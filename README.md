@@ -26,3 +26,7 @@ Follow [the instructions](./04-kafka/README.md)
 ## Deploy Service Registry
 
 Follow [the instructions](./05-service-registry/README.md)
+
+## Deploy DataGrid
+
+Follow [the instructions](./07-datagrid/README.md)

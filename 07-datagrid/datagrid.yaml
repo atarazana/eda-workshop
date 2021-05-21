@@ -1,0 +1,23 @@
+apiVersion: infinispan.org/v1 
+kind: Infinispan 
+metadata:
+  name: eda-infinispan
+spec:
+  # Specifies the number of nodes in the cluster.
+  replicas: 3
+  service:
+    # Configures the service type as Cache.
+    type: Cache
+    #type: DataGrid
+    # Sets the number of replicas for each entry across the cluster.
+    replicationFactor: 2
+  # Enables and configures automatic scaling.    
+  autoscale:
+    minReplicas: 3
+    minMemUsagePercent: 30 
+    maxReplicas: 6
+    maxMemUsagePercent: 70 
+  logging:
+    categories:
+      org.infinispan: info
+      org.jgroups: info
