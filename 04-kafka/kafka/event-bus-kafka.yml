@@ -1,0 +1,168 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  labels:
+    app: event-bus
+  name: event-bus
+spec:
+  kafka:
+    version: 2.7.0
+    config:
+      # Log message format
+      log.message.format.version: "2.7"
+      # default replication factors for automatically created topics
+      default.replication.factor: 3
+      # The default number of log partitions per topic
+      num.partitions: 1
+      # Enable auto creation of topic on the server
+      auto.create.topics.enable: true
+      # When a producer sets acks to "all" (or "-1"), min.insync.replicas specifies the minimum number of replicas that
+      # must acknowledge a write for the write to be considered successful.
+      # When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical
+      # scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and
+      # produce with acks of "all". This will ensure that the producer raises an exception if a
+      # majority of replicas do not receive a write.
+      min.insync.replicas: 2
+      # The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"
+      # For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      # The minimum age of a log file to be eligible for deletion due to age. Default value: 168
+      # The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property
+      log.retention.hours: 168
+      # The default cleanup policy for segments beyond the retention window. A comma separated list of valid policies.
+      # Valid policies are: "delete" and "compact". Default value: "delete"
+      log.cleanup.policy: delete
+      # Enable the log cleaner process to run on the server. Should be enabled if using any topics with a
+      # cleanup.policy=compact including the internal offsets topic. If disabled those topics will not be compacted
+      # and continually grow in size.
+      log.cleaner.enable: true
+      # How long are delete records retained?. Default value: 86400000 (24 hours)
+      log.cleaner.delete.retention.ms: 86400000
+    listeners:
+    - name: plain
+      port: 9092
+      tls: false
+      type: internal
+    - name: tls
+      port: 9093
+      tls: true
+      type: internal
+    - name: external
+      port: 9094
+      tls: true
+      type: route
+    livenessProbe:
+      initialDelaySeconds: 90
+      timeoutSeconds: 5
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 5
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+    replicas: 3
+    storage:
+      #type: ephemeral
+      type: jbod
+      volumes:
+        - id: 0
+          type: persistent-claim
+          deleteClaim: true
+          size: 25Gi
+    template:
+      pod:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: strimzi.io/name
+                    operator: In
+                    values:
+                    - event-bus-kafka
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        metadata:
+          labels:
+            custom-strimzi-label: event-bus-kafka
+  zookeeper:
+    livenessProbe:
+      initialDelaySeconds: 90
+      timeoutSeconds: 5
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 5
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: zookeeper-metrics-config.yml
+    replicas: 3
+    storage:
+      #type: ephemeral
+      type: persistent-claim
+      deleteClaim: true
+      size: 5Gi
+    template:
+      pod:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: strimzi.io/name
+                    operator: In
+                    values:
+                    - event-bus-zookeeper
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        metadata:
+          labels:
+            custom-strimzi-label: event-bus-kafka
+  entityOperator:
+    topicOperator:
+      reconciliationIntervalSeconds: 60
+    userOperator:
+      reconciliationIntervalSeconds: 60
+  kafkaExporter:
+    groupRegex: .*
+    topicRegex: .*
+  clientsCa:
+    generateCertificateAuthority: true
+    renewalDays: 30
+    validityDays: 1460
+  clusterCa:
+    generateCertificateAuthority: true
+    renewalDays: 30
+    validityDays: 1460
+  kafkaExporter:
+    topicRegex: ".*"
+    groupRegex: ".*"
+    readinessProbe:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
+    livenessProbe:
+      initialDelaySeconds: 15
+      timeoutSeconds: 5
+  cruiseControl:
+    #brokerCapacity:
+    #  inboundNetwork: 10000KB/s
+    #  outboundNetwork: 10000KB/s
+    #config:
+    #  hard.goals: >
+    #    com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkInboundCapacityGoal,
+    #    com.linkedin.kafka.cruisecontrol.analyzer.goals.NetworkOutboundCapacityGoal    
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: cruise-control-metrics
+          key: metrics-config.yml    

@@ -18,3 +18,7 @@ Follow [the instructions](./01-operators/README.md)
 ## Deploy Metrics Platform
 
 Follow [the instructions](./02-metrics/README.md)
+
+## Deploy Streaming Platform
+
+Follow [the instructions](./04-kafka/README.md)
