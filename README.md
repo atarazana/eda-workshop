@@ -14,3 +14,7 @@ As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespac
 ## Deploy Operators
 
 Follow [the instructions](./01-operators/README.md)
+
+## Deploy Metrics Platform
+
+Follow [the instructions](./02-metrics/README.md)
