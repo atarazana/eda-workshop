@@ -22,3 +22,7 @@ Follow [the instructions](./02-metrics/README.md)
 ## Deploy Streaming Platform
 
 Follow [the instructions](./04-kafka/README.md)
+
+## Deploy Service Registry
+
+Follow [the instructions](./05-service-registry/README.md)
