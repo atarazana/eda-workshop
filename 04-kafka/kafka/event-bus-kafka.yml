@@ -40,6 +40,10 @@ spec:
       log.cleaner.enable: true
       # How long are delete records retained?. Default value: 86400000 (24 hours)
       log.cleaner.delete.retention.ms: 86400000
+      # The minimum allowed session timeout for registered consumers. Shorter timeouts result in quicker failure
+      # detection at the cost of more frequent consumer heartbeating, which can overwhelm broker resources.
+      # Default: 6000 (6 seconds)
+      group.min.session.timeout.ms: 3000
     listeners:
     - name: plain
       port: 9092
