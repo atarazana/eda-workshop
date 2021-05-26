@@ -37,15 +37,15 @@
             <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
         </dependency>
         <!-- Quarkus Kafka Streams Extensions -->
-<!--        <dependency>-->
-<!--            <groupId>io.quarkus</groupId>-->
-<!--            <artifactId>quarkus-kafka-streams</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kafka-streams</artifactId>
+        </dependency>
         <!-- Debezium Extensions -->
-<!--        <dependency>-->
-<!--            <groupId>io.debezium</groupId>-->
-<!--            <artifactId>debezium-core</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.debezium</groupId>-->
+        <!--            <artifactId>debezium-core</artifactId>-->
+        <!--        </dependency>-->
         <!-- Quarkus General Extensions -->
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -75,40 +75,35 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish</groupId>-->
-<!--            <artifactId>jakarta.json</artifactId>-->
-<!--        </dependency>-->
         <!--        <dependency>-->
-<!--            <groupId>org.apache.kafka</groupId>-->
-<!--            <artifactId>kafka-streams-test-utils</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--            <groupId>org.glassfish</groupId>-->
+        <!--            <artifactId>jakarta.json</artifactId>-->
+        <!--        </dependency>-->
         <!-- Test Kafka and Messaging Extensions -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.kafka</groupId>-->
-<!--            <artifactId>kafka-streams-test-utils</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.kafka</groupId>-->
-<!--            <artifactId>kafka_2.12</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; Test Debezium Extensions &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>io.debezium</groupId>-->
-<!--            <artifactId>debezium-core</artifactId>-->
-<!--            <version>${debezium.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.debezium</groupId>-->
-<!--            <artifactId>debezium-core</artifactId>-->
-<!--            <version>${debezium.version}</version>-->
-<!--            <type>test-jar</type>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams-test-utils</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.kafka</groupId>-->
+        <!--            <artifactId>kafka_2.12</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; Test Debezium Extensions &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.debezium</groupId>-->
+        <!--            <artifactId>debezium-core</artifactId>-->
+        <!--            <version>${debezium.version}</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.debezium</groupId>-->
+        <!--            <artifactId>debezium-core</artifactId>-->
+        <!--            <version>${debezium.version}</version>-->
+        <!--            <type>test-jar</type>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
     </dependencies>
     <build>
         <plugins>
