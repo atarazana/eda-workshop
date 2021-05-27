@@ -29,7 +29,7 @@ CREATE TABLE clients (
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE KEY
-) AUTO_INCREMENT=1001;
+);
 
 # Create some fake accounts
 CREATE TABLE accounts (
