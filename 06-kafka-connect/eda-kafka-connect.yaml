@@ -1,0 +1,102 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: eda-kafka-connect
+  annotations:
+    # use-connector-resources configures this KafkaConnect
+    # to use KafkaConnector resources to avoid
+    # needing to call the Connect REST API directly
+    strimzi.io/use-connector-resources: "true"
+spec:
+  version: 2.7.0
+  replicas: 1
+  bootstrapServers: event-bus-kafka-bootstrap:9092
+  #bootstrapServers: event-bus-kafka-bootstrap:9093
+  #tls:
+  #  trustedCertificates:
+  #    - secretName: event-bus-cluster-ca-cert
+  #      certificate: ca.crt
+  config:
+    group.id: eda-connect-cluster
+    offset.storage.topic: kafka-connect-cluster-offsets
+    #offset.storage.replication.factor: 3
+    config.storage.topic: kafka-connect-cluster-configs
+    #config.storage.replication.factor: 3
+    status.storage.topic: kafka-connect-cluster-status
+    #status.storage.replication.factor: 3
+    #key.converter: org.apache.kafka.connect.json.JsonConverter
+    #value.converter: org.apache.kafka.connect.json.JsonConverter
+    #key.converter.schemas.enable: true
+    #value.converter.schemas.enable: true
+  #image: image-registry.openshift-image-registry.svc:5000/eda-workshop/eda-kafka-connect:latest
+  build:
+    output:
+      #type: docker
+      #image: image-registry.openshift-image-registry.svc:5000/eda-workshop/eda-kafka-connect:latest
+      type: imagestream
+      image: eda-kafka-connect:latest
+    plugins: 
+      # Adding TGZ file with some Debezium Connectors
+      # Debezium Connector for PostgreSQL
+      - name: debezium-connector-postgres
+        artifacts:
+          # Debezium Connector for PostgreSQL
+          - type: tgz
+            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.5.0.Final/debezium-connector-postgres-1.5.0.Final-plugin.tar.gz
+      # Debezium Connector for MySQL
+      - name: debezium-connector-mysql
+        artifacts:
+          - type: tgz
+            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.5.0.Final/debezium-connector-mysql-1.5.0.Final-plugin.tar.gz
+      # Apicurio Registry Connect Converters
+      - name: apicurio-registry-converter
+        artifacts:
+          - type: tgz
+            url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.0.0.Final/apicurio-registry-distro-connect-converter-2.0.0.Final.tar.gz
+  #resources: 
+  #  requests:
+  #    cpu: "1"
+  #    memory: 2Gi
+  #  limits:
+  #    cpu: "2"
+  #    memory: 2Gi
+  logging: 
+    type: inline
+    loggers:
+      log4j.rootLogger: "INFO"
+  readinessProbe: 
+    initialDelaySeconds: 30
+    timeoutSeconds: 5
+  livenessProbe:
+    initialDelaySeconds: 30
+    timeoutSeconds: 5
+  #metricsConfig: 
+  #  type: jmxPrometheusExporter
+  #  valueFrom:
+  #    configMapKeyRef:
+  #      name: my-config-map
+  #      key: my-key
+  #jvmOptions: 
+  #  "-Xmx": "1g"
+  #  "-Xms": "1g"
+  #template: 
+  #  pod:
+  #    affinity:
+  #      podAntiAffinity:
+  #        requiredDuringSchedulingIgnoredDuringExecution:
+  #          - labelSelector:
+  #              matchExpressions:
+  #                - key: application
+  #                  operator: In
+  #                  values:
+  #                    - postgresql
+  #                    - mongodb
+  #            topologyKey: "kubernetes.io/hostname"
+  #  connectContainer: 
+  #    env:
+  #      - name: JAEGER_SERVICE_NAME
+  #        value: my-jaeger-service
+  #      - name: JAEGER_AGENT_HOST
+  #        value: jaeger-agent-name
+  #      - name: JAEGER_AGENT_PORT
+  #        value: "6831"
