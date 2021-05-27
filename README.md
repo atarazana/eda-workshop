@@ -19,6 +19,10 @@ Follow [the instructions](./01-operators/README.md)
 
 Follow [the instructions](./02-metrics/README.md)
 
+## Deploy Databases
+
+Follow [the instructions](./03-databases/README.md)
+
 ## Deploy Streaming Platform
 
 Follow [the instructions](./04-kafka/README.md)
