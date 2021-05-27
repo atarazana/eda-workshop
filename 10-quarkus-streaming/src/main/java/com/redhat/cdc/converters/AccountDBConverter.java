@@ -32,7 +32,8 @@ public class AccountDBConverter {
         }
 
         if ("r".equals(accountDB.op)) {
-            LOG.info("{} Account from mainframe {}-{}-{} with status {}", ("r".equals(accountDB.op) ? "Read" : "Deleted"),
+            LOG.info("{} Account from database {}-{}-{} with status {}",
+                    "r".equals(accountDB.op) ? "Read" : "Deleted",
                     accountDB.region_code, accountDB.client_id, accountDB.sequence, accountDB.status);
 
             return null;
@@ -49,7 +50,8 @@ public class AccountDBConverter {
 
             accountDBEmitter.send(Message.of(accountDB).addMetadata(metadata));
 
-            LOG.info("{} Account from mainframe {}-{}-{} with status {}", ("c".equals(op) ? "Created" : "Updated"),
+            LOG.info("{} Account from database {}-{}-{} with status {}",
+                    "c".equals(op) ? "Created" : "Updated",
                     accountDB.region_code, accountDB.client_id, accountDB.sequence, accountDB.status);
         }
 

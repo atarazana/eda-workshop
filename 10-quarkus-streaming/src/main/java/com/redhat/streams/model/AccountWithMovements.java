@@ -14,8 +14,10 @@ public class AccountWithMovements {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountWithMovements.class);
 
     public Account account;
-    public int accountBalance = 0;
     public List<Movement> movements = new ArrayList<>();
+
+    // Account balance
+    public int accountBalance = 0;
 
     public AccountWithMovements addMovement(MovementAndAccount movementAndAccount) {
         LOGGER.info("Adding Movement into Account: {}", movementAndAccount);
@@ -53,6 +55,7 @@ public class AccountWithMovements {
         final StringBuffer sb = new StringBuffer("AccountWithMovements{");
         sb.append("account=").append(account);
         sb.append(", movements=").append(movements);
+        sb.append(", accountBalance=").append(accountBalance);
         sb.append('}');
         return sb.toString();
     }

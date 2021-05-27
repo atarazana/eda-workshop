@@ -32,7 +32,8 @@ public class MovementDBConverter {
         }
 
         if ("r".equals(movementDB.op)) {
-            LOG.info("{} Movement from mainframe {}-{}-{}", ("r".equals(movementDB.op) ? "Read" : "Deleted"),
+            LOG.info("{} Movement from database {}-{}-{}",
+                    "r".equals(movementDB.op) ? "Read" : "Deleted",
                     movementDB.account_id, movementDB.movement_date, movementDB.quantity);
 
             return null;
@@ -49,7 +50,8 @@ public class MovementDBConverter {
 
             movementDBEmitter.send(Message.of(movementDB).addMetadata(metadata));
 
-            LOG.info("{} Movement from mainframe: {}-{}-{}", ("c".equals(movementDB.op) ? "Created" : "Updated"),
+            LOG.info("{} Movement from database: {}-{}-{}",
+                    "c".equals(movementDB.op) ? "Created" : "Updated",
                     movementDB.account_id, movementDB.movement_date, movementDB.quantity);
         }
 

@@ -7,6 +7,8 @@ import com.redhat.streams.model.Client;
 import com.redhat.streams.model.ClientWithAccounts;
 import com.redhat.streams.model.Movement;
 import com.redhat.streams.model.MovementAndAccount;
+import com.redhat.streams.model.Region;
+import com.redhat.streams.model.RegionWithAccounts;
 import io.quarkus.kafka.client.serialization.JsonbSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -23,7 +25,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
 @ApplicationScoped
-public class ClientProducer {
+public class StreamTopologyProducer {
 
     /*
      * Data topics to analyze
@@ -31,6 +33,7 @@ public class ClientProducer {
     static final String DATA_CLIENTS_TOPIC = "eda.data.clients";
     static final String DATA_ACCOUNTS_TOPIC = "eda.data.accounts";
     static final String DATA_MOVEMENTS_TOPIC = "eda.data.movements";
+    static final String DATA_REGIONS_TOPIC = "eda.data.regions";
 
     /*
      * Domain Topics with information consolidated
@@ -65,10 +68,15 @@ public class ClientProducer {
         Serde<Integer> movementsKeySerde = new Serdes.IntegerSerde();
         JsonbSerde<Movement> movementsSerde = new JsonbSerde<>(Movement.class);
 
+        // Serde Definitions for Data Regions Topic
+        Serde<Integer> regionsKeySerde = new Serdes.IntegerSerde();
+        JsonbSerde<Region> regionsSerde = new JsonbSerde<>(Region.class);
+
         // Serde Definitions for Temporal Data Topics
         JsonbSerde<AccountAndClient> accountAndClientSerde = new JsonbSerde<>(AccountAndClient.class);
         JsonbSerde<ClientWithAccounts> clientWithAccountsSerde = new JsonbSerde<>(ClientWithAccounts.class);
         JsonbSerde<MovementAndAccount> movementAndAccountSerde = new JsonbSerde<>(MovementAndAccount.class);
+        JsonbSerde<Integer> accountWithMovementsKeySerde = new JsonbSerde<>(Integer.class);
         JsonbSerde<AccountWithMovements> accountWithMovementsSerde = new JsonbSerde<>(AccountWithMovements.class);
 
         // KTable to consume messages from Data Account Topic
@@ -88,6 +96,18 @@ public class ClientProducer {
                 DATA_MOVEMENTS_TOPIC,
                 Consumed.with(movementsKeySerde, movementsSerde)
         );
+
+//        // KTable to consume messages from Data Movement Topic
+//        KTable<Integer, Region> regions = builder.table(
+//                DATA_REGIONS_TOPIC,
+//                Consumed.with(regionsKeySerde, regionsSerde)
+//        );
+//
+//        // KTable to consume messages from Data Movement Topic
+//        KTable<Integer, AccountWithMovements> domainAccounts = builder.table(
+//                EDA_DOMAIN_ACCOUNTS_TOPIC,
+//                Consumed.with(accountWithMovementsKeySerde, accountWithMovementsSerde)
+//        );
 
         // KTable to join data from Clients and Accounts KTables
         // It creates the Domain Client Model

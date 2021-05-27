@@ -15,18 +15,23 @@ public class ClientWithAccounts {
 
     public Client client;
     public List<Account> accounts = new ArrayList<>();
+    public boolean accountsClosed = false;
+    public boolean accountsInactivated = false;
 
     public ClientWithAccounts addAccount(AccountAndClient accountAndClient) {
-        LOGGER.info("Adding: " + accountAndClient);
+        LOGGER.info("Adding account info {} to client {}", accountAndClient, client);
 
         client = accountAndClient.client;
         accounts.add(accountAndClient.account);
+
+        // Eval accounts status
+        evalAccountsStatus();
 
         return this;
     }
 
     public ClientWithAccounts removeAccount(AccountAndClient accountAndClient) {
-        LOGGER.info("Removing: " + accountAndClient);
+        LOGGER.info("Removing account info {} from client {}", accountAndClient, client);
 
         Iterator<Account> it = accounts.iterator();
         while (it.hasNext()) {
@@ -37,12 +42,40 @@ public class ClientWithAccounts {
             }
         }
 
+        // Eval accounts status
+        evalAccountsStatus();
+
         return this;
+    }
+
+    private void evalAccountsStatus() {
+        // Eval if all accounts are inactive
+        accountsInactivated = true;
+        for (Account account : accounts) {
+            if (!"INACTIVE".equals(account.status)) {
+                accountsInactivated = false;
+                break;
+            }
+        }
+        // Eval if all accounts are closed
+        accountsClosed = true;
+        for (Account account : accounts) {
+            if (!"CLOSED".equals(account.status)) {
+                accountsClosed = false;
+                break;
+            }
+        }
     }
 
     @Override
     public String toString() {
-        return "ClientWithAccounts [client=" + client + ", accounts=" + accounts + "]";
+        final StringBuffer sb = new StringBuffer("ClientWithAccounts{");
+        sb.append("client=").append(client);
+        sb.append(", accounts=").append(accounts);
+        sb.append(", accountsClosed=").append(accountsClosed);
+        sb.append(", accountsInactivated=").append(accountsInactivated);
+        sb.append('}');
+        return sb.toString();
     }
 
 }

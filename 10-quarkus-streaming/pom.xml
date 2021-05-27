@@ -64,6 +64,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-jsonb</artifactId>
         </dependency>
+        <!-- OpenShift Extensions -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-openshift</artifactId>
+        </dependency>
         <!-- Test Dependencies -->
         <dependency>
             <groupId>io.quarkus</groupId>

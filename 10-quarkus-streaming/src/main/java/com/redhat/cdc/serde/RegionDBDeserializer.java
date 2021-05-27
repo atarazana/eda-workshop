@@ -32,12 +32,14 @@ public class RegionDBDeserializer extends JsonbDeserializer<RegionDB> {
         regionDB.op = payload.getString("op");
         regionDB.code = payload.getJsonObject("after").getString("code");
         if ("c".equals(regionDB.op) || "u".equals(regionDB.op)) {
+            regionDB.id = payload.getJsonObject("after").getInt("id");
             regionDB.name = payload.getJsonObject("after").getString("name");
             regionDB.description = payload.getJsonObject("after").getString("description");
 
-            LOG.info("{} Region from mainframe: {}", ("c".equals(regionDB.op) ? "Created" : "Updated"), regionDB.code);
+            LOG.info("{} Region from database: {}", "c".equals(regionDB.op) ? "Created" : "Updated",
+                    regionDB.code);
         } else {
-            LOG.info("{} Region from mainframe", ("r".equals(regionDB.op) ? "Read" : "Deleted"));
+            LOG.info("{} Region from database", "r".equals(regionDB.op) ? "Read" : "Deleted");
         }
 
         return regionDB;

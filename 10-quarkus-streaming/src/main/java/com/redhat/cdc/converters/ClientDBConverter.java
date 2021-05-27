@@ -27,7 +27,7 @@ public class ClientDBConverter {
     public ClientDB process(ClientDB clientDB) {
         LOG.info("Consuming client from database: {}", clientDB);
 
-        if (null != clientDB && "c".equals(clientDB.op)) {
+        if (null != clientDB && ("c".equals(clientDB.op) || "u".equals(clientDB.op))) {
             // Identify the key
             OutgoingKafkaRecordMetadata<?> metadata = OutgoingKafkaRecordMetadata.builder()
                     .withKey(clientDB.id)
@@ -35,7 +35,9 @@ public class ClientDBConverter {
 
             eventsClientEmitter.send(Message.of(clientDB).addMetadata(metadata));
 
-            LOG.info("New data client created {} and published in data topic", clientDB);
+            LOG.info("{} data client from database {} published in data topic",
+                    "c".equals(clientDB.op) ? "Created" : "Updated",
+                    clientDB);
         }
 
         return clientDB;

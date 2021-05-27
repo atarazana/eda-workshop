@@ -27,7 +27,7 @@ public class RegionDBConverter {
     public RegionDB process(RegionDB regionDB) {
         LOG.info("Consuming region from database: {}", regionDB);
 
-        if (null != regionDB && "c".equals(regionDB.op)) {
+        if (null != regionDB && ("c".equals(regionDB.op) || "u".equals(regionDB.op))) {
             // Identify the key
             OutgoingKafkaRecordMetadata<?> metadata = OutgoingKafkaRecordMetadata.builder()
                     .withKey(regionDB.id)
@@ -35,7 +35,9 @@ public class RegionDBConverter {
 
             regionDBEmitter.send(Message.of(regionDB).addMetadata(metadata));
 
-            LOG.info("New data region created {} and published in data topic", regionDB);
+            LOG.info("{} data region from database {} published in data topic",
+                    "c".equals(regionDB.op) ? "Created" : "Updated",
+                    regionDB);
         }
 
         return regionDB;
