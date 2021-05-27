@@ -35,8 +35,9 @@ public class ClientProducer {
     /*
      * Domain Topics with information consolidated
      */
-    static final String EDA_DOMAIN_CLIENTS_TOPIC = "eda.domain.clients";
-    static final String EDA_DOMAIN_ACCOUNTS_TOPIC = "eda.domain.accounts";
+    static final String EDA_DOMAIN_CLIENTS_TOPIC = "eda.events.domain.clients";
+    static final String EDA_DOMAIN_ACCOUNTS_TOPIC = "eda.events.domain.accounts";
+    static final String EDA_DOMAIN_REGIONS_TOPIC = "eda.events.domain.regions";
 
     @Produces
     public Topology buildTopology() {
