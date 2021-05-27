@@ -31,6 +31,10 @@ Follow [the instructions](./04-kafka/README.md)
 
 Follow [the instructions](./05-service-registry/README.md)
 
+## Deploy KafkaConnect
+
+Follow [the instructions](./06-kafka-connect/README.md)
+
 ## Deploy DataGrid
 
 Follow [the instructions](./07-datagrid/README.md)
