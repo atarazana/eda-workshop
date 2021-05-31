@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/static/js/main.4aa2b844.chunk.js",
+    "main.js.map": "/static/js/main.4aa2b844.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.020335ec.js",
+    "runtime-main.js.map": "/static/js/runtime-main.020335ec.js.map",
+    "static/css/2.395bb006.chunk.css": "/static/css/2.395bb006.chunk.css",
+    "static/js/2.db173312.chunk.js": "/static/js/2.db173312.chunk.js",
+    "static/js/2.db173312.chunk.js.map": "/static/js/2.db173312.chunk.js.map",
+    "static/js/3.da421001.chunk.js": "/static/js/3.da421001.chunk.js",
+    "static/js/3.da421001.chunk.js.map": "/static/js/3.da421001.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.395bb006.chunk.css.map": "/static/css/2.395bb006.chunk.css.map",
+    "static/css/main.6dea0f05.chunk.css.map": "/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.db173312.chunk.js.LICENSE.txt": "/static/js/2.db173312.chunk.js.LICENSE.txt",
+    "static/media/patternfly.css": "/static/media/pficon.eae21d83.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.020335ec.js",
+    "static/css/2.395bb006.chunk.css",
+    "static/js/2.db173312.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.4aa2b844.chunk.js"
+  ]
+}
