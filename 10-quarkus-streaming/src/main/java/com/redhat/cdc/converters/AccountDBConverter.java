@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -70,13 +71,14 @@ public class AccountDBConverter {
 
                 Alert alert = Alert.newBuilder()
                         .setId(String.valueOf(accountDB.id))
-                        .setVariant(AlertVariant.WARNING)
-                        .setName("Account moved to INACTIVE")
-                        .setDuration("1")
-                        .setExpression("Expression")
+                        .setVariant(AlertVariant.warning)
+                        .setName("Account Inactivated")
+                        .setDefinition("Account inactivated in region " + accountDB.region_code)
+                        .setDuration("1m")
+                        .setExpression("")
                         .setLabels(new HashMap<>())
                         .setAnnotations(new HashMap<>())
-                        .setTimestamp((new Timestamp(System.currentTimeMillis())).toString())
+                        .setTimestamp(Instant.now().toString())
                         .build();
 
                 alertEmitter.send(alert.toString());
@@ -87,13 +89,14 @@ public class AccountDBConverter {
 
                 Alert alert = Alert.newBuilder()
                         .setId(String.valueOf(accountDB.id))
-                        .setVariant(AlertVariant.WARNING)
-                        .setName("Account moved to CLOSE")
-                        .setDuration("1")
-                        .setExpression("Expression")
+                        .setVariant(AlertVariant.danger)
+                        .setName("Account Closed")
+                        .setDefinition("Account closed in region " + accountDB.region_code)
+                        .setDuration("1m")
+                        .setExpression("")
                         .setLabels(new HashMap<>())
                         .setAnnotations(new HashMap<>())
-                        .setTimestamp((new Timestamp(System.currentTimeMillis())).toString())
+                        .setTimestamp(Instant.now().toString())
                         .build();
 
                 alertEmitter.send(alert.toString());

@@ -3,7 +3,8 @@
     "namespace": "com.redhat.eda.model.events",
     "name": "AlertVariant",
     "type": "enum",
-    "symbols": [ "SUCCESS", "DANGER", "WARNING", "INFO", "DEFAULT" ],
+    "symbols": [ "success", "danger", "warning", "info", "default" ],
+    "default": "default",
     "doc": "Alert variants"
   },
   {
@@ -21,6 +22,11 @@
         "name": "name",
         "type": "string",
         "doc": "Name."
+      },
+      {
+        "name": "definition",
+        "type": "string",
+        "doc": "Definition."
       },
       {
         "name": "variant",

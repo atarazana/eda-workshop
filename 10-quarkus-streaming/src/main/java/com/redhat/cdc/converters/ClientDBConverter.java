@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -55,13 +56,14 @@ public class ClientDBConverter {
 
                 Alert alert = Alert.newBuilder()
                         .setId(String.valueOf(clientDB.id))
-                        .setVariant(AlertVariant.INFO)
-                        .setName("New customer client with email " + clientDB.email)
-                        .setDuration("1")
-                        .setExpression("Expression")
+                        .setVariant(AlertVariant.info)
+                        .setName("New Client Registered")
+                        .setDefinition("New client " +  clientDB.email + " registered.")
+                        .setExpression("")
+                        .setDuration("1m")
                         .setLabels(new HashMap<>())
                         .setAnnotations(new HashMap<>())
-                        .setTimestamp((new Timestamp(System.currentTimeMillis())).toString())
+                        .setTimestamp(Instant.now().toString())
                         .build();
 
                 alertEmitter.send(alert.toString());
