@@ -1,6 +1,8 @@
 package com.redhat.cdc.converters;
 
 import com.redhat.cdc.model.AccountDB;
+import com.redhat.eda.model.events.Alert;
+import com.redhat.eda.model.events.AlertVariant;
 import io.smallrye.reactive.messaging.kafka.OutgoingKafkaRecordMetadata;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -12,6 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.sql.Timestamp;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 @ApplicationScoped
 public class AccountDBConverter {
@@ -21,6 +27,11 @@ public class AccountDBConverter {
     @Inject
     @Channel("data-accounts")
     Emitter<AccountDB> accountDBEmitter;
+
+    @Inject
+    @Channel("eda-alerts")
+    //Emitter<Alert> alertEmitter;
+    Emitter<String> alertEmitter;
 
     @Incoming("dbz-enterprise-accounts")
     @Acknowledgment(Acknowledgment.Strategy.POST_PROCESSING)
@@ -53,6 +64,40 @@ public class AccountDBConverter {
             LOG.info("{} Account from database {}-{}-{} with status {}",
                     "c".equals(op) ? "Created" : "Updated",
                     accountDB.region_code, accountDB.client_id, accountDB.sequence, accountDB.status);
+
+            if ("INACTIVE".equals(accountDB.status)) {
+                LOG.info("Account with status inactive", accountDB.sequence);
+
+                Alert alert = Alert.newBuilder()
+                        .setId(String.valueOf(accountDB.id))
+                        .setVariant(AlertVariant.WARNING)
+                        .setName("Account moved to INACTIVE")
+                        .setDuration("1")
+                        .setExpression("Expression")
+                        .setLabels(new HashMap<>())
+                        .setAnnotations(new HashMap<>())
+                        .setTimestamp((new Timestamp(System.currentTimeMillis())).toString())
+                        .build();
+
+                alertEmitter.send(alert.toString());
+            }
+
+            if ("CLOSED".equals(accountDB.status)) {
+                LOG.info("Account with status closed", accountDB.sequence);
+
+                Alert alert = Alert.newBuilder()
+                        .setId(String.valueOf(accountDB.id))
+                        .setVariant(AlertVariant.WARNING)
+                        .setName("Account moved to CLOSE")
+                        .setDuration("1")
+                        .setExpression("Expression")
+                        .setLabels(new HashMap<>())
+                        .setAnnotations(new HashMap<>())
+                        .setTimestamp((new Timestamp(System.currentTimeMillis())).toString())
+                        .build();
+
+                alertEmitter.send(alert.toString());
+            }
         }
 
         return accountDB;
