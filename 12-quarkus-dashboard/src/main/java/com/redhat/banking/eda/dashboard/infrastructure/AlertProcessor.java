@@ -12,6 +12,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.redhat.banking.eda.dashboard.valueobjects.Alert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A bean consuming data from the "prices" Kafka topic and applying some conversion.
@@ -19,6 +21,7 @@ import com.redhat.banking.eda.dashboard.valueobjects.Alert;
  */
 @ApplicationScoped
 public class AlertProcessor {
+    private static final Logger LOG = LoggerFactory.getLogger(AlertProcessor.class);
 
     @Inject 
     @Remote("alerts")
@@ -36,6 +39,8 @@ public class AlertProcessor {
     @Broadcast                                              
     @Acknowledgment(Acknowledgment.Strategy.PRE_PROCESSING) 
     public Alert process(Alert alert) {
+        LOG.info("Processing Alert {}", alert);
+
         cache.put(alert.getId(), alert);
         return alert;
     }

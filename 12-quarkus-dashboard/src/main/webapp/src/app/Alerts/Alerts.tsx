@@ -25,8 +25,12 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
 
     useEffect(() => {
         const timeout = 5;
-        // let eventSource = new EventSource("/alerts/stream")
-        let eventSource = new EventSource("http://localhost:8080/alerts/stream")
+
+        const EVENT_SOURCE_URL = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/alerts/stream' : '/alerts/stream'; 
+
+        console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
+
+        let eventSource = new EventSource(EVENT_SOURCE_URL)
         eventSource.onmessage = e => {
             let alert = JSON.parse(e.data) as IAlert;
 

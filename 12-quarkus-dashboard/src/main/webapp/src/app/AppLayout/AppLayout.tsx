@@ -92,9 +92,13 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
   })
 
   useEffect(() => {
+      const EVENT_SOURCE_URL = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/alerts/stream' : '/alerts/stream'; 
+
+      console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
+
       const timeout = 5;
-      // let eventSource = new EventSource("/alerts/stream")
-      let eventSource = new EventSource("http://localhost:8080/alerts/stream")
+      // let eventSource = new EventSource(EVENT_SOURCE_URL)
+      let eventSource = new EventSource(EVENT_SOURCE_URL)
       eventSource.onmessage = e => {
           let alert = JSON.parse(e.data) as IAlert;        
           addAlert(alert);

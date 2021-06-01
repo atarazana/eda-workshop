@@ -2,7 +2,6 @@ package com.redhat.banking.eda.dashboard.infrastructure;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
@@ -34,11 +33,11 @@ public class AlertGenerator {
                 .map(tick -> {
                     UUID uuid = UUID.randomUUID();
 
-                    HashMap<String,String> labels = new HashMap<String,String>();
-                    labels.put("from", "dept-" + random.nextInt(10));
+                    // HashMap<String,String> labels = new HashMap<String,String>();
+                    // labels.put("from", "dept-" + random.nextInt(10));
 
-                    HashMap<String,String> annotations = new HashMap<String,String>();
-                    annotations.put("location", "SPAIN");
+                    // HashMap<String,String> annotations = new HashMap<String,String>();
+                    // annotations.put("location", "SPAIN");
 
                     int variant = random.nextInt(4);
                     AlertVariant variantValue = AlertVariant.DEFAULT;
@@ -49,7 +48,8 @@ public class AlertGenerator {
                         case 3:  variantValue = AlertVariant.DANGER; break;
                     }
 
-                    Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, labels, annotations, Instant.now());
+                    //Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, labels, annotations, Instant.now());
+                    Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, Instant.now());
                     return alert;
                 });
     }

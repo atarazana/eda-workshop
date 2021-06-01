@@ -108,12 +108,16 @@ VALUES (default,"Jorge","Bailies","jorge.vailies@acme.com");
 
 INSERT INTO accounts
 VALUES (default,6,'es','0000000001','CLOSED');
-
 INSERT INTO accounts
 VALUES (default,6,'es','0000000003','CLOSED');
-
 INSERT INTO accounts
 VALUES (default,6,'es','0000000002','CLOSED');
+INSERT INTO accounts
+VALUES (default,6,'uk','0000000001','CLOSED');
+INSERT INTO accounts
+VALUES (default,6,'uk','0000000002','CLOSED');
+INSERT INTO accounts
+VALUES (default,6,'uk','0000000003','CLOSED');
 
 UPDATE accounts SET status = 'ACTIVE' WHERE client_id = 6;
 UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 6;
@@ -126,6 +130,14 @@ VALUES (default,"Eduardo","Andante","eduardo.andante@acme.com");
 
 INSERT INTO accounts
 VALUES (default,7,'es','0000000001','INACTIVE');
+INSERT INTO accounts
+VALUES (default,7,'es','0000000002','INACTIVE');
+INSERT INTO accounts
+VALUES (default,7,'pt','0000000001','INACTIVE');
+INSERT INTO accounts
+VALUES (default,7,'pt','0000000002','INACTIVE');
+INSERT INTO accounts
+VALUES (default,7,'pt','0000000003','INACTIVE');
 
 # Client with Accounts VIP
 
@@ -166,3 +178,61 @@ INSERT INTO movements
 VALUES (20, default, '2021-01-20 06:37:03', 'Incoming Transfer', 5000),
        (20, default, '2021-02-20 06:37:03', 'Outgoing Transfer',-10000),
        (20, default, '2021-03-20 06:37:03', 'Incoming Transfer',-25000);
+
+# Client with Accounts NEG
+
+INSERT INTO clients
+VALUES (default,"Antonio","Sinpasta","antonio.sinpasta@acme.com");
+
+INSERT INTO accounts
+VALUES (default,11,'uk','0000000001','ACTIVE');
+
+INSERT INTO movements
+VALUES (22, default, '2021-01-20 06:37:03', 'Incoming Transfer', -5000),
+       (22, default, '2021-02-20 06:37:03', 'Outgoing Transfer',-10000),
+       (22, default, '2021-03-20 06:37:03', 'Incoming Transfer',-25000),
+       (22, default, '2021-01-20 06:37:03', 'Incoming Transfer', -1000);
+
+# Client with Accounts Closed
+
+INSERT INTO clients
+VALUES (default,"Tony","Closed","toni.closed@acme.com");
+
+UPDATE clients SET last_name = 'Client', email = 'toni.client@acme.com' WHERE id = 12;
+
+INSERT INTO accounts
+VALUES (default,12,'uk','0000000001','CLOSED');
+INSERT INTO accounts
+VALUES (default,12,'uk','0000000002','ACTIVE');
+
+UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 12;
+UPDATE accounts SET status = 'CLOSED' WHERE client_id = 12;
+
+# Client with Accounts Inactivated or Closed
+
+INSERT INTO clients
+VALUES (default,"Client","Test","client.test@acme.com");
+
+INSERT INTO accounts
+VALUES (default,13,'us','0000000001','ACTIVE');
+INSERT INTO accounts
+VALUES (default,13,'us','0000000002','ACTIVE');
+INSERT INTO accounts
+VALUES (default,13,'us','0000000003','INACTIVE');
+INSERT INTO accounts
+VALUES (default,13,'us','0000000004','CLOSED');
+
+UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 13;
+UPDATE accounts SET status = 'CLOSED' WHERE client_id = 13;
+
+# Client
+
+INSERT INTO clients
+VALUES (default,"Client","More Test","client.moretest@acme.com");
+
+INSERT INTO accounts
+VALUES (default,14,'us','0000000001','ACTIVE');
+INSERT INTO accounts
+VALUES (default,14,'us','0000000002','INACTIVE');
+INSERT INTO accounts
+VALUES (default,14,'us','0000000003','CLOSED');

@@ -1,6 +1,8 @@
 package com.redhat.cdc.converters;
 
 import com.redhat.cdc.model.ClientDB;
+import com.redhat.eda.model.events.Alert;
+import com.redhat.eda.model.events.AlertVariant;
 import io.smallrye.reactive.messaging.kafka.OutgoingKafkaRecordMetadata;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -12,6 +14,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 @ApplicationScoped
 public class ClientDBConverter {
@@ -21,6 +28,11 @@ public class ClientDBConverter {
     @Inject
     @Channel("data-clients")
     Emitter<ClientDB> eventsClientEmitter;
+
+    @Inject
+    @Channel("eda-alerts")
+    //Emitter<Alert> alertEmitter;
+    Emitter<String> alertEmitter;
 
     @Incoming("dbz-enterprise-clients")
     @Acknowledgment(Acknowledgment.Strategy.POST_PROCESSING)
@@ -38,6 +50,24 @@ public class ClientDBConverter {
             LOG.info("{} data client from database {} published in data topic",
                     "c".equals(clientDB.op) ? "Created" : "Updated",
                     clientDB);
+
+            if ("c".equals(clientDB.op)) {
+                LOG.info("New Client alert {}", clientDB.email);
+
+                Alert alert = Alert.newBuilder()
+                        .setId(String.valueOf(clientDB.id))
+                        .setVariant(AlertVariant.info)
+                        .setName("New Client Registered")
+                        .setDefinition("New client " +  clientDB.email + " registered.")
+                        .setExpression("")
+                        .setDuration("1m")
+                        .setLabels(new HashMap<>())
+                        .setAnnotations(new HashMap<>())
+                        .setTimestamp(Instant.now().toString())
+                        .build();
+
+                alertEmitter.send(alert.toString());
+            }
         }
 
         return clientDB;

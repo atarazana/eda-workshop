@@ -1,0 +1,20 @@
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: eda-infinispan-aggregate-metrics
+spec:
+  adminAuth: 
+    secretName: eda-infinispan-caches-credentials
+  clusterName: eda-infinispan
+  name: aggregate-metrics
+  template: >-
+    <infinispan>
+      <cache-container>
+        <replicated-cache name="aggregate-metrics" mode="SYNC" statistics="true">
+          <memory>
+            <binary eviction="MEMORY" size="400000000"/> <!-- 400 MB -->
+          </memory>
+          <expiration lifespan="5184000"/> <!-- 1 day -->
+        </replicated-cache>
+      </cache-container>
+    </infinispan>
