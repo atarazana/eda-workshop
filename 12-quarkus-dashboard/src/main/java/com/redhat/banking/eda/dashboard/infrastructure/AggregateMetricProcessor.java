@@ -8,6 +8,8 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import javax.enterprise.context.ApplicationScoped;
 
 import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A bean consuming data from the "prices" Kafka topic and applying some conversion.
@@ -16,11 +18,15 @@ import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
 @ApplicationScoped
 public class AggregateMetricProcessor {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AggregateMetricProcessor.class);
+
     @Incoming("aggregate-metrics")                                     
     @Outgoing("aggregate-metrics-stream")                             
     @Broadcast                                              
     @Acknowledgment(Acknowledgment.Strategy.PRE_PROCESSING) 
     public AggregateMetric process(AggregateMetric metric) {
+        LOG.info("Processing Aggregated Metric {}", metric);
+
         return metric;
     }
 

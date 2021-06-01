@@ -8,6 +8,8 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import javax.enterprise.context.ApplicationScoped;
 
 import com.redhat.banking.eda.dashboard.valueobjects.Alert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A bean consuming data from the "prices" Kafka topic and applying some conversion.
@@ -16,11 +18,15 @@ import com.redhat.banking.eda.dashboard.valueobjects.Alert;
 @ApplicationScoped
 public class AlertProcessor {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AlertProcessor.class);
+
     @Incoming("alerts")                                     
     @Outgoing("alerts-stream")                             
     @Broadcast                                              
     @Acknowledgment(Acknowledgment.Strategy.PRE_PROCESSING) 
     public Alert process(Alert alert) {
+        LOG.info("Processing Alert {}", alert);
+
         return alert;
     }
 
