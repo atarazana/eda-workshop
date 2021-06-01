@@ -205,7 +205,7 @@ VALUES (default,12,'uk','0000000001','CLOSED');
 INSERT INTO accounts
 VALUES (default,12,'uk','0000000002','ACTIVE');
 
-# UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 12;
+UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 12;
 UPDATE accounts SET status = 'CLOSED' WHERE client_id = 12;
 
 # Client with Accounts Inactivated or Closed
@@ -214,13 +214,25 @@ INSERT INTO clients
 VALUES (default,"Client","Test","client.test@acme.com");
 
 INSERT INTO accounts
-VALUES (default,20,'us','0000000001','ACTIVE');
+VALUES (default,13,'us','0000000001','ACTIVE');
 INSERT INTO accounts
-VALUES (default,20,'us','0000000002','ACTIVE');
+VALUES (default,13,'us','0000000002','ACTIVE');
 INSERT INTO accounts
-VALUES (default,20,'us','0000000003','INACTIVE');
+VALUES (default,13,'us','0000000003','INACTIVE');
 INSERT INTO accounts
-VALUES (default,20,'us','0000000004','CLOSED');
+VALUES (default,13,'us','0000000004','CLOSED');
 
-# UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 20;
-# UPDATE accounts SET status = 'CLOSED' WHERE client_id = 20;
+UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 13;
+UPDATE accounts SET status = 'CLOSED' WHERE client_id = 13;
+
+# Client
+
+INSERT INTO clients
+VALUES (default,"Client","More Test","client.moretest@acme.com");
+
+INSERT INTO accounts
+VALUES (default,14,'us','0000000001','ACTIVE');
+INSERT INTO accounts
+VALUES (default,14,'us','0000000002','INACTIVE');
+INSERT INTO accounts
+VALUES (default,14,'us','0000000003','CLOSED');
