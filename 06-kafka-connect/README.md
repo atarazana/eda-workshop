@@ -9,7 +9,10 @@ oc apply -f eda-kafka-connect-cluster-is.yaml
 It is needed because the KafkaConnect cluster will be built adding the Debezium Connectors
 using the build capabilities of Red Hat AMQ Streams.
 
+To deploy Kafka Connect cluster exposing metrics:
+
 ```shell script
+❯ oc apply -f configmap/
 ❯ oc apply -f eda-kafka-connect.yaml 
 ```
 
@@ -67,15 +70,19 @@ oc apply -f connectors/
 
 To list the current KafkaConnectors:
 
+```shell script
 ❯ oc get kafkaconnectors
 NAME                    CLUSTER             CONNECTOR CLASS                                           MAX TASKS   READY
 file-source-connector   eda-kafka-connect   org.apache.kafka.connect.file.FileStreamSourceConnector   1           True
+```
 
 If this KafkaConnector run successfully a new KafkaTopic should be created
 
+```shell script
 ❯ oc get kt
 NAME                                CLUSTER     PARTITIONS   REPLICATION FACTOR   READY
 samples.connect.file-source-topic   event-bus   1            3                    True
+```
 
 ## Deploying Debezium Connectors
 
@@ -107,10 +114,10 @@ dbserver01.inventory.geom                                                       
 dbserver01.inventory.orders                                                       event-bus   1            3                    True
 dbserver01.inventory.products                                                     event-bus   1            3                    True
 dbserver01.inventory.products-on-hand---6a8b200cccca29a0d62d59204506736ec1b3197   event-bus   1            3                    True
-dbserver.enterprise.accounts                                                      event-bus   1            3                    True
-dbserver.enterprise.clients                                                       event-bus   1            3                    True
-dbserver.enterprise.movements                                                     event-bus   1            3                    True
-dbserver.enterprise.regions                                                       event-bus   1            3                    True
+dbserver02.enterprise.accounts                                                    event-bus   1            3                    True
+dbserver02.enterprise.clients                                                     event-bus   1            3                    True
+dbserver02.enterprise.movement                                                    event-bus   1            3                    True
+dbserver02.enterprise.regions                                                     event-bus   1            3                    True
 schema-changes.enterprise                                                         event-bus   1            3                    True
 schema-changes.inventory                                                          event-bus   1            3                    True
 ```

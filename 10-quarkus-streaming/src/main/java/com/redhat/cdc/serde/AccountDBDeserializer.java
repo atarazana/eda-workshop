@@ -33,6 +33,7 @@ public class AccountDBDeserializer extends JsonbDeserializer<AccountDB> {
         if ("c".equals(op) || "u".equals(op)) {
             accountDB.id = payload.getJsonObject("after").getInt("id");
             accountDB.client_id = payload.getJsonObject("after").getInt("client_id");
+            accountDB.region_id = payload.getJsonObject("after").getInt("region_id");
             accountDB.region_code = payload.getJsonObject("after").getString("region_code");
             accountDB.sequence = payload.getJsonObject("after").getString("sequence");
             accountDB.status = payload.getJsonObject("after").getString("status");

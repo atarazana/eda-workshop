@@ -70,12 +70,12 @@ spec:
   livenessProbe:
     initialDelaySeconds: 30
     timeoutSeconds: 5
-  #metricsConfig: 
-  #  type: jmxPrometheusExporter
-  #  valueFrom:
-  #    configMapKeyRef:
-  #      name: my-config-map
-  #      key: my-key
+  metricsConfig:
+    type: jmxPrometheusExporter
+    valueFrom:
+      configMapKeyRef:
+        name: connect-metrics
+        key: metrics-config.yml
   #jvmOptions: 
   #  "-Xmx": "1g"
   #  "-Xms": "1g"

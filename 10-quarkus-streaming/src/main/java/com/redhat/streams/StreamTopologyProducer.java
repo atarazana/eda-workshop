@@ -2,6 +2,7 @@ package com.redhat.streams;
 
 import com.redhat.streams.model.Account;
 import com.redhat.streams.model.AccountAndClient;
+import com.redhat.streams.model.AccountAndRegion;
 import com.redhat.streams.model.AccountWithMovements;
 import com.redhat.streams.model.Client;
 import com.redhat.streams.model.ClientWithAccounts;
@@ -78,12 +79,8 @@ public class StreamTopologyProducer {
         JsonbSerde<MovementAndAccount> movementAndAccountSerde = new JsonbSerde<>(MovementAndAccount.class);
         JsonbSerde<Integer> accountWithMovementsKeySerde = new JsonbSerde<>(Integer.class);
         JsonbSerde<AccountWithMovements> accountWithMovementsSerde = new JsonbSerde<>(AccountWithMovements.class);
-
-        // KTable to consume messages from Data Account Topic
-        KTable<Integer, Account> accounts = builder.table(
-                DATA_ACCOUNTS_TOPIC,
-                Consumed.with(accountKeySerde, accountSerde)
-        );
+        JsonbSerde<AccountAndRegion> accountAndRegionSerde = new JsonbSerde<>(AccountAndRegion.class);
+        JsonbSerde<RegionWithAccounts> regionWithAccountsSerde = new JsonbSerde<>(RegionWithAccounts.class);
 
         // KTable to consume messages from Data Client Topic
         KTable<Integer, Client> clients = builder.table(
@@ -91,23 +88,21 @@ public class StreamTopologyProducer {
                 Consumed.with(clientsKeySerde, clientsSerde)
         );
 
-        // KTable to consume messages from Data Movement Topic
-        KTable<Integer, Movement> movements = builder.table(
-                DATA_MOVEMENTS_TOPIC,
-                Consumed.with(movementsKeySerde, movementsSerde)
+        // KTable to consume messages from Data Account Topic
+        KTable<Integer, Account> accounts = builder.table(
+                DATA_ACCOUNTS_TOPIC,
+                Consumed.with(accountKeySerde, accountSerde)
         );
 
-//        // KTable to consume messages from Data Movement Topic
-//        KTable<Integer, Region> regions = builder.table(
-//                DATA_REGIONS_TOPIC,
-//                Consumed.with(regionsKeySerde, regionsSerde)
-//        );
-//
-//        // KTable to consume messages from Data Movement Topic
-//        KTable<Integer, AccountWithMovements> domainAccounts = builder.table(
-//                EDA_DOMAIN_ACCOUNTS_TOPIC,
-//                Consumed.with(accountWithMovementsKeySerde, accountWithMovementsSerde)
-//        );
+        // KTable to consume messages from Data Region Topic
+        KTable<Integer, Region> regions = builder.table(
+                DATA_REGIONS_TOPIC,
+                Consumed.with(regionsKeySerde, regionsSerde)
+        );
+
+        /*
+         * Aggregation data of Clients and Accounts
+         */
 
         // KTable to join data from Clients and Accounts KTables
         // It creates the Domain Client Model
@@ -136,6 +131,16 @@ public class StreamTopologyProducer {
                         Produced.with(Serdes.Integer(), clientWithAccountsSerde)
                 );
 
+        /*
+         * Aggregation data of Accounts and Movements
+         */
+
+        // KTable to consume messages from Data Movement Topic
+        KTable<Integer, Movement> movements = builder.table(
+                DATA_MOVEMENTS_TOPIC,
+                Consumed.with(movementsKeySerde, movementsSerde)
+        );
+
         // KTable to join data from Accounts and Movements KTables
         // It creates the Domain Account Model
         KTable<Integer, AccountWithMovements> accountWithMovementsKTable = movements.join(
@@ -163,6 +168,70 @@ public class StreamTopologyProducer {
                         Produced.with(Serdes.Integer(), accountWithMovementsSerde)
                 );
 
+        /*
+         * Aggregation data from Regions and Accounts
+         */
+
+        // KTable to consume messages from Data Movement Topic
+        KTable<Integer, AccountWithMovements> accountsWithMovements = builder.table(
+                EDA_DOMAIN_ACCOUNTS_TOPIC,
+                Consumed.with(new Serdes.IntegerSerde(), accountWithMovementsSerde)
+        );
+
+        // KTable to join data from Regions and Accounts with Movements KTables
+        KTable<Integer, RegionWithAccounts> regionWithAccountsKTable = accountsWithMovements.join(
+                regions,
+                account -> account.account.region_id,
+                AccountAndRegion::new,
+                Materialized.with(Serdes.Integer(), accountAndRegionSerde)
+        )
+                .groupBy(
+                        (accountId, accountAndRegion) -> KeyValue.pair(accountAndRegion.region.id, accountAndRegion),
+                        Grouped.with(Serdes.Integer(), accountAndRegionSerde)
+                )
+                .aggregate(
+                        RegionWithAccounts::new,
+                        (regionId, accountAndRegion, aggregate) -> aggregate.addAccount(accountAndRegion),
+                        (regionId, accountAndRegion, aggregate) -> aggregate.removeAccount(accountAndRegion),
+                        Materialized.with(Serdes.Integer(), regionWithAccountsSerde)
+                );
+
+        // Publish Domain Region Data into Domain Topic
+        regionWithAccountsKTable
+                .toStream()
+                .to(
+                        EDA_DOMAIN_REGIONS_TOPIC,
+                        Produced.with(Serdes.Integer(), regionWithAccountsSerde)
+                );
+
+        // Original code joining data.regions and data.accounts (worked)
+//        // KTable to join data from Regions and Accounts KTables
+//        KTable<Integer, RegionWithAccounts> regionWithAccountsKTable = accounts.join(
+//                regions,
+//                account -> account.region_id,
+//                AccountAndRegion::new,
+//                Materialized.with(Serdes.Integer(), accountAndRegionSerde)
+//        )
+//                .groupBy(
+//                        (accountId, accountAndRegion) -> KeyValue.pair(accountAndRegion.region.id, accountAndRegion),
+//                        Grouped.with(Serdes.Integer(), accountAndRegionSerde)
+//                )
+//                .aggregate(
+//                        RegionWithAccounts::new,
+//                        (regionId, accountAndRegion, aggregate) -> aggregate.addAccount(accountAndRegion),
+//                        (regionId, accountAndRegion, aggregate) -> aggregate.removeAccount(accountAndRegion),
+//                        Materialized.with(Serdes.Integer(), regionWithAccountsSerde)
+//                );
+//
+//        // Publish Domain Region Data into Domain Topic
+//        regionWithAccountsKTable
+//                .toStream()
+//                .to(
+//                        EDA_DOMAIN_REGIONS_TOPIC,
+//                        Produced.with(Serdes.Integer(), regionWithAccountsSerde)
+//                );
+
+        // Build and return Kafka Streams Topology
         return builder.build();
     }
 
