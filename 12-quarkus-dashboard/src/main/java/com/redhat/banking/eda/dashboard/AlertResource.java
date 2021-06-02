@@ -1,5 +1,10 @@
 package com.redhat.banking.eda.dashboard;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,14 +14,47 @@ import javax.ws.rs.core.MediaType;
 import com.redhat.banking.eda.dashboard.valueobjects.Alert;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.infinispan.client.hotrod.RemoteCache;
+import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.jboss.resteasy.annotations.SseElementType;
 import org.reactivestreams.Publisher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.quarkus.infinispan.client.Remote;
+
 @Path("/alerts")
 public class AlertResource {
+    private static final Logger LOG = LoggerFactory.getLogger(AlertResource.class);
 
     @Inject
     @Channel("alerts-stream") Publisher<Alert> alerts; 
+
+    @Inject 
+    @Remote("alerts")
+    RemoteCache<String, Alert> cache;
+
+    RemoteCacheManager remoteCacheManager;
+    
+    @Inject 
+    AlertResource(RemoteCacheManager remoteCacheManager) {
+        this.remoteCacheManager = remoteCacheManager;
+    }
+
+    @GET
+    public List<Alert> allAlerts() { 
+        LOG.info("allAlerts");
+
+        ArrayList<Alert> alerts = new ArrayList<Alert>();
+        for (Map.Entry<String, Alert> alert : cache.entrySet()) {
+            alerts.add(alert.getValue());
+        }
+
+        LOG.info("size = " + cache.keySet().size());
+
+        return alerts;  
+    }
 
     @GET
     @Path("/stream")

@@ -28,7 +28,7 @@ public class AlertGenerator {
 
     @Outgoing("generated-alerts")
     public Multi<Alert> generate() {
-        return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(20))
                 .onOverflow().drop()
                 .map(tick -> {
                     UUID uuid = UUID.randomUUID();

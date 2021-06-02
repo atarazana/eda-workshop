@@ -18,8 +18,8 @@ module.exports = merge(common('development'), {
     overlay: true,
     open: true,
     proxy: {
-      '/alerts/stream': 'http://localhost:8080',
-      '/aggregate-metrics/stream': 'http://localhost:8080',
+      '/alerts': 'http://localhost:8080',
+      '/aggregate-metrics': 'http://localhost:8080',
       '/particles': 'http://localhost:8080'
     }
   },

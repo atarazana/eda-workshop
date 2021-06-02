@@ -17,11 +17,7 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
  */
 @ApplicationScoped
 public class AggregateMetricGenerator {
-    private static String NAME = "Balance";
-    private static String UNIT = "EUR";
-    private static String QUALIFIER = "SUM";
-    private static String FROM = "AccountBalance";
-    private static String GROUP_BY_CLAUSE = "Department";
+    private static String[] regions = {"Finland", "Russia", "Latvia", "Lithuania", "Poland"};
 
     private Random random = new Random();
 
@@ -30,11 +26,65 @@ public class AggregateMetricGenerator {
         return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
                 .onOverflow().drop()
                 .map(tick -> {
-                    AggregateMetric metric = new AggregateMetric(
-                        NAME, 
-                        random.nextInt(1000) + random.nextDouble(), UNIT, QUALIFIER, FROM, GROUP_BY_CLAUSE, Instant.now());
+                    AggregateMetric metric = null;
+                    int variant = random.nextInt(4);
+                    switch (variant) {
+                        case 0:  metric = generateBalanceByRegion(); break;
+                        case 1:  metric = generateAccountsClosedByRegion(); break;
+                        case 2:  metric = generateAccountsInactiveByRegion(); break;
+                        case 3:  metric = generateAccountsActiveByRegion(); break;
+                    }
                     return metric;
                 });
     }
 
+    public AggregateMetric generateBalanceByRegion() {
+        String region = regions[random.nextInt(regions.length)];
+        AggregateMetric metric = new AggregateMetric(
+                        "Balance by Region", 
+                        random.nextInt(1000) + random.nextDouble(), 
+                        "EUR", 
+                        "COUNT", 
+                        "Region(" + region + ")", 
+                        region, Instant.now());
+        return metric;
+    }
+
+    public AggregateMetric generateAccountsClosedByRegion() {
+        String region = regions[random.nextInt(regions.length)];
+        AggregateMetric metric = new AggregateMetric(
+            "Accounts Closed by Region", 
+            random.nextInt(10) + 0.0, 
+            "Accounts", 
+            "COUNT", 
+            "Region(" + region + ")", 
+            region, Instant.now());
+        return metric;
+    }
+
+    public AggregateMetric generateAccountsInactiveByRegion() {
+        String region = regions[random.nextInt(regions.length)];
+        AggregateMetric metric = new AggregateMetric(
+            "Accounts Inactive by Region", 
+            random.nextInt(10) + 0.0, 
+            "Accounts", 
+            "COUNT", 
+            "Region(" + region + ")", 
+            region, Instant.now());
+        return metric;
+    }
+
+    public AggregateMetric generateAccountsActiveByRegion() {
+        String region = regions[random.nextInt(regions.length)];
+        AggregateMetric metric = new AggregateMetric(
+            "Accounts Active by Region", 
+            random.nextInt(10) + 0.0, 
+            "Accounts", 
+            "COUNT", 
+            "Region(" + region + ")", 
+            region, Instant.now());
+        return metric;
+    }
 }
+
+

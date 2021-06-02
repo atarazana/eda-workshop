@@ -2,6 +2,9 @@ package com.redhat.banking.eda.dashboard.valueobjects;
 
 import java.time.Instant;
 
+import org.infinispan.protostream.annotations.ProtoFactory;
+import org.infinispan.protostream.annotations.ProtoField;
+
 public class AggregateMetric {
     private final String name;
     private final Double value;
@@ -11,6 +14,7 @@ public class AggregateMetric {
     private final String groupByClause;
     private final Instant timestamp;
     
+    @ProtoFactory
     public AggregateMetric(String name, Double value, String unit, String qualifier, String from, String groupByClause,
             Instant timestamp) {
         this.name = name;
@@ -22,30 +26,37 @@ public class AggregateMetric {
         this.timestamp = timestamp;
     }
 
+    @ProtoField(number = 1)
     public String getName() {
         return name;
     }
 
+    @ProtoField(number = 2)
     public Double getValue() {
         return value;
     }
 
+    @ProtoField(number = 3)
     public String getUnit() {
         return unit;
     }
 
+    @ProtoField(number = 4)
     public String getQualifier() {
         return qualifier;
     }
 
+    @ProtoField(number = 5)
     public String getFrom() {
         return from;
     }
 
+    @ProtoField(number = 6)
     public String getGroupByClause() {
         return groupByClause;
     }
 
+    @ProtoField(number = 7, defaultValue = "0")
     public Instant getTimestamp() {
         return timestamp;
     }

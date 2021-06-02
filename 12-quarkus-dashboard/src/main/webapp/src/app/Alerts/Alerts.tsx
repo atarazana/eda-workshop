@@ -32,38 +32,34 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
 
         let eventSource = new EventSource(EVENT_SOURCE_URL)
         eventSource.onmessage = e => {
-            let alert = JSON.parse(e.data) as IAlert;
-
-            console.log(alert);
-            
-            // const alertComponent = <Alert title="Default timeout Alert" timeout={timeout} actionLinks={
-            //     <React.Fragment>
-            //       <AlertActionLink>View details</AlertActionLink>
-            //       <AlertActionLink>Ignore</AlertActionLink>
-            //     </React.Fragment>
-            //   }>
-            //        This alert will dismiss after {`${timeout / 1000} seconds`}
-            //     </Alert>
-
-            addAlert(alert);   
+            const alert = JSON.parse(e.data) as IAlert;
+            // addAlert(alert);   
 
             const row: string[] = [alert.id, alert.name, alert.definition, alert.expression, alert.duration, alert.timestamp];
             addRow(row);
         }
+
+        fetch('/alerts')
+        .then(res => res.json())
+        .then( data => {
+            //setAlerts(data);
+            setRows(data.map((element: IAlert) => [element.id, element.name, element.definition, element.expression, element.duration, element.timestamp]));
+        })
+        .catch(console.log)
     }, []);
 
-    const addAlert = (alert: IAlert) => setAlerts(prevAlerts => [...prevAlerts, alert])
+    // const addAlert = (alert: IAlert) => setAlerts(prevAlerts => [...prevAlerts, alert])
     const addRow = (row: string[]) => setRows(prevRows => [...prevRows, row])
     
-    const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
-        return prevAlerts.filter(element => element.id != alert.id);
-    })
+    // const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
+    //     return prevAlerts.filter(element => element.id != alert.id);
+    // })
 
     return <PageSection>
             <React.Fragment>
                 <ToggleGroup aria-label="Default with single selectable">
                 <ToggleGroupItem
-                    text={"Default " + alerts.length}
+                    text={"Default " + rows.length}
                     buttonId="default"
                 />
                 
@@ -78,23 +74,6 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
                 <TableHeader />
                 <TableBody />
                 </Table>
-                <AlertGroup isToast>
-                    {alerts.map((alert) => (
-                        <Alert
-                        isLiveRegion
-                        variant={alert.variant}
-                        title={alert.name}
-                        timeout
-                        actionClose={
-                            <AlertActionCloseButton
-                            title={alert.name}
-                            variantLabel={`${alert.variant} alert`}
-                            onClose={() => removeAlert(alert)}
-                            />
-                        }
-                        key={alert.id} />
-                    ))}
-                </AlertGroup>
             </React.Fragment>
             </PageSection>
     ;

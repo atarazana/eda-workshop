@@ -10,6 +10,7 @@ import { useDocumentTitle } from '@app/utils/useDocumentTitle';
 import { LastLocationProvider, useLastLocation } from 'react-router-last-location';
 
 import { Alerts } from '@app/Alerts/Alerts';
+import { AggregateMetrics } from '@app/AggregateMetrics/AggregateMetrics';
 
 let routeFocusTimer: number;
 export interface IAppRoute {
@@ -31,20 +32,29 @@ export interface IAppRouteGroup {
 
 export type AppRouteConfig = IAppRoute | IAppRouteGroup;
 
+const APP_NAME = "Bank in a pod"
+
 const routes: AppRouteConfig[] = [
   {
     component: Dashboard,
     exact: true,
     label: 'Dashboard',
     path: '/',
-    title: 'PatternFly Seed | Main Dashboard',
+    title: `${APP_NAME} | Main Dashboard`,
   },
   {
     component: Alerts,
     exact: true,
     label: 'Alerts',
     path: '/alerts',
-    title: 'Tests | Alerts',
+    title: `${APP_NAME} | Alerts`,
+  },
+  {
+    component: AggregateMetrics,
+    exact: true,
+    label: 'Aggregate Metrics',
+    path: '/aggregate-metrics',
+    title: `${APP_NAME} | Aggregate Metrics`,
   },
   {
     component: Support,
@@ -52,7 +62,7 @@ const routes: AppRouteConfig[] = [
     isAsync: true,
     label: 'Support',
     path: '/support',
-    title: 'PatternFly Seed | Support Page',
+    title: `${APP_NAME} | Support Page`,
   },
   {
     label: 'Settings',
@@ -62,14 +72,14 @@ const routes: AppRouteConfig[] = [
         exact: true,
         label: 'General',
         path: '/settings/general',
-        title: 'PatternFly Seed | General Settings',
+        title: `${APP_NAME} | General Settings`,
       },
       {
         component: ProfileSettings,
         exact: true,
         label: 'Profile',
         path: '/settings/profile',
-        title: 'PatternFly Seed | Profile Settings',
+        title: `${APP_NAME} | Profile Settings`,
       },
     ],
   },
