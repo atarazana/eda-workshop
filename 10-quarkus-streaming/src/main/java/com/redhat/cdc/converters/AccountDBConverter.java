@@ -44,9 +44,10 @@ public class AccountDBConverter {
         }
 
         if ("r".equals(accountDB.op)) {
-            LOG.info("{} Account from database {}-{}-{} with status {}",
+            LOG.info("{} Account from database {}-{}-{}-{} with status {}",
                     "r".equals(accountDB.op) ? "Read" : "Deleted",
-                    accountDB.region_code, accountDB.client_id, accountDB.sequence, accountDB.status);
+                    accountDB.region_id, accountDB.region_code, accountDB.client_id, accountDB.sequence,
+                    accountDB.status);
 
             return null;
         }
@@ -62,9 +63,10 @@ public class AccountDBConverter {
 
             accountDBEmitter.send(Message.of(accountDB).addMetadata(metadata));
 
-            LOG.info("{} Account from database {}-{}-{} with status {}",
+            LOG.info("{} Account from database {}-{}-{}-{} with status {}",
                     "c".equals(op) ? "Created" : "Updated",
-                    accountDB.region_code, accountDB.client_id, accountDB.sequence, accountDB.status);
+                    accountDB.region_id, accountDB.region_code, accountDB.client_id, accountDB.sequence,
+                    accountDB.status);
 
             if ("INACTIVE".equals(accountDB.status)) {
                 LOG.info("Account with status inactive", accountDB.sequence);

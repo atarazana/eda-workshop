@@ -14,21 +14,72 @@ public class RegionWithAccounts {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionWithAccounts.class);
 
     public Region region;
+    public List<AccountWithMovements> accounts = new ArrayList<>();
     public int balanceRegion;
+    public int accountsActive;
+    public int accountsInactive;
+    public int accountsClosed;
 
     public RegionWithAccounts addAccount(AccountAndRegion accountAndRegion) {
-        LOGGER.info("Adding Account Balance {} into Region {}", accountAndRegion.account.accountBalance, region.code);
+        LOGGER.info("Adding into Region {} the Account {}", accountAndRegion.region, accountAndRegion.account);
 
         region = accountAndRegion.region;
-        balanceRegion += accountAndRegion.account.accountBalance;
+        accounts.add(accountAndRegion.account);
+
+        // TODO Centralize in one place
+
+        for (AccountWithMovements accountWithMovement : accounts) {
+            // Updating Region Account Balance
+            //balanceRegion += accountAndRegion.account.accountBalance;
+            balanceRegion += accountWithMovement.accountBalance;
+            //switch (accountAndRegion.account.status) {
+            //switch (accountAndRegion.account.account.status) {
+            switch (accountWithMovement.account.status) {
+                case "ACTIVE":
+                    accountsActive++;
+                    break;
+
+                case "INACTIVE":
+                    accountsInactive++;
+                    break;
+
+                case "CLOSED":
+                    accountsClosed++;
+                    break;
+            }
+        }
 
         return this;
     }
 
     public RegionWithAccounts removeAccount(AccountAndRegion accountAndRegion) {
-        LOGGER.info("Removing Account Balance {} from Region {}", accountAndRegion.account.accountBalance, region.code);
+        LOGGER.info("Removing from Region {} the Account {}", accountAndRegion.region, accountAndRegion.account);
 
-        balanceRegion -= accountAndRegion.account.accountBalance;
+        Iterator<AccountWithMovements> it = accounts.iterator();
+        while (it.hasNext()) {
+            AccountWithMovements a = it.next();
+            if (a.account.id == accountAndRegion.account.account.id) {
+                it.remove();
+                // Updating Region Account Balance
+                balanceRegion -= accountAndRegion.account.accountBalance;
+                break;
+            }
+        }
+
+        //switch (accountAndRegion.account.status) {
+        switch (accountAndRegion.account.account.status) {
+            case "ACTIVE":
+                accountsActive--;
+                break;
+
+            case "INACTIVE":
+                accountsInactive--;
+                break;
+
+            case "CLOSED":
+                accountsClosed--;
+                break;
+        }
 
         return this;
     }
@@ -37,7 +88,11 @@ public class RegionWithAccounts {
     public String toString() {
         final StringBuffer sb = new StringBuffer("RegionWithAccounts{");
         sb.append("region=").append(region);
+        sb.append(", accounts=").append(accounts);
         sb.append(", balanceRegion=").append(balanceRegion);
+        sb.append(", accountsActive=").append(accountsActive);
+        sb.append(", accountsInactive=").append(accountsInactive);
+        sb.append(", accountsClosed=").append(accountsClosed);
         sb.append('}');
         return sb.toString();
     }
