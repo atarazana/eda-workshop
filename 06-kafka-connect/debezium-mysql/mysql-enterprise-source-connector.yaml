@@ -13,7 +13,7 @@ spec:
     database.user: debezium
     database.password: dbz
     database.server.id: 284054
-    database.server.name: dbserver
+    database.server.name: dbserver02
     database.include.list: enterprise
     database.history.kafka.bootstrap.servers: event-bus-kafka-bootstrap:9092  
     database.history.kafka.topic: schema-changes.enterprise
