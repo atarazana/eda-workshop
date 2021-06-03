@@ -5,9 +5,9 @@ metadata:
   name: datagrid
   namespace: openshift-operators
 spec:
-  channel: 8.1.x
+  channel: 8.2.x
   installPlanApproval: Automatic
   name: datagrid
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: datagrid-operator.v8.1.7
+  startingCSV: datagrid-operator.v8.2.0
