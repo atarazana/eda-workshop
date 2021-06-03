@@ -39,10 +39,6 @@ Follow [the instructions](./06-kafka-connect/README.md)
 
 Follow [the instructions](./07-datagrid/README.md)
 
-## Deploy DataGrid
-
-Follow [the instructions](./07-datagrid/README.md)
-
 ## Deploy Quarkus Streaming Application
 
 Follow [the instructions](./10-quarkus-streaming/README.md)
