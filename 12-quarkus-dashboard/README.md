@@ -45,6 +45,18 @@ You can then execute your native executable with: `./target/dashboard-1.0-SNAPSH
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
 
+## Deploying into OpenShift
+
+To deploy the application using the Source-to-Image capabilities of OpenShift:
+
+```shell script
+./mvnw package -DskipTests=true -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true -Dquarkus.openshift.route.expose=true
+```
+
+References:
+
+* [SSLHandshakeException when deploying Quarkus application to OpenShift using S2I build](https://access.redhat.com/solutions/5397941)
+
 ## Related guides
 
 - RESTEasy JAX-RS ([guide](https://quarkus.io/guides/rest-json)): REST endpoint framework implementing JAX-RS and more
