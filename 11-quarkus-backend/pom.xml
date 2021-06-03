@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.redhat.eda</groupId>
-    <artifactId>quarkus-backend</artifactId>
+    <groupId>com.redhat.banking.eda</groupId>
+    <artifactId>backend</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
@@ -22,7 +22,7 @@
         <avro.version>1.10.1</avro.version>
         <!-- Apicurio Registry -->
         <apicurio.version>1.3.2.Final</apicurio.version>
-        <apicurio.registry.url>http://eda-registry.eda-workshop.apps.labs.sandbox1862.opentlc.com/api</apicurio.registry.url>
+        <apicurio.registry.url>http://eda-registry.eda-workshop.apps.labs.sandbox1754.opentlc.com/api</apicurio.registry.url>
     </properties>
     <dependencyManagement>
         <dependencies>

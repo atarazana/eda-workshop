@@ -1,4 +1,4 @@
-package com.redhat.eda.listeners;
+package com.redhat.banking.eda.backend.listeners;
 
 import com.redhat.eda.model.events.AggregateMetric;
 import io.smallrye.reactive.messaging.kafka.IncomingKafkaRecord;

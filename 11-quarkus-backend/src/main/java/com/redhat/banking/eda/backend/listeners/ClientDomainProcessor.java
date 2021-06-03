@@ -1,12 +1,10 @@
-package com.redhat.eda.listeners;
+package com.redhat.banking.eda.backend.listeners;
 
 import com.redhat.eda.model.events.AggregateMetric;
-import io.quarkus.infinispan.client.Remote;
 import io.smallrye.reactive.messaging.kafka.IncomingKafkaRecord;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.infinispan.client.hotrod.RemoteCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

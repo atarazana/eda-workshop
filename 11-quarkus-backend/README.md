@@ -1,5 +1,8 @@
 # quarkus-streaming project
 
+This project simulates the backend applications consuming events, proccesing data
+and generating new events to other elements of the architecture..
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
