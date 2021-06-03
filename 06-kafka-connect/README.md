@@ -3,7 +3,7 @@
 To deploy Kafka Connect requires create a initial `ImageStream` of the container image:
 
 ```shell script
-oc apply -f eda-kafka-connect-cluster-is.yaml 
+oc apply -f eda-kafka-connect-is.yaml 
 ```
 
 It is needed because the KafkaConnect cluster will be built adding the Debezium Connectors
@@ -95,7 +95,7 @@ oc apply -f debezium-mysql/
 To check the status of the current `KafkaConnectors` deployed:
 
 ```shell script
-❯ oc get kafkaconnector 
+❯ oc get kafkaconnector
 NAME                                CLUSTER             CONNECTOR CLASS                                           MAX TASKS   READY
 file-source-connector               eda-kafka-connect   org.apache.kafka.connect.file.FileStreamSourceConnector   1           True
 mysql-enterprise-source-connector   eda-kafka-connect   io.debezium.connector.mysql.MySqlConnector                1           True
