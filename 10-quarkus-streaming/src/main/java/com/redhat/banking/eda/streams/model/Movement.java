@@ -1,4 +1,4 @@
-package com.redhat.streams.model;
+package com.redhat.banking.eda.streams.model;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

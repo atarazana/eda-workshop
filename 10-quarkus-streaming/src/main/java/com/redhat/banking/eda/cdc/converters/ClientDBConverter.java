@@ -1,6 +1,6 @@
-package com.redhat.cdc.converters;
+package com.redhat.banking.eda.cdc.converters;
 
-import com.redhat.cdc.model.ClientDB;
+import com.redhat.banking.eda.cdc.model.ClientDB;
 import com.redhat.eda.model.events.Alert;
 import com.redhat.eda.model.events.AlertVariant;
 import io.smallrye.reactive.messaging.kafka.OutgoingKafkaRecordMetadata;
@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 @ApplicationScoped

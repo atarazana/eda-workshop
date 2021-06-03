@@ -1,6 +1,6 @@
-package com.redhat.cdc.serde;
+package com.redhat.banking.eda.cdc.serde;
 
-import com.redhat.cdc.model.ClientDB;
+import com.redhat.banking.eda.cdc.model.ClientDB;
 import io.quarkus.kafka.client.serialization.JsonbDeserializer;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.slf4j.Logger;

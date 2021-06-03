@@ -1,15 +1,15 @@
-package com.redhat.streams;
+package com.redhat.banking.eda.streams;
 
-import com.redhat.streams.model.Account;
-import com.redhat.streams.model.AccountAndClient;
-import com.redhat.streams.model.AccountAndRegion;
-import com.redhat.streams.model.AccountWithMovements;
-import com.redhat.streams.model.Client;
-import com.redhat.streams.model.ClientWithAccounts;
-import com.redhat.streams.model.Movement;
-import com.redhat.streams.model.MovementAndAccount;
-import com.redhat.streams.model.Region;
-import com.redhat.streams.model.RegionWithAccounts;
+import com.redhat.banking.eda.streams.model.Account;
+import com.redhat.banking.eda.streams.model.AccountAndClient;
+import com.redhat.banking.eda.streams.model.AccountAndRegion;
+import com.redhat.banking.eda.streams.model.AccountWithMovements;
+import com.redhat.banking.eda.streams.model.Client;
+import com.redhat.banking.eda.streams.model.ClientWithAccounts;
+import com.redhat.banking.eda.streams.model.Movement;
+import com.redhat.banking.eda.streams.model.MovementAndAccount;
+import com.redhat.banking.eda.streams.model.Region;
+import com.redhat.banking.eda.streams.model.RegionWithAccounts;
 import io.quarkus.kafka.client.serialization.JsonbSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;

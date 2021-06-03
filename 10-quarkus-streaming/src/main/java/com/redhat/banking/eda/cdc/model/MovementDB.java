@@ -1,4 +1,4 @@
-package com.redhat.cdc.model;
+package com.redhat.banking.eda.cdc.model;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

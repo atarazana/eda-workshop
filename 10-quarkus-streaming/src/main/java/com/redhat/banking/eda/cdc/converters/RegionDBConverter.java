@@ -1,6 +1,6 @@
-package com.redhat.cdc.converters;
+package com.redhat.banking.eda.cdc.converters;
 
-import com.redhat.cdc.model.RegionDB;
+import com.redhat.banking.eda.cdc.model.RegionDB;
 import io.smallrye.reactive.messaging.kafka.OutgoingKafkaRecordMetadata;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Channel;
