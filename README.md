@@ -35,10 +35,22 @@ Follow [the instructions](./05-service-registry/README.md)
 
 Follow [the instructions](./06-kafka-connect/README.md)
 
-## Deploy Quarkus Streaming Application
+## Deploy DataGrid
 
-Follow [the instructions](./10-quarkus-streaming/README.md)
+Follow [the instructions](./07-datagrid/README.md)
 
 ## Deploy DataGrid
 
 Follow [the instructions](./07-datagrid/README.md)
+
+## Deploy Quarkus Streaming Application
+
+Follow [the instructions](./10-quarkus-streaming/README.md)
+
+## Deploy Quarkus Backend Application
+
+Follow [the instructions](./11-quarkus-backend/README.md)
+
+## Deploy Quarkus Dashboard Application
+
+Follow [the instructions](./12-quarkus-dashboard/README.md)
