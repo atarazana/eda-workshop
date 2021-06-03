@@ -35,11 +35,13 @@ CREATE TABLE clients (
 CREATE TABLE accounts (
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   client_id INTEGER NOT NULL,
+  region_id INTEGER NOT NULL,
   region_code VARCHAR(2) NOT NULL,
   sequence VARCHAR(10) NOT NULL,
   status enum('ACTIVE','INACTIVE','CLOSED') NOT NULL,
   FOREIGN KEY account_client (client_id) REFERENCES clients(id),
-  FOREIGN KEY account_region (region_code) REFERENCES regions(code)
+  FOREIGN KEY account_region_id (region_id) REFERENCES regions(id),
+  FOREIGN KEY account_region_code (region_code) REFERENCES regions(code)
 ) AUTO_INCREMENT = 10;
 
 # Create some very simple movements
