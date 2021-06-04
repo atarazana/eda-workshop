@@ -43,6 +43,10 @@ Follow [the instructions](./07-datagrid/README.md)
 
 Follow [the instructions](./08-quarkus-business-app/README.md)
 
+## Publish Schemas API
+
+Follow [the instructions](./09-event-schemas-api/README.md)
+
 ## Deploy Quarkus Streaming Application
 
 Follow [the instructions](./10-quarkus-streaming/README.md)
