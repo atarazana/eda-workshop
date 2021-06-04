@@ -114,6 +114,12 @@
             </exclusions>
         </dependency>
 
+        <!-- Health Check -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
+
         <!-- OpenShift Quarkus Extension -->
         <dependency>
             <groupId>io.quarkus</groupId>

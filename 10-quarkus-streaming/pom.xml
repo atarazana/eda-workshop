@@ -76,6 +76,12 @@
             <artifactId>quarkus-avro</artifactId>
         </dependency>
 
+        <!-- Health Check -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
+
         <!-- OpenShift Extensions -->
         <dependency>
             <groupId>io.quarkus</groupId>
