@@ -67,10 +67,6 @@ To register the schemas in Service Registry execute:
 ❯ ./mvnw generate-sources -Papicurio -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/api
 ```
 
-
-
-$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')
-
 ## Provided examples
 
 ### RESTEasy JAX-RS example

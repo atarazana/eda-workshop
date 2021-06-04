@@ -1,0 +1,28 @@
+{
+  "namespace": "com.redhat.banking.eda.model.events.clients",
+  "name": "ClientAccountsInactivated",
+  "type": "record",
+  "doc": "Client with all accounts inactivated.",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "doc": "Client Id."
+    },
+    {
+      "name": "full_name",
+      "type": "string",
+      "doc": "Full name."
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "Email."
+    },
+    {
+      "name": "accountsInactivated",
+      "type": "int",
+      "doc": "Number of accounts inactivated."
+    }
+  ]
+}

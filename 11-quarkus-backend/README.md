@@ -54,6 +54,14 @@ You can then execute your native executable with: `./target/quarkus-streaming-1.
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
 
+## Getting Schemas from Service Registry
+
+To download the schemas in Service Registry execute:
+
+```shell script
+❯ ./mvnw generate-sources -Papicurio -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/api
+```
+
 ## Deploying into OpenShift
 
 To deploy the application using the Source-to-Image capabilities of OpenShift:
