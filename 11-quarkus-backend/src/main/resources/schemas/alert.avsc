@@ -1,0 +1,61 @@
+[
+  {
+    "namespace": "com.redhat.eda.model.events",
+    "name": "AlertVariant",
+    "type": "enum",
+    "symbols": [ "success", "danger", "warning", "info", "default" ],
+    "default": "default",
+    "doc": "Alert variants"
+  },
+  {
+    "namespace": "com.redhat.eda.model.events",
+    "name": "Alert",
+    "type": "record",
+    "doc": "Alert event with some important information.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "string",
+        "doc": "Alert Id."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "doc": "Name."
+      },
+      {
+        "name": "definition",
+        "type": "string",
+        "doc": "Definition."
+      },
+      {
+        "name": "variant",
+        "type": "com.redhat.eda.model.events.AlertVariant",
+        "doc": "Variant."
+      },
+      {
+        "name": "expression",
+        "type": "string",
+        "doc": "Alert expression."
+      },
+      {
+        "name": "duration",
+        "type": "string",
+        "doc": "Duration."
+      },
+      {
+        "name": "labels",
+        "type": { "type": "map", "values": "string" }
+      },
+      {
+        "name": "annotations",
+        "type": { "type": "map", "values": "string" }
+      },
+      {
+        "name": "timestamp",
+        "type": "string",
+        "doc": "Timestamp."
+      }
+    ]
+  }
+]

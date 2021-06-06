@@ -10,4 +10,4 @@ spec:
   name: serverless-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: serverless-operator.v1.7.2
+  startingCSV: serverless-operator.v1.14.1

@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.redhat.eda</groupId>
-    <artifactId>quarkus-streaming</artifactId>
+    <groupId>com.redhat.banking.eda</groupId>
+    <artifactId>data-streaming</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
@@ -13,16 +13,16 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <quarkus-plugin.version>1.13.4.Final</quarkus-plugin.version>
+        <quarkus-plugin.version>1.13.6.Final</quarkus-plugin.version>
         <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>1.13.4.Final</quarkus.platform.version>
+        <quarkus.platform.version>1.13.6.Final</quarkus.platform.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <!-- Avro -->
         <avro.version>1.10.1</avro.version>
         <!-- Apicurio Registry -->
         <apicurio.version>1.3.2.Final</apicurio.version>
-        <apicurio.registry.url>http://eda-registry.eda-workshop.apps.labs.sandbox1862.opentlc.com/api</apicurio.registry.url>
+        <apicurio.registry.url>http://APICURIO-SERVICE-REGISTRY:PORT/api</apicurio.registry.url>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -74,6 +74,12 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-avro</artifactId>
+        </dependency>
+
+        <!-- Health Check -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
 
         <!-- OpenShift Extensions -->
@@ -249,6 +255,41 @@
             <properties>
                 <quarkus.package.type>native</quarkus.package.type>
             </properties>
+        </profile>
+
+        <profile>
+            <id>apicurio</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.apicurio</groupId>
+                        <artifactId>apicurio-registry-maven-plugin</artifactId>
+                        <version>${apicurio.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>download</goal>
+                                </goals>
+                                <configuration>
+                                    <registryUrl>${apicurio.registry.url}</registryUrl>
+                                    <ids>
+                                        <param1>com.redhat.banking.eda.model.events.Alert</param1>
+                                        <param2>com.redhat.banking.eda.model.events.AggregateMetric</param2>
+                                        <param3>com.redhat.banking.eda.model.events.clients.ClientAccountsClosed</param3>
+                                        <param4>com.redhat.banking.eda.model.events.clients.ClientAccountsInactivated</param4>
+                                        <param5>com.redhat.banking.eda.model.events.accounts.AccountBalanceLOWReached</param5>
+                                        <param6>com.redhat.banking.eda.model.events.accounts.AccountBalanceNEGReached</param6>
+                                        <param7>com.redhat.banking.eda.model.events.accounts.AccountBalanceVIPReached</param7>
+                                    </ids>
+                                    <artifactExtension>.avsc</artifactExtension>
+                                    <outputDirectory>${project.basedir}/src/main/resources/schemas</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

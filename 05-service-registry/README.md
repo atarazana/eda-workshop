@@ -10,7 +10,7 @@ To check the current status of the Service Registry:
 
 ```shell script
 ❯ oc get apicurioregistry eda-registry -o yaml
-...
+# ...
 spec:
   configuration:
     kafkasql:
@@ -20,7 +20,7 @@ spec:
     ui:
       readOnly: false
   deployment:
-    host: eda-registry.eda-workshop.apps.labs.sandbox1862.opentlc.com
+    host: eda-registry.eda-workshop.apps.labs.sandbox1754.opentlc.com
     replicas: 1
 status:
   conditions:
@@ -30,7 +30,7 @@ status:
     status: "True"
     type: Ready
   info:
-    host: eda-registry.eda-workshop.apps.labs.sandbox1862.opentlc.com
+    host: eda-registry.eda-workshop.apps.labs.sandbox1754.opentlc.com
   managedResources:
   - kind: Deployment
     name: eda-registry-deployment
@@ -49,4 +49,11 @@ A new pod will be deployed:
 ❯ oc get pod | grep registry
 NAME                                       READY   STATUS    RESTARTS   AGE
 eda-registry-deployment-67c7895564-cbfvf   1/1     Running   0          10m
+```
+
+Service Registry is available outside OpenShift cluster with the next route over
+the `eda-registry-service` service:
+
+```shell script
+oc get route eda-registry-ingress-h7t7p -o jsonpath='{.spec.host}'
 ```

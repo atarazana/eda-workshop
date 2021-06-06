@@ -21,6 +21,7 @@ The application can be packaged using:
 ```shell script
 ./mvnw package
 ```
+
 It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
 Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
@@ -49,6 +50,14 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/quarkus-streaming-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
+
+## Getting Schemas from Service Registry
+
+To download the schemas in Service Registry execute:
+
+```shell script
+❯ ./mvnw generate-sources -Papicurio -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/api
+```
 
 ## Deploying into OpenShift
 

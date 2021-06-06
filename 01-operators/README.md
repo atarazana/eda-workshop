@@ -37,8 +37,8 @@ To check the subscription statuses:
 ❯ oc get csv
 NAME                               DISPLAY                                           VERSION   REPLACES                      PHASE
 amqstreams.v1.7.1                  Red Hat Integration - AMQ Streams                 1.7.1     amqstreams.v1.7.0             Succeeded
-datagrid-operator.v8.1.7           Data Grid                                         8.1.7     datagrid-operator.v8.1.6      Succeeded
-serverless-operator.v1.14.0        Red Hat OpenShift Serverless                      1.14.0    serverless-operator.v1.13.0   Succeeded
+datagrid-operator.v8.2.0           Data Grid                                         8.2.0     datagrid-operator.v8.1.7      Succeeded
+serverless-operator.v1.14.1        Red Hat OpenShift Serverless                      1.14.1    serverless-operator.v1.14.0   Succeeded
 service-registry-operator.v2.0.0   Red Hat Integration - Service Registry Operator   2.0.0                                   Succeeded
 ```
 
@@ -56,17 +56,15 @@ from only that namespace.
 ```shell script
 ❯ oc get pod -n eda-workshop
 NAME                                         READY   STATUS             RESTARTS   AGE
-grafana-deployment-8688d6b5dc-zkcvq          1/1     Running            0          28h
 grafana-operator-5ccd457bc6-rxs6t            1/1     Running            0          28h
 prometheus-operator-7d874db8c-rpfmm          1/1     Running            0          28h
-prometheus-prometheus-0                      2/2     Running            0          28h
 ```
 
 To check the subscription statuses:
 
 ```shell script
 ❯ oc get csv
-NAME                               DISPLAY                                           VERSION   REPLACES                      PHASE
-grafana-operator.v3.10.1           Grafana Operator                                  3.10.1    grafana-operator.v3.10.0      Succeeded
-prometheusoperator.0.47.0          Prometheus Operator                               0.47.0    prometheusoperator.0.37.0     Succeeded
+NAME                               DISPLAY                VERSION   REPLACES                      PHASE
+grafana-operator.v3.10.1           Grafana Operator       3.10.1    grafana-operator.v3.10.0      Succeeded
+prometheusoperator.0.47.0          Prometheus Operator    0.47.0    prometheusoperator.0.37.0     Succeeded
 ```

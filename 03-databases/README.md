@@ -4,7 +4,7 @@
 
 ### Enterprise Database
 
-Sample database with a model of clients, accounts and movements.
+Sample database with a model of regions, clients, accounts and movements.
 
 To build this image:
 

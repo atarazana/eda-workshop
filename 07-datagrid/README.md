@@ -16,14 +16,20 @@ To check the current status of the DataGrid:
 
 ```shell script
 ❯ oc get infinispan eda-infinispan -o yaml
-...
+# ...
 status:
   conditions:
   - status: "True"
     type: PreliminaryChecksPassed
-  - message: 'View: eda-infinispan-0-3647,eda-infinispan-1-987,eda-infinispan-2-13866'
+  - message: 'View: eda-infinispan-0-6324,eda-infinispan-1-13135,eda-infinispan-2-45969'
     status: "True"
     type: WellFormed
+  consoleUrl: http://eda-infinispan-external-eda-workshop.apps.labs.sandbox1754.opentlc.com/console
+  podStatus:
+    ready:
+    - eda-infinispan-1
+    - eda-infinispan-2
+    - eda-infinispan-3
   statefulSetName: eda-infinispan
 ```
 
@@ -35,6 +41,12 @@ NAME               READY   STATUS    RESTARTS   AGE
 eda-infinispan-0   1/1     Running   0          10m
 eda-infinispan-1   1/1     Running   0          9m5s
 eda-infinispan-2   1/1     Running   0          7m58s
+```
+
+To get the route to access DataGrid Administration Console:
+
+```shell script
+oc get route eda-infinispan-external -o jsonpath='{.spec.host}'
 ```
 
 ## Deploying Data Caches
@@ -52,9 +64,11 @@ We could test and verify the Caches:
 
 ```shell script
 ❯ oc get cache
-NAME                     AGE
-eda-infinispan-clients   10s
-eda-infinispan-regions   10s
+NAME                               AGE
+eda-infinispan-aggregate-metrics   7s
+eda-infinispan-alerts              7s
+eda-infinispan-clients             7s
+eda-infinispan-regions             7s
 ```
 
 To get the current status of a Data Cache:
