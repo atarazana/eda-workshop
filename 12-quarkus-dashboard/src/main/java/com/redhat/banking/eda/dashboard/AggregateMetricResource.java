@@ -1,13 +1,18 @@
 package com.redhat.banking.eda.dashboard;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
@@ -15,6 +20,10 @@ import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
+import org.infinispan.client.hotrod.Search;
+import org.infinispan.query.dsl.Query;
+import org.infinispan.query.dsl.QueryFactory;
+import org.infinispan.query.dsl.QueryResult;
 import org.jboss.resteasy.annotations.SseElementType;
 import org.reactivestreams.Publisher;
 
@@ -56,6 +65,39 @@ public class AggregateMetricResource {
         LOG.info("size = " + cache.keySet().size());
 
         return aggregateMetrics;  
+    }
+
+    @GET
+    @Path("/by-name")
+    public List<AggregateMetric> aggregateMetricsByName(@QueryParam("name") String name,  @QueryParam("groupByClause") String groupByClause, @DefaultValue("30") @QueryParam("period") int period) { 
+        LOG.info("aggregateMetricsByName");
+
+        QueryFactory queryFactory = Search.getQueryFactory(cache);
+        String groupByClauseFull = groupByClause != null ? "AND groupByClause = '" + groupByClause + "'" : "";
+        Query<AggregateMetric> query = queryFactory.create("FROM eda.workshop.AggregateMetric WHERE name = '" + name + "' " + groupByClauseFull + " ORDER BY timestamp");
+
+        // Execute the query
+        QueryResult<AggregateMetric> queryResult = query.execute();
+
+        LOG.info("size = " + queryResult.hitCount());
+
+        return queryResult.list().stream().filter(c -> c.getTimestamp().compareTo(Instant.now().minusSeconds(period)) > 0 ).collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("/by-name-region")
+    public List<AggregateMetric> aggregateMetricsByNameAndRegion(@QueryParam("name") String name, @QueryParam("region") String region) { 
+        LOG.info("aggregateMetricsByName");
+
+        QueryFactory queryFactory = Search.getQueryFactory(cache);
+        Query<AggregateMetric> query = queryFactory.create("FROM eda.workshop.AggregateMetric WHERE name = '" + name + "' and from = '" + region + "' ORDER BY timestamp");
+
+        // Execute the query
+        QueryResult<AggregateMetric> queryResult = query.execute();
+
+        LOG.info("size = " + queryResult.hitCount());
+
+        return queryResult.list();
     }
 
     @GET
