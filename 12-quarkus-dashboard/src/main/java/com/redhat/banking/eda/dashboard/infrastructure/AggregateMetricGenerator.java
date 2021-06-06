@@ -9,7 +9,11 @@ import javax.enterprise.context.ApplicationScoped;
 import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
 
 import io.smallrye.mutiny.Multi;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
+
+import org.jboss.logging.Logger;
 
 /**
  * A bean producing random prices every 5 seconds.
@@ -17,25 +21,35 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
  */
 @ApplicationScoped
 public class AggregateMetricGenerator {
+    Logger logger = Logger.getLogger(AggregateMetricGenerator.class);
+
     private static String[] regions = {"Finland", "Russia", "Latvia", "Lithuania", "Poland"};
 
     private Random random = new Random();
 
+    @ConfigProperty(name = "dummy.generator")
+    String dummyGenerator;
+
     @Outgoing("generated-aggregate-metrics")
     public Multi<AggregateMetric> generate() {
-        return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
-                .onOverflow().drop()
-                .map(tick -> {
-                    AggregateMetric metric = null;
-                    int variant = random.nextInt(4);
-                    switch (variant) {
-                        case 0:  metric = generateBalanceByRegion(); break;
-                        case 1:  metric = generateAccountsClosedByRegion(); break;
-                        case 2:  metric = generateAccountsInactiveByRegion(); break;
-                        case 3:  metric = generateAccountsActiveByRegion(); break;
-                    }
-                    return metric;
-                });
+        logger.info(">>>>>>>>>> dummy.generator = " + dummyGenerator);
+
+        if (dummyGenerator.equalsIgnoreCase("on")) {
+            return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
+            .onOverflow().drop()
+            .map(tick -> {
+                AggregateMetric metric = null;
+                int variant = random.nextInt(4);
+                switch (variant) {
+                    case 0:  metric = generateBalanceByRegion(); break;
+                    case 1:  metric = generateAccountsClosedByRegion(); break;
+                    case 2:  metric = generateAccountsInactiveByRegion(); break;
+                    case 3:  metric = generateAccountsActiveByRegion(); break;
+                }
+                return metric;
+            });
+        }
+        return null;
     }
 
     public AggregateMetric generateBalanceByRegion() {
