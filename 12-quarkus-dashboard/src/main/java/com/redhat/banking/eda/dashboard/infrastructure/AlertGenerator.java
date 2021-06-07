@@ -11,7 +11,10 @@ import com.redhat.banking.eda.dashboard.valueobjects.Alert;
 import com.redhat.banking.eda.dashboard.valueobjects.AlertVariant;
 
 import io.smallrye.mutiny.Multi;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import org.jboss.logging.Logger;
 
 /**
  * A bean producing random prices every 5 seconds.
@@ -19,6 +22,8 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
  */
 @ApplicationScoped
 public class AlertGenerator {
+    Logger logger = Logger.getLogger(AlertGenerator.class);
+
     private static String NAME = "Max Hourly Balance Exceeded";
     private static String DEFINITION = "Min Balance Exceeded 1000 EUR for a given Region";
     private static String EXPRESSION = "balance <= 1000";
@@ -26,9 +31,15 @@ public class AlertGenerator {
 
     private Random random = new Random();
 
+    @ConfigProperty(name = "dummy.generator")
+    String dummyGenerator;
+    
     @Outgoing("generated-alerts")
     public Multi<Alert> generate() {
-        return Multi.createFrom().ticks().every(Duration.ofSeconds(20))
+        logger.info(">>>>>>>>>> dummy.generator = " + dummyGenerator);
+
+        if (dummyGenerator.equalsIgnoreCase("on")) {
+            return Multi.createFrom().ticks().every(Duration.ofSeconds(20))
                 .onOverflow().drop()
                 .map(tick -> {
                     UUID uuid = UUID.randomUUID();
@@ -40,18 +51,21 @@ public class AlertGenerator {
                     // annotations.put("location", "SPAIN");
 
                     int variant = random.nextInt(4);
+                    String definition = DEFINITION;
                     AlertVariant variantValue = AlertVariant.DEFAULT;
                     switch (variant) {
-                        case 0:  variantValue = AlertVariant.SUCCESS; break;
-                        case 1:  variantValue = AlertVariant.INFO; break;
-                        case 2:  variantValue = AlertVariant.WARNING; break;
-                        case 3:  variantValue = AlertVariant.DANGER; break;
+                        case 0:  variantValue = AlertVariant.SUCCESS; definition = "Balance replenished"; break;
+                        case 1:  variantValue = AlertVariant.INFO; definition = "All good"; break;
+                        case 2:  variantValue = AlertVariant.WARNING; definition = "Min Balance about to be reached"; break;
+                        case 3:  variantValue = AlertVariant.DANGER; definition = "Outstanding problem!"; break;
                     }
 
                     //Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, labels, annotations, Instant.now());
-                    Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, Instant.now());
+                    Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), definition, EXPRESSION, DURATION, Instant.now());
                     return alert;
                 });
+            }
+        return null;
     }
 
 }

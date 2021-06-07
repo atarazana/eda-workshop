@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { IAggregateMetric } from './AggregateMetrics';
-import { Chart, ChartVoronoiContainer, ChartAxis, ChartGroup, ChartLine, ChartLegendTooltip, createContainer } from '@patternfly/react-charts';
-import { NavItemSeparator, Title, TitleSizes } from '@patternfly/react-core';
+import { Chart, ChartVoronoiContainer, ChartAxis, ChartGroup, ChartLine, ChartLegendTooltip, createContainer, ChartThemeColor } from '@patternfly/react-charts';
+import { Title, TitleSizes } from '@patternfly/react-core';
 
 interface ILegendDataItem {
     name?: string;
@@ -19,15 +19,17 @@ interface IDataItem {
     y: number
 }
 
-const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: number, timeRange?: number,  metrics?: IAggregateMetric[]}> = ({ metricName, timePeriod = 30, timeRange = 5, metrics = [] }) => {
+const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: number, timeRange?: number,  metrics?: IAggregateMetric[]}> = ({ metricName, timePeriod = 30*60, timeRange = 5*60, metrics = [] }) => {
     const [name, setName] = useState<string>(metricName);
+    const [period, setPeriod] = useState<number>(timePeriod);
+    const [range, setRange] = useState<number>(timeRange);
     const [aggregateMetrics, setAggregateMetrics] = useState<IAggregateMetric[]>([]);
     const [ticksX, setTicksX] = useState<string[]>([]);
     const [legendData, setLegendData] = useState<ILegendDataItem[]>([]);
     const [data, setData] = useState<Map<string, IDataItem[]>>(new Map());
 
     const handleServerEvent = (metric: IAggregateMetric) => {
-        if (metric.name === metricName) {
+        if (metric.name === name) {
             console.log(`*** metric = ${metric.name} accepted!`)
             fetchData();
         }
@@ -44,7 +46,7 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
     }
 
     const fetchData = () => {
-        fetch(`aggregate-metrics/by-name?name=${metricName}&period=9000`)
+        fetch(`aggregate-metrics/by-name?name=${name}&period=${period}`)
         .then(res => res.json())
         .then(rawData => {
             let _aggregateMetrics: IAggregateMetric[] = [];
@@ -147,11 +149,11 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
 
     return  <React.Fragment>
             <Title headingLevel="h1" size={TitleSizes['md']}>
-            {metricName}
+            {name}
             </Title>
             <Chart
-                ariaDesc={metricName}
-                ariaTitle={metricName}
+                ariaDesc={name}
+                ariaTitle={name}
                 containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${datum.x} ${Math.round(datum.y)}`} constrainToVisibleArea />}
                 // containerComponent={
                 //     <CursorVoronoiContainer
@@ -176,6 +178,7 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                     right: 50, 
                     top: 0
                   }}
+                themeColor={ChartThemeColor.green}
                 >
                 <ChartAxis scale={'time'} tickCount={timePeriod/timeRange} />
                 <ChartAxis dependentAxis showGrid  />
