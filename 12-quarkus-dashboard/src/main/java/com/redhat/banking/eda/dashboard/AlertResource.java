@@ -1,6 +1,7 @@
 package com.redhat.banking.eda.dashboard;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,7 +54,9 @@ public class AlertResource {
 
         LOG.info("size = " + cache.keySet().size());
 
-        return alerts;  
+        alerts.sort(Comparator.comparing(Alert::getTimestamp).reversed());
+
+        return alerts;
     }
 
     @GET
@@ -63,4 +66,11 @@ public class AlertResource {
     public Publisher<Alert> stream() { 
         return alerts;
     }
+
+    // class InstantSorter implements Comparator<Alert> {
+    //     @Override
+    //     public int compare(Alert o1, Alert o2) {
+    //         return o2.getTimestamp() > o1.getTimestamp();
+    //     }
+    // }
 }

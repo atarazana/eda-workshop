@@ -24,7 +24,9 @@ import {
   DropdownGroup,
   Alert,
   AlertActionCloseButton,
-  AlertGroup
+  AlertGroup,
+  Badge,
+  NotificationBadge
 } from '@patternfly/react-core';
 import { routes, IAppRoute, IAppRouteGroup } from '@app/routes';
 import logo from '@app/bgimages/Patternfly-Logo.svg';
@@ -46,6 +48,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
   const [isUpperToolbarDropdownOpen, setIsUpperToolbarDropdownOpen] = React.useState(false);
   
   const [alerts, setAlerts] = useState<IAlert[]>([]);
+  const [unReadNotifications, setUnReadNotifications] = useState<number>(0);
 
   const onNavToggleMobile = () => {
     setIsNavOpenMobile(!isNavOpenMobile);
@@ -85,24 +88,36 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
     </DropdownGroup>
   ];
   
-  const addAlert = (alert: IAlert) => setAlerts(prevAlerts => [...prevAlerts, alert])
+  const addAlert = (alert: IAlert) => setAlerts(prevAlerts => {
+    console.log('HI');
+    setUnReadNotifications((prevUnreadNotificationsCount) => prevUnreadNotificationsCount+1);
+    return [...prevAlerts, alert];
+  });
     
   const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
       return prevAlerts.filter(element => element.id != alert.id);
-  })
+  });
+
+  const resetUnreadNotificationsCount = () => setUnReadNotifications(0);
+
+  const handleAlertServerEvent = (alert: IAlert) => {
+    addAlert(alert);
+  }
 
   useEffect(() => {
       const EVENT_SOURCE_URL = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/alerts/stream' : '/alerts/stream'; 
 
       console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
-
-      const timeout = 5;
-      // let eventSource = new EventSource(EVENT_SOURCE_URL)
+      
       let eventSource = new EventSource(EVENT_SOURCE_URL)
-      eventSource.onmessage = e => {
-          let alert = JSON.parse(e.data) as IAlert;        
-          addAlert(alert);
-      }
+
+      eventSource.onmessage = e => handleAlertServerEvent(JSON.parse(e.data) as IAlert);
+
+      eventSource.onerror = () => { eventSource.close(); }
+
+      return () => {
+          eventSource.close();
+      };
   }, []);
 
   function LogoImg() {
@@ -129,9 +144,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
           </Button>
         </PageHeaderToolsItem>
         <PageHeaderToolsItem>
-          <Button aria-label="Help actions" variant={ButtonVariant.plain}>
-            <HelpIcon />
-          </Button>
+          <NotificationBadge variant={unReadNotifications > 0 ? 'unread' : 'read'} onClick={resetUnreadNotificationsCount} count={unReadNotifications} aria-label="Notifications" />
         </PageHeaderToolsItem>
       </PageHeaderToolsGroup>
       <PageHeaderToolsGroup>
