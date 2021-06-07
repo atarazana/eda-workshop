@@ -48,7 +48,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
   const [isUpperToolbarDropdownOpen, setIsUpperToolbarDropdownOpen] = React.useState(false);
   
   const [alerts, setAlerts] = useState<IAlert[]>([]);
-  const [unReadNotifications, setUnReadNotifications] = useState<number>(0);
+  const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
 
   const onNavToggleMobile = () => {
     setIsNavOpenMobile(!isNavOpenMobile);
@@ -89,19 +89,22 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
   ];
   
   const addNewAlert = (alert: IAlert) => setAlerts(prevAlerts => {
-    console.log('HI');
-    setUnReadNotifications(unReadNotifications + 1);
     return [...prevAlerts, alert];
+  });
+
+  const increaseUnreadNotifications = () => setUnreadNotifications(count => {
+    return count + 1;
   });
     
   const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
       return prevAlerts.filter(element => element.id != alert.id);
   });
 
-  const resetUnreadNotificationsCount = () => setUnReadNotifications(0);
+  const resetUnreadNotificationsCount = () => setUnreadNotifications(0);
 
   const handleAlertServerEvent = (alert: IAlert) => {
     addNewAlert(alert);
+    increaseUnreadNotifications();
   }
 
   useEffect(() => {
@@ -144,7 +147,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
           </Button>
         </PageHeaderToolsItem>
         <PageHeaderToolsItem>
-          <NotificationBadge variant={unReadNotifications > 0 ? 'unread' : 'read'} onClick={resetUnreadNotificationsCount} count={unReadNotifications} aria-label="Notifications" />
+          <NotificationBadge variant={unreadNotifications > 0 ? 'unread' : 'read'} onClick={resetUnreadNotificationsCount} count={unreadNotifications} aria-label="Notifications" />
         </PageHeaderToolsItem>
       </PageHeaderToolsGroup>
       <PageHeaderToolsGroup>
