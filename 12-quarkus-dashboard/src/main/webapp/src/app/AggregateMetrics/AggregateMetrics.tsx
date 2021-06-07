@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { PageSection, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
+import { PageSection, Title, TitleSizes, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
 
 export interface IAggregateMetric {
     name: string;
@@ -50,13 +50,9 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
     
     return <PageSection>
             <React.Fragment>
-                <ToggleGroup aria-label="Default with single selectable">
-                <ToggleGroupItem
-                    text={"Default " + rows.length}
-                    buttonId="default"
-                />
-                
-                </ToggleGroup>
+                <Title headingLevel="h1" size={TitleSizes['lg']}>
+                Aggregate Metrics
+                </Title>
                 <Table
                 aria-label="Simple Table"
                 // variant={choice !== 'default' ? 'compact' : null}
