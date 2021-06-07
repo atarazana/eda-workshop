@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { Alert, AlertActionCloseButton, AlertActionLink, AlertGroup, AlertVariant, PageSection, Title, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
+import { Alert, AlertActionCloseButton, AlertActionLink, AlertGroup, AlertVariant, PageSection, Title, TitleSizes, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
 
 export interface IAlert {
     id: string;
@@ -57,13 +57,9 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
 
     return <PageSection>
             <React.Fragment>
-                <ToggleGroup aria-label="Default with single selectable">
-                <ToggleGroupItem
-                    text={"Default " + rows.length}
-                    buttonId="default"
-                />
-                
-                </ToggleGroup>
+                <Title headingLevel="h1" size={TitleSizes['lg']}>
+                Alerts
+                </Title>
                 <Table
                 aria-label="Simple Table"
                 // variant={choice !== 'default' ? 'compact' : null}

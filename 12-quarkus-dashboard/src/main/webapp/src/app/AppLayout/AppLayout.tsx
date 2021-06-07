@@ -88,9 +88,9 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
     </DropdownGroup>
   ];
   
-  const addAlert = (alert: IAlert) => setAlerts(prevAlerts => {
+  const addNewAlert = (alert: IAlert) => setAlerts(prevAlerts => {
     console.log('HI');
-    setUnReadNotifications((prevUnreadNotificationsCount) => prevUnreadNotificationsCount+1);
+    setUnReadNotifications(unReadNotifications + 1);
     return [...prevAlerts, alert];
   });
     
@@ -101,7 +101,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
   const resetUnreadNotificationsCount = () => setUnReadNotifications(0);
 
   const handleAlertServerEvent = (alert: IAlert) => {
-    addAlert(alert);
+    addNewAlert(alert);
   }
 
   useEffect(() => {
