@@ -69,7 +69,7 @@ spec:
         configMapKeyRef:
           name: kafka-metrics
           key: kafka-metrics-config.yml
-    replicas: 3
+    replicas: 5
     storage:
       #type: ephemeral
       type: jbod

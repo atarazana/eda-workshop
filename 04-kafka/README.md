@@ -39,6 +39,20 @@ event-bus-zookeeper-client           ClusterIP   172.30.39.80     <none>        
 event-bus-zookeeper-nodes            ClusterIP   None             <none>        2181/TCP,2888/TCP,3888/TCP   6m49s
 ```
 
+## Rolling Updates
+
+To update Zookeeper StatefulSet without downtime use the following command:following command:
+
+```shell script
+oc annotate statefulset event-bus-zookeeper strimzi.io/manual-rolling-update=true
+```
+
+To update Kafka StatefulSet without downtime use the 
+
+```shell script
+oc annotate statefulset event-bus-kafka strimzi.io/manual-rolling-update=true
+```
+
 ## Deploying KafkaTopics
 
 ## Data KafkaTopics
