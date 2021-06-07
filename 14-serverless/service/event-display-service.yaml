@@ -1,0 +1,10 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: event-display-serverless
+spec:
+  template:
+    spec:
+      containers:
+        - image: quay.io/openshift-knative/knative-eventing-sources-event-display:latest

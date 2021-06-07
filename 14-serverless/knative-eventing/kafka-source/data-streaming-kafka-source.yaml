@@ -1,0 +1,21 @@
+apiVersion: sources.knative.dev/v1beta1
+kind: KafkaSource
+metadata:
+  name: data-streaming-kafka-source
+  labels:
+    app.kubernetes.io/part-of: data-streaming-serverless
+    kafkasources.sources.knative.dev/key-type: string
+spec:
+  consumerGroup: data-streaming-knative-group
+  bootstrapServers:
+    - event-bus-kafka-bootstrap.eda-workshop.svc:9092
+  topics:
+    - 'dbserver02.enterprise.accounts'
+    - 'dbserver02.enterprise.clients'
+    - 'dbserver02.enterprise.movements'
+    - 'dbserver02.enterprise.regions'
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: data-streaming-serverless

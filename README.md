@@ -58,3 +58,7 @@ Follow [the instructions](./11-quarkus-backend/README.md)
 ## Deploy Quarkus Dashboard Application
 
 Follow [the instructions](./12-quarkus-dashboard/README.md)
+
+## Deploy Serverless Services
+
+Follow [the instructions](./14-serverless/README.md)
