@@ -54,7 +54,7 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
                 <TextContent style={{paddingBottom: 10}}>
                     <Text component="h1">Aggregate Metrics</Text>
                     <Text component="p">
-                    Here you'll find all the aggregate metrics cached in Red Had Data Grid.<br />
+                    Here you'll find all the aggregate metrics cached in Red Had Data Grid. So far there are {rows.length} metrics.<br />
                     </Text>
                 </TextContent>
 

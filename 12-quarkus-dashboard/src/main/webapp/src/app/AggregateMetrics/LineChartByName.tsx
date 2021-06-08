@@ -82,10 +82,10 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                         // find next not -1 value
                         //const y = findDifferent(_dataItems, i, -1);
                         const nextValidItem = _dataItems.slice(i+1).find((item) => item.y != -1);
-                        if (nextValidItem) {
+                        if (nextValidItem != null) {
                             _dataItems.splice(i, 0, {name: key, x: _dateString, y: nextValidItem?.y!});
                         } else {
-                            _dataItems.push({name: key, x: _dateString, y: _dataItems[i-1].y});
+                            _dataItems.push({name: key, x: _dateString, y: (i == 0 ? 0 :_dataItems[i-1].y)});
                         }
                     }
                 });

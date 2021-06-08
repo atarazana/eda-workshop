@@ -60,7 +60,7 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
                     <TextContent style={{paddingBottom: 10}}>
                         <Text component="h1">Alerts</Text>
                         <Text component="p">
-                        Here you'll find all the alerts cached in Red Had Data Grid.<br />
+                        Here you'll find all the alerts cached in Red Had Data Grid. So far there are {rows.length} alerts<br />
                         </Text>
                     </TextContent>
                 
