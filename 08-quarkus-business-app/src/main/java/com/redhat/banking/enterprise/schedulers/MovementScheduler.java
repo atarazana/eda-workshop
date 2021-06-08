@@ -38,7 +38,7 @@ public class MovementScheduler {
 
     Random random = new Random();
 
-    @Scheduled(every = "120s")
+    @Scheduled(cron = "{cron.expr.generate.movements}")
     @Transactional
     void generateMovements() {
         // Get list of clients

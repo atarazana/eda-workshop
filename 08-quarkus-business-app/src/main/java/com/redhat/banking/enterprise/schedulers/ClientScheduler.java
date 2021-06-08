@@ -36,7 +36,7 @@ public class ClientScheduler {
 
     Random random = new Random();
 
-    @Scheduled(every="300s")
+    @Scheduled(cron = "{cron.expr.generate.clients}")
     @Transactional
     void generateClientWithAccounts() {
         // Random uuid

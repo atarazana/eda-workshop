@@ -1,0 +1,14 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: data-streaming-serverless
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: data-streaming-serverless
+        app.kubernetes.io/part-of: data-streaming-serverless  
+    spec:
+      containers:
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:1.0.0-SNAPSHOT

@@ -1,0 +1,12 @@
+---
+apiVersion: operator.knative.dev/v1alpha1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+spec:
+  config:
+    autoscaler:
+      scale-to-zero-pod-retention-period: "60s"
+      container-concurrency-target-default: "100" # Default 100
+      container-concurrency-target-percentage: "75" # Default 70

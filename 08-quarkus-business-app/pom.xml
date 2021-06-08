@@ -64,6 +64,12 @@
       <artifactId>quarkus-openshift</artifactId>
     </dependency>
 
+    <!-- Health Check -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
+
     <!-- Test Dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>

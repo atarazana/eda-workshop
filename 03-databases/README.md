@@ -12,6 +12,7 @@ To build this image:
 oc new-build ./mysql/enterprise --name=mysql-enterprise
 oc start-build mysql-enterprise --from-dir=./mysql/enterprise --follow
 oc new-app mysql-enterprise:latest -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw
+oc label deployment mysql-enterprise app.kubernetes.io/part-of=mysql-databases
 ```
 
 To verify the new database:
@@ -48,6 +49,7 @@ Sample database with a model of customers, products and orders.
 oc new-build ./mysql/inventory --name=mysql-inventory
 oc start-build mysql-inventory --from-dir=./mysql/inventory --follow
 oc new-app mysql-inventory:latest -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw
+oc label deployment mysql-inventory app.kubernetes.io/part-of=mysql-databases
 ```
 
 ```shell script
