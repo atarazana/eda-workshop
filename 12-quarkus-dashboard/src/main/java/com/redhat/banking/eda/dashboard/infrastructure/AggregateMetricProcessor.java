@@ -1,5 +1,7 @@
 package com.redhat.banking.eda.dashboard.infrastructure;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tags;
 import io.quarkus.infinispan.client.Remote;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
@@ -24,6 +26,8 @@ public class AggregateMetricProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(AggregateMetricProcessor.class);
 
+    private final MeterRegistry registry;
+
     @Inject 
     @Remote("aggregate-metrics")
     RemoteCache<String, AggregateMetric> cache;
@@ -31,7 +35,8 @@ public class AggregateMetricProcessor {
     RemoteCacheManager remoteCacheManager;
     
     @Inject 
-    AggregateMetricProcessor(RemoteCacheManager remoteCacheManager) {
+    AggregateMetricProcessor(MeterRegistry registry, RemoteCacheManager remoteCacheManager) {
+        this.registry = registry;
         this.remoteCacheManager = remoteCacheManager;
     }
     
@@ -41,8 +46,17 @@ public class AggregateMetricProcessor {
     @Acknowledgment(Acknowledgment.Strategy.PRE_PROCESSING) 
     public AggregateMetric process(AggregateMetric metric) {
         LOG.info("Processing Aggregated Metric {}", metric);
+
+        registry.counter("eda.workshop.aggregate_metrics.received.total").increment();
+
         cache.put(metric.getTimestamp().toString(), metric);
-        LOG.info("size = " + cache.size());
+
+        if (metric.getName().matches("Accounts.*")) {
+            registry.counter("eda.workshop.aggregate_metrics.accounts", Tags.of("name", metric.getName(), "group_by_clause", metric.getGroupByClause())).increment();
+        }
+
+        registry.counter("eda.workshop.aggregate_metrics.proccessed.total").increment();
+        
         return metric;
     }
 

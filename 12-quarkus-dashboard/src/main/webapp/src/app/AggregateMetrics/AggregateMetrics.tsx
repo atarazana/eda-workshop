@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { PageSection, Title, TitleSizes, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
+import { Divider, PageSection, TextContent, Title, TitleSizes, Text } from '@patternfly/react-core';
+import { bottom } from '@patternfly/react-core/dist/js/helpers/Popper/thirdparty/popper-core';
 
 export interface IAggregateMetric {
     name: string;
@@ -32,7 +33,7 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
             const aggregateMetric = JSON.parse(e.data) as IAggregateMetric;
             addAggregateMetric(aggregateMetric);   
 
-            const row: string[] = [aggregateMetric.name, String(aggregateMetric.value), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp];
+            const row: string[] = [aggregateMetric.name, String(Math.round(aggregateMetric.value)), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp];
             addRow(row);
         }
 
@@ -40,7 +41,7 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
         .then(res => res.json())
         .then(data => {
             setAggregateMetrics(data);
-            setRows(data.map((aggregateMetric: IAggregateMetric) => [aggregateMetric.name, String(aggregateMetric.value), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp]));
+            setRows(data.map((aggregateMetric: IAggregateMetric) => [aggregateMetric.name, String(aggregateMetric.unit == 'EUR' ? aggregateMetric.value.toFixed(2) : aggregateMetric.value), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp]));
         })
         .catch(console.log)
     }, []);
@@ -48,23 +49,26 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
     const addAggregateMetric = (aggregateMetric: IAggregateMetric) => setAggregateMetrics(prevMetrics => [...prevMetrics, aggregateMetric])
     const addRow = (row: string[]) => setRows(prevRows => [...prevRows, row])
     
-    return <PageSection>
-            <React.Fragment>
-                <Title headingLevel="h1" size={TitleSizes['lg']}>
-                Aggregate Metrics
-                </Title>
+    return <React.Fragment>
+            <PageSection>
+                <TextContent style={{paddingBottom: 10}}>
+                    <Text component="h1">Aggregate Metrics</Text>
+                    <Text component="p">
+                    Here you'll find all the aggregate metrics cached in Red Had Data Grid.<br />
+                    </Text>
+                </TextContent>
+
                 <Table
-                aria-label="Simple Table"
-                // variant={choice !== 'default' ? 'compact' : null}
-                borders={choice !== 'compactBorderless'}
-                cells={columns}
-                rows={rows}
-                >
-                <TableHeader />
-                <TableBody />
+                    aria-label="Simple Table"
+                    variant={'compact'}
+                    borders={choice !== 'compactBorderless'}
+                    cells={columns}
+                    rows={rows}>
+                    <TableHeader />
+                    <TableBody />
                 </Table>
-            </React.Fragment>
             </PageSection>
+        </React.Fragment>
     ;
 }
 

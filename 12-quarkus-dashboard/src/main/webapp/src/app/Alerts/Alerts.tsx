@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { Alert, AlertActionCloseButton, AlertActionLink, AlertGroup, AlertVariant, PageSection, Title, TitleSizes, ToggleGroup, ToggleGroupItem } from '@patternfly/react-core';
+import { AlertVariant, PageSection, TextContent, Text } from '@patternfly/react-core';
 
 export interface IAlert {
     id: string;
@@ -55,23 +55,26 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
     //     return prevAlerts.filter(element => element.id != alert.id);
     // })
 
-    return <PageSection>
-            <React.Fragment>
-                <Title headingLevel="h1" size={TitleSizes['lg']}>
-                Alerts
-                </Title>
-                <Table
-                aria-label="Simple Table"
-                // variant={choice !== 'default' ? 'compact' : null}
-                borders={choice !== 'compactBorderless'}
-                cells={columns}
-                rows={rows}
-                >
-                <TableHeader />
-                <TableBody />
-                </Table>
+    return <React.Fragment>
+                <PageSection>
+                    <TextContent style={{paddingBottom: 10}}>
+                        <Text component="h1">Alerts</Text>
+                        <Text component="p">
+                        Here you'll find all the alerts cached in Red Had Data Grid.<br />
+                        </Text>
+                    </TextContent>
+                
+                    <Table
+                        aria-label="Simple Table"
+                        variant={'compact'}
+                        borders={choice !== 'compactBorderless'}
+                        cells={columns}
+                        rows={rows}>
+                        <TableHeader />
+                        <TableBody />
+                    </Table>
+                </PageSection>
             </React.Fragment>
-            </PageSection>
     ;
 }
 

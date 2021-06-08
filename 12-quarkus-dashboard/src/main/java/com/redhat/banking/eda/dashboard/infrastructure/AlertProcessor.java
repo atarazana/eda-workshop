@@ -1,5 +1,7 @@
 package com.redhat.banking.eda.dashboard.infrastructure;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tags;
 import io.quarkus.infinispan.client.Remote;
 import io.smallrye.reactive.messaging.annotations.Broadcast;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
@@ -21,7 +23,10 @@ import org.slf4j.LoggerFactory;
  */
 @ApplicationScoped
 public class AlertProcessor {
+    
     private static final Logger LOG = LoggerFactory.getLogger(AlertProcessor.class);
+
+    private final MeterRegistry registry;
 
     @Inject 
     @Remote("alerts")
@@ -30,7 +35,8 @@ public class AlertProcessor {
     RemoteCacheManager remoteCacheManager;
     
     @Inject 
-    AlertProcessor(RemoteCacheManager remoteCacheManager) {
+    AlertProcessor(MeterRegistry registry, RemoteCacheManager remoteCacheManager) {
+        this.registry = registry;
         this.remoteCacheManager = remoteCacheManager;
     }
 
@@ -40,6 +46,8 @@ public class AlertProcessor {
     @Acknowledgment(Acknowledgment.Strategy.PRE_PROCESSING) 
     public Alert process(Alert alert) {
         LOG.info("Processing Alert {}", alert);
+
+        registry.counter("eda.workshop.alert.number", Tags.of("name", alert.getName())).increment();
 
         cache.put(alert.getId(), alert);
         return alert;
