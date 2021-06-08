@@ -9,7 +9,7 @@ public class AggregateMetric {
     private final String name;
     private final Double value;
     private final String unit;
-    private final String qualifier; // AVG / MAX / MIN / SUM / COUNT
+    private final String qualifier; // AVG / MAX / MIN / SUM / COUNT / etc
     private final String from;    
     private final String groupByClause;
     private final Instant timestamp;

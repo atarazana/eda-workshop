@@ -70,30 +70,30 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                 }
             });
 
-            
-
             // There have to be as many data items as different date/times, we fill with y: -1 the gaps
-            let __data: Map<string, IDataItem[]> = new Map();
             let i: number = 0;
+            // For each date of all different timestamps recorded in all metrics
             _dates.forEach(_date => {
+                // Let's build the date string from the timestamp
                 let _dateString = `${_date.getHours()}:${String(_date.getMinutes()).padStart(2, '0')}`;
+                // Let run through all the elements in each set of data. Key will be the name of the data set.
                 _data.forEach((_dataItems, key) => {
-                    if (_dateString != _dataItems[i]?.x) {
-                        // find next not -1 value
-                        //const y = findDifferent(_dataItems, i, -1);
-                        const nextValidItem = _dataItems.slice(i+1).find((item) => item.y != -1);
-                        if (nextValidItem != null) {
-                            _dataItems.splice(i, 0, {name: key, x: _dateString, y: nextValidItem?.y!});
-                        } else {
-                            _dataItems.push({name: key, x: _dateString, y: (i == 0 ? 0 :_dataItems[i-1].y)});
+                    // If we haven't reached the end of the data array
+                    if (i < _dataItems.length - 1) {
+                        // If the current date string is NOT its position (i)
+                        if (_dateString != _dataItems[i]?.x) {
+                            // Copy the next value to the current position
+                            _dataItems.splice(i, 0, {name: key, x: _dateString, y: _dataItems[i+1]?.y!});
                         }
+                        // Else, do nothing, x is ok
+                    } else {
+                        // There are no more elements to copy the previous value with the current x 
+                        _dataItems.push({name: key, x: _dateString, y: _dataItems[i-1].y});
                     }
                 });
                 i++;
             });
             
-
-            console.log(`a1 _aggregateMetrics.size = ${_aggregateMetrics.length}`);
             setAggregateMetrics([..._aggregateMetrics]);
             setData(_data);
 
@@ -148,7 +148,7 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
     const CursorVoronoiContainer = createContainer("voronoi", "cursor");
 
     return  <React.Fragment>
-            <Title headingLevel="h1" size={TitleSizes['md']}>
+            <Title headingLevel="h1" size={TitleSizes['lg']}>
             {name}
             </Title>
             <Chart
@@ -168,17 +168,17 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                 legendData={legendData}
                 // legendOrientation="vertical"
                 legendPosition="bottom"
-                // height={250}
+                height={350}
                 // maxDomain={{y: 10}}
                 // minDomain={{y: 0}}
-                // width={600}
+                width={700}
                 padding={{
-                    bottom: 80,
+                    bottom: 70,
                     left: 50,
                     right: 50, 
-                    top: 0
+                    top: 20
                   }}
-                themeColor={ChartThemeColor.green}
+                themeColor={ChartThemeColor.multi}
                 >
                 <ChartAxis scale={'time'} tickCount={timePeriod/timeRange} />
                 <ChartAxis dependentAxis showGrid  />
