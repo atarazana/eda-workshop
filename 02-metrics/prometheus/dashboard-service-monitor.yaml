@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |
+    enableUserWorkload: true 
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: prometheus
+  name: dashboard-monitor
+spec:
+  namespaceSelector:
+    matchNames:
+      - eda-workshop
+  endpoints:
+    - interval: 30s
+      path: /q/metrics
+      port: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dashboard
