@@ -70,8 +70,14 @@ spec:
           name: kafka-metrics
           key: kafka-metrics-config.yml
     replicas: 5
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "2"
     storage:
-      #type: ephemeral
       type: jbod
       volumes:
         - id: 0
@@ -109,8 +115,14 @@ spec:
           name: kafka-metrics
           key: zookeeper-metrics-config.yml
     replicas: 3
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "2"
     storage:
-      #type: ephemeral
       type: persistent-claim
       deleteClaim: true
       size: 5Gi
@@ -134,11 +146,32 @@ spec:
   entityOperator:
     topicOperator:
       reconciliationIntervalSeconds: 60
+      resources:
+        requests:
+          cpu: 250m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
     userOperator:
       reconciliationIntervalSeconds: 60
+      resources:
+        requests:
+          cpu: 250m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
   kafkaExporter:
     groupRegex: .*
     topicRegex: .*
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 1Gi
   clientsCa:
     generateCertificateAuthority: true
     renewalDays: 30
@@ -156,6 +189,13 @@ spec:
     livenessProbe:
       initialDelaySeconds: 15
       timeoutSeconds: 5
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 1Gi
   cruiseControl:
     #brokerCapacity:
     #  inboundNetwork: 10000KB/s
@@ -170,3 +210,10 @@ spec:
         configMapKeyRef:
           name: cruise-control-metrics
           key: metrics-config.yml    
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 1Gi

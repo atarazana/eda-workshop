@@ -53,13 +53,13 @@ spec:
         artifacts:
           - type: tgz
             url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.0.0.Final/apicurio-registry-distro-connect-converter-2.0.0.Final.tar.gz
-  #resources: 
-  #  requests:
-  #    cpu: "1"
-  #    memory: 2Gi
-  #  limits:
-  #    cpu: "2"
-  #    memory: 2Gi
+  resources: 
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
   logging: 
     type: inline
     loggers:

@@ -12,6 +12,9 @@ spec:
     categories:
       org.infinispan: info
       org.jgroups: info
+  container:
+    cpu: "1000m"
+    memory: 1Gi
   expose:
     type: Route
   security:
