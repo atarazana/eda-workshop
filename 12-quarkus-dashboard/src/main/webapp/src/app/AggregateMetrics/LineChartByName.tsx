@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { IAggregateMetric } from './AggregateMetrics';
-import { Chart, ChartVoronoiContainer, ChartAxis, ChartGroup, ChartLine, ChartLegendTooltip, createContainer, ChartThemeColor } from '@patternfly/react-charts';
+import { Chart, ChartVoronoiContainer, ChartAxis, ChartGroup, ChartLine, ChartLegendTooltip, createContainer, ChartThemeColor, ChartLabel } from '@patternfly/react-charts';
 import { Title, TitleSizes } from '@patternfly/react-core';
 
 interface ILegendDataItem {
@@ -76,20 +76,46 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
             _dates.forEach(_date => {
                 // Let's build the date string from the timestamp
                 let _dateString = `${_date.getHours()}:${String(_date.getMinutes()).padStart(2, '0')}`;
-                // Let run through all the elements in each set of data. Key will be the name of the data set.
+                // Let's run through all the elements in each set of data. Key will be the name of the data set.
                 _data.forEach((_dataItems, key) => {
-                    // If we haven't reached the end of the data array
-                    if (i < _dataItems.length - 1) {
+                    // If we still have data
+                    if (i < _dataItems.length) {
                         // If the current date string is NOT its position (i)
                         if (_dateString != _dataItems[i]?.x) {
-                            // Copy the next value to the current position
-                            _dataItems.splice(i, 0, {name: key, x: _dateString, y: _dataItems[i+1]?.y!});
+                            // If current date string is < the one in the array
+                            if (_dataItems[i] === undefined) {
+                                console.log("STOP HERE")
+                            }
+                            let _dataItemDateString = _dataItems[i].x!;
+                            if (_dateString < _dataItemDateString) {
+                                // Insert a copy of the value before
+                                _dataItems.splice(i, 0, {name: key, x: _dateString, y: _dataItems[i].y!});
+                            } else {
+                                _dataItems.push({name: key, x: _dateString, y: _dataItems[i].y!});
+                            }
                         }
-                        // Else, do nothing, x is ok
                     } else {
-                        // There are no more elements to copy the previous value with the current x 
-                        _dataItems.push({name: key, x: _dateString, y: _dataItems[i-1].y});
+                        _dataItems.push({name: key, x: _dateString, y: _dataItems[i - 1].y!});
                     }
+                    
+
+                    // // If we haven't reached the end of the data array
+                    // if (i < _dataItems.length - 1) {
+                    //     // If the current date string is NOT its position (i)
+                    //     if (_dateString != _dataItems[i]?.x) {
+                    //         // Copy the next value to the current position
+                    //         _dataItems.splice(i, 0, {name: key, x: _dateString, y: _dataItems[i+1]?.y!});
+                    //     }
+                    //     // Else, do nothing, x is ok
+                    // } else {
+                    //     // There are no more elements so let's copy the previous value
+                    //     if (i > 0) {
+                    //         _dataItems.push({name: key, x: _dateString, y: _dataItems[i-1].y});
+                    //     } else {
+                    //         _dataItems.push({name: key, x: _dateString, y: 0});
+                    //     }
+                        
+                    // }
                 });
                 i++;
             });
@@ -152,9 +178,13 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
             {name}
             </Title>
             <Chart
+                animate={{
+                    duration: 1000,
+                    easing: "bounce"
+                }}
                 ariaDesc={name}
                 ariaTitle={name}
-                containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${datum.x} ${Math.round(datum.y)}`} constrainToVisibleArea />}
+                containerComponent={<ChartVoronoiContainer labels={({ datum }) => `${datum.name}: ${Math.round(datum.y)}`} constrainToVisibleArea />}
                 // containerComponent={
                 //     <CursorVoronoiContainer
                 //       cursorDimension="x"
@@ -171,12 +201,12 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                 height={350}
                 // maxDomain={{y: 10}}
                 // minDomain={{y: 0}}
-                width={700}
+                width={600}
                 padding={{
                     bottom: 70,
-                    left: 50,
+                    left: 70,
                     right: 50, 
-                    top: 20
+                    top: 50
                   }}
                 themeColor={ChartThemeColor.multi}
                 >
@@ -186,7 +216,6 @@ const LineChartByName: FunctionComponent<{metricName: string, timePeriod?: numbe
                     {Array.from(data.entries()).map((dataItem) => (
                     <ChartLine key={dataItem[0]} name={dataItem[0]} data={dataItem[1]} />
                     ))}
-                    
                 </ChartGroup>
             </Chart>
         </React.Fragment>
