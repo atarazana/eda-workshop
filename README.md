@@ -1,8 +1,35 @@
 # Event-Driven Architecture Workshop
 
+In the digital transformation strategies of companies, Serverless technologies, Event-Driven Architectures (EDA)
+and data capture patterns (Change Data Capture) are gaining more strength every day.
+ 
+Within this scenario, [Red Hat OpenShift Serverless](https://www.openshift.com/learn/topics/serverless),
+[Red Hat AMQ Streams](https://www.redhat.com/en/technologies/jboss-middleware/amq),
+[Red Hat Integration](https://www.redhat.com/en/products/integration),
+[Red Hat Data Grid](https://www.redhat.com/en/technologies/jboss-middleware/data-grid),
+and [Red Hat build of Quarkus](https://access.redhat.com/products/quarkus), offer companies
+significant cost savings and multiple operational benefits by shifting infrastructure and
+provisioning responsibilities to the different frameworks. This enables you
+to solve problems quickly, at scale, and with high availability.
+
+This repository includes a practical business example so that we can adopt modern and agile application
+designs and implementations (containers, Serverless, streaming, etc.).
+
+The logical architecture diagram of this use case is:
+
+![Event-Driven Logical Architecture](./img/eda-logical-architecture.png "Event-Driven Logical Architecture")
+
+At the end of the instructions you will have deployed a full Event-Driven Architecture with the
+following deployment topology:
+
+![Event-Driven Physical Architecture](./img/eda-physical-architecture.png "Event-Driven Physical Architecture in OpenShift")
+
+This file include the list of steps to deploy easily this use case for your learning and testing efforts
+about these amazing technologies and products.
+
 ## Prepare OpenShift
 
-This demo has been tested in Red Hat OpenShift Container Platform 4.7 version.
+This architecture has been tested in Red Hat OpenShift Container Platform 4.7 version.
 
 As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespace:
 

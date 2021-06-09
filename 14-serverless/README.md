@@ -136,7 +136,7 @@ Now every time a new message is sent to `eda.cloud.events` topic or `eda.events.
 
 To send messages to events topic
 
-```bash
+```shell script
 ❯ oc run eda-serverless-kafka-producer -ti \
  --image=registry.redhat.io/amq7/amq-streams-kafka-27-rhel7:1.7.0 \
  --rm=true --restart=Never \
@@ -149,7 +149,7 @@ If you don't see a command prompt, try pressing enter.
 
 Checking that the event was processed by the `event-display` service:
 
-```bash
+```shell script
 ❯ oc logs -f event-display-64vkz-deployment-6dd7676664-6j7sz -c user-container
 ☁️  cloudevents.Event
 Validation: valid
@@ -164,6 +164,24 @@ Extensions,
   traceparent: 00-58cddc96c8c32beb14f2f1b84afdc144-61fe1778e98d1cd3-00
 Data,
   Hello Serverless World from Apache Kafka!
+```
+
+## Updating Service Image Version
+
+Once the Knative Service is deployed the image tag used will be fixed to the current at that moment.
+If we would like to update to the latest version of the image of the application, then you should
+execute the following commands:
+
+To update `backend-serverless` service:
+
+```shell script
+kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:1.0.0-SNAPSHOT
+```
+
+To update `data-streaming-serverless` service:
+
+```shell script
+kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:1.0.0-SNAPSHOT
 ```
 
 ## Main References
