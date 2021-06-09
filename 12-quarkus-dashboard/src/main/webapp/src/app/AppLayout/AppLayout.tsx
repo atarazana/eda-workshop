@@ -112,7 +112,7 @@ const AppLayout: React.FunctionComponent<IAppLayout> = ({ children }) => {
 
       console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
       
-      let eventSource = new EventSource(EVENT_SOURCE_URL)
+      let eventSource = new EventSource(EVENT_SOURCE_URL);
 
       eventSource.onmessage = e => handleAlertServerEvent(JSON.parse(e.data) as IAlert);
 

@@ -1,8 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
-import { Divider, PageSection, TextContent, Title, TitleSizes, Text } from '@patternfly/react-core';
-import { bottom } from '@patternfly/react-core/dist/js/helpers/Popper/thirdparty/popper-core';
+import { PageSection, TextContent, Title, TitleSizes, Text } from '@patternfly/react-core';
 
 export interface IAggregateMetric {
     name: string;
@@ -21,29 +20,38 @@ const AggregateMetrics: FunctionComponent<{ initial?: number }> = ({ initial = 0
 
     const columns = ['Name', 'Value', 'Unit', 'Qualifier', 'From', 'Group By', 'Timestamp'];
 
+    const handleServerEvent = (metric: IAggregateMetric) => {
+        addAggregateMetric(metric);   
+
+        const row: string[] = [metric.name, String(Math.round(metric.value)), metric.unit, metric.qualifier, metric.from, metric.groupByClause, metric.timestamp];
+        addRow(row);
+    }
+
     useEffect(() => {
         const timeout = 5;
 
         const EVENT_SOURCE_URL = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/aggregate-metrics/stream' : '/aggregate-metrics/stream'; 
 
         console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
-
-        let eventSource = new EventSource(EVENT_SOURCE_URL)
-        eventSource.onmessage = e => {
-            const aggregateMetric = JSON.parse(e.data) as IAggregateMetric;
-            addAggregateMetric(aggregateMetric);   
-
-            const row: string[] = [aggregateMetric.name, String(Math.round(aggregateMetric.value)), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp];
-            addRow(row);
-        }
-
+        
         fetch('/aggregate-metrics')
         .then(res => res.json())
         .then(data => {
             setAggregateMetrics(data);
             setRows(data.map((aggregateMetric: IAggregateMetric) => [aggregateMetric.name, String(aggregateMetric.unit == 'EUR' ? aggregateMetric.value.toFixed(2) : aggregateMetric.value), aggregateMetric.unit, aggregateMetric.qualifier, aggregateMetric.from, aggregateMetric.groupByClause, aggregateMetric.timestamp]));
         })
-        .catch(console.log)
+        .catch(console.log);
+
+        let eventSource = new EventSource(EVENT_SOURCE_URL);
+
+        eventSource.onmessage = e => handleServerEvent(JSON.parse(e.data) as IAggregateMetric);
+
+        eventSource.onerror = () => { eventSource.close(); }
+
+        return () => {
+            eventSource.close();
+        };
+
     }, []);
 
     const addAggregateMetric = (aggregateMetric: IAggregateMetric) => setAggregateMetrics(prevMetrics => [...prevMetrics, aggregateMetric])

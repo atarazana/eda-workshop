@@ -23,6 +23,20 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
 
     const columns = ['Id', 'Name', 'Definition', 'Expression', 'Duration', 'Timestamp'];
 
+    // const addAlert = (alert: IAlert) => setAlerts(prevAlerts => [...prevAlerts, alert])
+    const addRow = (row: string[]) => setRows(prevRows => [...prevRows, row])
+    
+    // const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
+    //     return prevAlerts.filter(element => element.id != alert.id);
+    // })
+    
+    const handleServerEvent = (alert: IAlert) => {
+        // addAlert(alert);   
+
+        const row: string[] = [alert.id, alert.name, alert.definition, alert.expression, alert.duration, alert.timestamp];
+        addRow(row);
+      }
+
     useEffect(() => {
         const timeout = 5;
 
@@ -30,30 +44,24 @@ const Alerts: FunctionComponent<{ initial?: number }> = ({ initial = 0 }) => {
 
         console.log(`process.env.NODE_ENV=${process.env.NODE_ENV}`);
 
-        let eventSource = new EventSource(EVENT_SOURCE_URL)
-        eventSource.onmessage = e => {
-            const alert = JSON.parse(e.data) as IAlert;
-            // addAlert(alert);   
-
-            const row: string[] = [alert.id, alert.name, alert.definition, alert.expression, alert.duration, alert.timestamp];
-            addRow(row);
-        }
-
         fetch('/alerts')
         .then(res => res.json())
         .then( data => {
             //setAlerts(data);
             setRows(data.map((element: IAlert) => [element.id, element.name, element.definition, element.expression, element.duration, element.timestamp]));
         })
-        .catch(console.log)
-    }, []);
+        .catch(console.log);
 
-    // const addAlert = (alert: IAlert) => setAlerts(prevAlerts => [...prevAlerts, alert])
-    const addRow = (row: string[]) => setRows(prevRows => [...prevRows, row])
-    
-    // const removeAlert = (alert: IAlert) => setAlerts(prevAlerts => {
-    //     return prevAlerts.filter(element => element.id != alert.id);
-    // })
+        let eventSource = new EventSource(EVENT_SOURCE_URL);
+
+        eventSource.onmessage = e => handleServerEvent(JSON.parse(e.data) as IAlert);
+        
+        eventSource.onerror = () => { eventSource.close(); }
+
+        return () => {
+            eventSource.close();
+        };
+    }, []);
 
     return <React.Fragment>
                 <PageSection>

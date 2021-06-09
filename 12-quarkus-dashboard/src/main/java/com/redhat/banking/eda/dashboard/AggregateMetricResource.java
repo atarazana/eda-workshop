@@ -68,7 +68,7 @@ public class AggregateMetricResource {
     @Path("/by-name")
     public List<AggregateMetric> aggregateMetricsByName(@QueryParam("name") String name,
                                                         @QueryParam("groupByClause") String groupByClause,
-                                                        @DefaultValue("30") @QueryParam("period") int period) {
+                                                        @DefaultValue("300") @QueryParam("period") int periodInSeconds) {
         LOG.info("aggregateMetricsByName");
 
         QueryFactory queryFactory = Search.getQueryFactory(cache);
@@ -85,7 +85,7 @@ public class AggregateMetricResource {
 
         return queryResult.list()
                 .stream()
-                .filter(c -> c.getTimestamp().compareTo(Instant.now().minusSeconds(period)) > 0)
+                .filter(c -> c.getTimestamp().compareTo(Instant.now().minusSeconds(periodInSeconds)) > 0)
                 .collect(Collectors.toList());
     }
 
