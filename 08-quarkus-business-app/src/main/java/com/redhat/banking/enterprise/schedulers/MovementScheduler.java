@@ -1,7 +1,6 @@
 package com.redhat.banking.enterprise.schedulers;
 
 import com.redhat.banking.enterprise.entities.Account;
-import com.redhat.banking.enterprise.entities.AccountStatusEnum;
 import com.redhat.banking.enterprise.entities.Client;
 import com.redhat.banking.enterprise.entities.Movement;
 import com.redhat.banking.enterprise.entities.MovementTypeEnum;
@@ -27,6 +26,7 @@ public class MovementScheduler {
     private static final Logger LOG = LoggerFactory.getLogger(MovementScheduler.class);
 
     private static final int MAX_TRANSFER = 1000000;
+    private static final int MIN_TRANSFER = 10000;
 
     RegionRepository regionRepository;
     @Inject
@@ -57,39 +57,36 @@ public class MovementScheduler {
             return;
         }
 
-        // Generate movements only in ACTIVE accounts
         for (Account account : accounts) {
-            if (AccountStatusEnum.ACTIVE.value().equals(account.status)) {
-                // Add a random number of movements with random outgoing or incoming
-                int movementsSize = random.nextInt(10);
+            // Add a random number of movements with random outgoing or incoming
+            int movementsSize = random.nextInt(10);
 
-                LOG.info("Generating {} movements for the client {} in account {}-{}-{}",
-                        movementsSize,
-                        client.email,
-                        account.region_code, account.sequence, account.status);
+            LOG.info("Generating {} movements for the client {} in account {}-{}-{}",
+                    movementsSize,
+                    client.email,
+                    account.region_code, account.sequence, account.status);
 
-                for (int i = 0; i < movementsSize; i++) {
-                    Movement movement = new Movement();
-                    movement.account_id = account.id;
-                    movement.movement_date = Instant.now();
+            for (int i = 0; i < movementsSize; i++) {
+                Movement movement = new Movement();
+                movement.account_id = account.id;
+                movement.movement_date = Instant.now();
 
-                    // Random Incoming or Outgoing movement
-                    MovementTypeEnum movementTypeEnum = MovementTypeEnum.values()[random.nextInt(MovementTypeEnum.values().length)];
-                    movement.description = movementTypeEnum.value();
-                    if (MovementTypeEnum.INCOMING.equals(movementTypeEnum)) {
-                        movement.quantity = random.nextInt(MAX_TRANSFER);
-                    } else {
-                        movement.quantity = random.nextInt(MAX_TRANSFER) * -1;
-                    }
-
-                    // persist it
-                    movementRepository.persist(movement);
-
-                    LOG.info("Movement[{}] {} quantity by {} in account {}-{}-{} for client {}",
-                            i, movement.quantity, movement.description,
-                            account.region_code, account.sequence, account.status,
-                            client.email);
+                // Random Incoming or Outgoing movement
+                MovementTypeEnum movementTypeEnum = MovementTypeEnum.values()[random.nextInt(MovementTypeEnum.values().length)];
+                movement.description = movementTypeEnum.value();
+                if (MovementTypeEnum.INCOMING.equals(movementTypeEnum)) {
+                    movement.quantity = random.nextInt(MAX_TRANSFER);
+                } else {
+                    movement.quantity = random.nextInt(MIN_TRANSFER) * -1;
                 }
+
+                // persist it
+                movementRepository.persist(movement);
+
+                LOG.info("Movement[{}] {} quantity by {} in account {}-{}-{} for client {}",
+                        i, movement.quantity, movement.description,
+                        account.region_code, account.sequence, account.status,
+                        client.email);
             }
         }
     }

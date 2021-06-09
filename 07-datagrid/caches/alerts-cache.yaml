@@ -11,10 +11,10 @@ spec:
     <infinispan>
       <cache-container>
         <replicated-cache name="alerts" mode="SYNC" statistics="true">
-          <memory>
-            <binary eviction="MEMORY" size="400000000"/> <!-- 400 MB -->
+          <memory>                          
+            <binary eviction="MEMORY" size="419430400"/> <!-- 400 MB -->
           </memory>
-          <expiration lifespan="5184000"/> <!-- 1 day -->
+          <expiration lifespan="7200000"/> <!-- 2 hours -->
         </replicated-cache>
       </cache-container>
     </infinispan>

@@ -72,8 +72,9 @@ public class AccountDBConverter {
                         .setId(String.valueOf(accountDB.id))
                         .setVariant(AlertVariant.warning)
                         .setName("Account Inactivated")
-                        .setDefinition("Account inactivated in region " + accountDB.region_code)
-                        .setDuration("1m")
+                        .setDefinition("Account " + accountDB.region_code + "-" + accountDB.sequence +
+                                " inactivated in region " + accountDB.region_code.toUpperCase())
+                        .setDuration("2m")
                         .setExpression("")
                         .setLabels(new HashMap<>())
                         .setAnnotations(new HashMap<>())
@@ -90,8 +91,9 @@ public class AccountDBConverter {
                         .setId(String.valueOf(accountDB.id))
                         .setVariant(AlertVariant.danger)
                         .setName("Account Closed")
-                        .setDefinition("Account closed in region " + accountDB.region_code)
-                        .setDuration("1m")
+                        .setDefinition("Account " + accountDB.region_code + "-" + accountDB.sequence +
+                                " closed in region " + accountDB.region_code.toUpperCase())
+                        .setDuration("3m")
                         .setExpression("")
                         .setLabels(new HashMap<>())
                         .setAnnotations(new HashMap<>())

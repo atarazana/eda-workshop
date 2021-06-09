@@ -12,9 +12,9 @@ spec:
       <cache-container>
         <replicated-cache name="aggregate-metrics" mode="SYNC" statistics="true">
           <memory>
-            <binary eviction="MEMORY" size="400000000"/> <!-- 400 MB -->
+            <binary eviction="MEMORY" size="419430400"/> <!-- 400 MB -->
           </memory>
-          <expiration lifespan="5184000"/> <!-- 1 day -->
+          <expiration lifespan="86400000"/> <!-- 1 day -->          
         </replicated-cache>
       </cache-container>
     </infinispan>

@@ -26,27 +26,21 @@ public class RegionWithAccounts {
         region = accountAndRegion.region;
         accounts.add(accountAndRegion.account);
 
-        // TODO Centralize in one place
+        // Update Balance of the region with the new data
+        balanceRegion += accountAndRegion.account.accountBalance;
+        // Update the account status counters
+        switch (accountAndRegion.account.account.status) {
+            case "ACTIVE":
+                accountsActive++;
+                break;
 
-        for (AccountWithMovements accountWithMovement : accounts) {
-            // Updating Region Account Balance
-            //balanceRegion += accountAndRegion.account.accountBalance;
-            balanceRegion += accountWithMovement.accountBalance;
-            //switch (accountAndRegion.account.status) {
-            //switch (accountAndRegion.account.account.status) {
-            switch (accountWithMovement.account.status) {
-                case "ACTIVE":
-                    accountsActive++;
-                    break;
+            case "INACTIVE":
+                accountsInactive++;
+                break;
 
-                case "INACTIVE":
-                    accountsInactive++;
-                    break;
-
-                case "CLOSED":
-                    accountsClosed++;
-                    break;
-            }
+            case "CLOSED":
+                accountsClosed++;
+                break;
         }
 
         return this;
@@ -60,25 +54,25 @@ public class RegionWithAccounts {
             AccountWithMovements a = it.next();
             if (a.account.id == accountAndRegion.account.account.id) {
                 it.remove();
-                // Updating Region Account Balance
+                // Update Region Account Balance
                 balanceRegion -= accountAndRegion.account.accountBalance;
+
+                // Update the account status counters
+                switch (accountAndRegion.account.account.status) {
+                    case "ACTIVE":
+                        accountsActive--;
+                        break;
+
+                    case "INACTIVE":
+                        accountsInactive--;
+                        break;
+
+                    case "CLOSED":
+                        accountsClosed--;
+                        break;
+                }
                 break;
             }
-        }
-
-        //switch (accountAndRegion.account.status) {
-        switch (accountAndRegion.account.account.status) {
-            case "ACTIVE":
-                accountsActive--;
-                break;
-
-            case "INACTIVE":
-                accountsInactive--;
-                break;
-
-            case "CLOSED":
-                accountsClosed--;
-                break;
         }
 
         return this;

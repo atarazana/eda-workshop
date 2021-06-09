@@ -12,3 +12,10 @@ spec:
     spec:
       containers:
         - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/dashboard:1.0.0-SNAPSHOT
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2
+              memory: 2Gi
