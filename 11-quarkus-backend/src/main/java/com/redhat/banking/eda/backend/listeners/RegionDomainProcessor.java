@@ -76,7 +76,7 @@ public class RegionDomainProcessor {
         AggregateMetric accountsClosedMetric = AggregateMetric.newBuilder()
                 .setName("Accounts Closed by Region")
                 .setUnit("Accounts")
-                .setValue(Double.valueOf(accountsInactive))
+                .setValue(Double.valueOf(accountsClosed))
                 .setQualifier("COUNT")
                 .setFrom("Region(" + regionCode + ")")
                 .setGroupByClause(regionCode)
