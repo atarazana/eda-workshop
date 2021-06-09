@@ -2,6 +2,8 @@ package com.redhat.banking.eda.dashboard;
 
 import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
 import io.quarkus.infinispan.client.Remote;
+import io.smallrye.mutiny.Multi;
+
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -9,7 +11,7 @@ import org.infinispan.client.hotrod.Search;
 import org.infinispan.query.dsl.Query;
 import org.infinispan.query.dsl.QueryFactory;
 import org.infinispan.query.dsl.QueryResult;
-import org.jboss.resteasy.annotations.SseElementType;
+import org.jboss.resteasy.reactive.RestSseElementType;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,7 @@ public class AggregateMetricResource {
 
     @Inject
     @Channel("aggregate-metrics-stream")
-    Publisher<AggregateMetric> metrics;
+    Multi<AggregateMetric> metrics;
 
     @Inject
     @Remote("aggregate-metrics")
@@ -111,8 +113,8 @@ public class AggregateMetricResource {
     @GET
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    @SseElementType(MediaType.APPLICATION_JSON)
-    public Publisher<AggregateMetric> stream() {
+    @RestSseElementType(MediaType.APPLICATION_JSON)
+    public Multi<AggregateMetric> stream() {
         return metrics;
     }
 

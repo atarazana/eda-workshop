@@ -17,20 +17,20 @@ import com.redhat.banking.eda.dashboard.valueobjects.Alert;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
-import org.jboss.resteasy.annotations.SseElementType;
-import org.reactivestreams.Publisher;
+import org.jboss.resteasy.reactive.RestSseElementType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.quarkus.infinispan.client.Remote;
+import io.smallrye.mutiny.Multi;
 
 @Path("/alerts")
 public class AlertResource {
     private static final Logger LOG = LoggerFactory.getLogger(AlertResource.class);
 
     @Inject
-    @Channel("alerts-stream") Publisher<Alert> alerts; 
+    @Channel("alerts-stream") Multi<Alert> alerts; 
 
     @Inject 
     @Remote("alerts")
@@ -62,8 +62,8 @@ public class AlertResource {
     @GET
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS) 
-    @SseElementType(MediaType.APPLICATION_JSON) 
-    public Publisher<Alert> stream() { 
+    @RestSseElementType(MediaType.APPLICATION_JSON) 
+    public Multi<Alert> stream() { 
         return alerts;
     }
 
