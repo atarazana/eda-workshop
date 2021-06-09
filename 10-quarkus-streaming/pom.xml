@@ -98,35 +98,17 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.glassfish</groupId>-->
-        <!--            <artifactId>jakarta.json</artifactId>-->
-        <!--        </dependency>-->
         <!-- Test Kafka and Messaging Extensions -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams-test-utils</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.kafka</groupId>-->
-        <!--            <artifactId>kafka_2.12</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash; Test Debezium Extensions &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.debezium</groupId>-->
-        <!--            <artifactId>debezium-core</artifactId>-->
-        <!--            <version>${debezium.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.debezium</groupId>-->
-        <!--            <artifactId>debezium-core</artifactId>-->
-        <!--            <version>${debezium.version}</version>-->
-        <!--            <type>test-jar</type>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>io.smallrye.reactive</groupId>
+            <artifactId>smallrye-reactive-messaging-in-memory</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -64,7 +64,7 @@ To download the schemas in Service Registry execute:
 To deploy the application using the Source-to-Image capabilities of OpenShift:
 
 ```shell script
-./mvnw package -DskipTests=true -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true
+./mvnw package -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true
 ```
 
 ## Provided examples
