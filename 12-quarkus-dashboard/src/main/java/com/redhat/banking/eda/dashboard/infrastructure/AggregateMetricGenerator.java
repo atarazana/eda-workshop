@@ -27,6 +27,8 @@ public class AggregateMetricGenerator {
 
     private Random random = new Random();
 
+    private static Double accumulatedBalanceFinland = 0.0;
+
     @ConfigProperty(name = "dummy.generator")
     String dummyGenerator;
 
@@ -54,9 +56,19 @@ public class AggregateMetricGenerator {
 
     public AggregateMetric generateBalanceByRegion() {
         String region = regions[random.nextInt(regions.length)];
+
+        Double balance = null;
+        if (region == "Finland") {
+            accumulatedBalanceFinland += random.nextInt(1000) + random.nextDouble();
+            balance = accumulatedBalanceFinland;
+            logger.info("Accumulated Balance Finland " + accumulatedBalanceFinland);
+        } else {
+            balance = random.nextInt(1000) + random.nextDouble();
+        }
+        
         AggregateMetric metric = new AggregateMetric(
                         "Balance by Region", 
-                        random.nextInt(1000) + random.nextDouble(), 
+                        balance, 
                         "EUR", 
                         "COUNT", 
                         "Region(" + region + ")", 
