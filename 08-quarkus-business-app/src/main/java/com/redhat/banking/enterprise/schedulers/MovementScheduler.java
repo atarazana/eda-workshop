@@ -25,8 +25,8 @@ public class MovementScheduler {
 
     private static final Logger LOG = LoggerFactory.getLogger(MovementScheduler.class);
 
-    private static final int MAX_TRANSFER = 10000;
-    private static final int MIN_TRANSFER = 10000;
+    private static final int MAX_TRANSFER = 1000;
+    private static final int MIN_TRANSFER = 100;
 
     RegionRepository regionRepository;
     @Inject
