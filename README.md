@@ -33,7 +33,7 @@ This architecture has been tested in Red Hat OpenShift Container Platform 4.7 ve
 
 As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespace:
 
-```shell script
+```shell
 ❯ oc login -u user
 ❯ oc new-project eda-workshop
 ```

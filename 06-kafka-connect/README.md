@@ -2,7 +2,7 @@
 
 To deploy Kafka Connect requires create a initial `ImageStream` of the container image:
 
-```shell script
+```shell
 oc apply -f eda-kafka-connect-is.yaml 
 ```
 
@@ -11,14 +11,14 @@ using the build capabilities of Red Hat AMQ Streams.
 
 To deploy Kafka Connect cluster exposing metrics:
 
-```shell script
+```shell
 ❯ oc apply -f configmap/
 ❯ oc apply -f eda-kafka-connect.yaml 
 ```
 
 After some minutes the KafkaConnect Cluster will be ready:
 
-```shell script
+```shell
 ❯ oc get kc eda-kafka-connect -o yaml
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
@@ -64,13 +64,13 @@ The `status` lists the different KafkaConnectors available to use in this KafkaC
 
 To test and verify that KafkaConnect cluster is ready, we will deploy a simple source KafkaConnector:
 
-```shell script
+```shell
 oc apply -f connectors/
 ```
 
 To list the current KafkaConnectors:
 
-```shell script
+```shell
 ❯ oc get kafkaconnectors
 NAME                    CLUSTER             CONNECTOR CLASS                                           MAX TASKS   READY
 file-source-connector   eda-kafka-connect   org.apache.kafka.connect.file.FileStreamSourceConnector   1           True
@@ -78,7 +78,7 @@ file-source-connector   eda-kafka-connect   org.apache.kafka.connect.file.FileSt
 
 If this KafkaConnector run successfully a new KafkaTopic should be created
 
-```shell script
+```shell
 ❯ oc get kt
 NAME                                CLUSTER     PARTITIONS   REPLICATION FACTOR   READY
 samples.connect.file-source-topic   event-bus   1            3                    True
@@ -88,13 +88,13 @@ samples.connect.file-source-topic   event-bus   1            3                  
 
 To deploy the Debezium Connectors for MySQL to get the events from the MySQL Databases:
 
-```shell script
+```shell
 oc apply -f debezium-mysql/
 ```
 
 To check the status of the current `KafkaConnectors` deployed:
 
-```shell script
+```shell
 ❯ oc get kafkaconnector
 NAME                                CLUSTER             CONNECTOR CLASS                                           MAX TASKS   READY
 file-source-connector               eda-kafka-connect   org.apache.kafka.connect.file.FileStreamSourceConnector   1           True
@@ -104,7 +104,7 @@ mysql-inventory-source-connector    eda-kafka-connect   io.debezium.connector.my
 
 To verify that all the KafkaTopics from each MySQL table is created:
 
-```shell script
+```shell
 ❯ oc get kt
 NAME                                                                              CLUSTER     PARTITIONS   REPLICATION FACTOR   READY
 dbserver01                                                                        event-bus   1            3                    True
@@ -126,6 +126,6 @@ schema-changes.inventory                                                        
 
 To restart a KafkaConnector:
 
-```shell script
+```shell
 oc annotate kafkaconnector mysql-enterprise-source-connector strimzi.io/restart=true
 ```

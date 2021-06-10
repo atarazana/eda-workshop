@@ -2,7 +2,7 @@
 
 To deploy Red Hat DataGrid execute:
 
-```shell script
+```shell
 oc apply -f secrets/
 oc apply -f eda-infinispan.yaml
 ```
@@ -14,7 +14,7 @@ Secrets contain a set of credentials of the following users:
 
 To check the current status of the DataGrid:
 
-```shell script
+```shell
 ❯ oc get infinispan eda-infinispan -o yaml
 # ...
 status:
@@ -35,7 +35,7 @@ status:
 
 A set of new pods will be deployed:
 
-```shell script
+```shell
 ❯ oc get pod | grep infinispan
 NAME               READY   STATUS    RESTARTS   AGE
 eda-infinispan-0   1/1     Running   0          10m
@@ -45,7 +45,7 @@ eda-infinispan-2   1/1     Running   0          7m58s
 
 To get the route to access DataGrid Administration Console:
 
-```shell script
+```shell
 oc get route eda-infinispan-external -o jsonpath='{.spec.host}'
 ```
 
@@ -56,13 +56,13 @@ information.
 
 To deploy Data Caches:
 
-```shell script
+```shell
 oc apply -f caches/
 ```
 
 We could test and verify the Caches:
 
-```shell script
+```shell
 ❯ oc get cache
 NAME                               AGE
 eda-infinispan-aggregate-metrics   7s
@@ -73,7 +73,7 @@ eda-infinispan-regions             7s
 
 To get the current status of a Data Cache:
 
-```shell script
+```shell
 ❯ oc get cache eda-infinispan-clients -o yaml
 apiVersion: infinispan.org/v2alpha1
 kind: Cache

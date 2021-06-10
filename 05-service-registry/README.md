@@ -2,13 +2,13 @@
 
 To deploy Service Registry as API Schema platform execute:
 
-```shell script
+```shell
 oc apply -f apicurio-registry.yaml
 ```
 
 To check the current status of the Service Registry:
 
-```shell script
+```shell
 ❯ oc get apicurioregistry eda-registry -o yaml
 # ...
 spec:
@@ -45,7 +45,7 @@ status:
 
 A new pod will be deployed:
 
-```shell script
+```shell
 ❯ oc get pod | grep registry
 NAME                                       READY   STATUS    RESTARTS   AGE
 eda-registry-deployment-67c7895564-cbfvf   1/1     Running   0          10m
@@ -54,6 +54,6 @@ eda-registry-deployment-67c7895564-cbfvf   1/1     Running   0          10m
 Service Registry is available outside OpenShift cluster with the next route over
 the `eda-registry-service` service:
 
-```shell script
+```shell
 oc get route eda-registry-ingress-h7t7p -o jsonpath='{.spec.host}'
 ```

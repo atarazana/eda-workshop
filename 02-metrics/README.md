@@ -26,7 +26,7 @@ we could manage the metrics from our Apache Kafka Cluster.
 
 To deploy a local Prometheus Server in ```eda-workshop``` namespace.
 
-```shell script
+```shell
 ❯ oc apply -f prometheus/prometheus-additional.yaml
 ❯ oc apply -f prometheus/strimzi-pod-monitor.yaml
 ❯ oc apply -f prometheus/prometheus-rules.yaml
@@ -35,7 +35,7 @@ To deploy a local Prometheus Server in ```eda-workshop``` namespace.
 
 A Prometheus instance will be available with a service and a route:
 
-```shell script
+```shell
 ❯ oc get svc
 NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 prometheus-operated   ClusterIP   None             <none>        9090/TCP   34s
@@ -46,13 +46,13 @@ prometheus  prometheus-eda-workshop.apps.labs.sandbox1754.opentlc.com         pr
 
 To get the route to access Prometheus:
 
-```shell script
+```shell
 oc get route prometheus -o jsonpath='{.spec.host}'
 ```
 
 Deploy Grafana:
 
-```shell script
+```shell
 oc apply -f grafana/grafana.yaml
 ```
 
@@ -63,13 +63,13 @@ to get the metrics.
 Grafana has a set of dashboards to review the metrics from Apache Zookeeper and Apache Kafka Cluster. We could
 deploy it as:
 
-```shell script
+```shell
 oc apply -f grafana/dashboards/
 ```
 
 To get the route to access Grafana:
 
-```shell script
+```shell
 oc get route grafana-route -o jsonpath='{.spec.host}'
 ```
 

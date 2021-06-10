@@ -8,7 +8,7 @@ Sample database with a model of regions, clients, accounts and movements.
 
 To build this image:
 
-```shell script
+```shell
 oc new-build ./mysql/enterprise --name=mysql-enterprise
 oc start-build mysql-enterprise --from-dir=./mysql/enterprise --follow
 oc new-app mysql-enterprise:latest -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw
@@ -17,7 +17,7 @@ oc label deployment mysql-enterprise app.kubernetes.io/part-of=mysql-databases
 
 To verify the new database:
 
-```shell script
+```shell
 $ oc rsh mysql-enterprise-5488f4997d-8ppkm
 $ mysql -u $MYSQL_USER -p$MYSQL_PASSWORD enterprise
 mysql> show databases;
@@ -45,14 +45,14 @@ mysql> show tables;
 
 Sample database with a model of customers, products and orders.
 
-```shell script
+```shell
 oc new-build ./mysql/inventory --name=mysql-inventory
 oc start-build mysql-inventory --from-dir=./mysql/inventory --follow
 oc new-app mysql-inventory:latest -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw
 oc label deployment mysql-inventory app.kubernetes.io/part-of=mysql-databases
 ```
 
-```shell script
+```shell
 ❯ oc rsh mysql-inventory-95f6fc6b4-bpvlz 
 $ mysql -u $MYSQL_USER -p$MYSQL_PASSWORD inventory
 mysql> show databases;

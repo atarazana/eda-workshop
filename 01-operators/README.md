@@ -5,7 +5,7 @@ Operators running on a cluster.
 
 **NOTE:** To deploy the different Operators we need to use an user with ```cluster-admin``` role.
 
-```shell script
+```shell
 oc login -u admin-user
 ```
 
@@ -13,14 +13,14 @@ oc login -u admin-user
 
 Install the global (or cluster-wide) operators running the following command:
 
-```shell script
+```shell
 oc create -f cluster-wide/
 ```
 
 These operators will be installed in the ```openshift-operators``` namespace and will be usable
 from any namespaces in the cluster.
 
-```shell script
+```shell
 ❯ oc get pod -n openshift-operators
 NAME                                                  READY   STATUS    RESTARTS   AGE
 amq-streams-cluster-operator-v1.7.1-bcf69549b-ntdm2   1/1     Running   0          25h
@@ -33,7 +33,7 @@ knative-operator-55b5877c97-m4gtn                     1/1     Running   0       
 
 To check the subscription statuses:
 
-```shell script
+```shell
 ❯ oc get csv
 NAME                               DISPLAY                                           VERSION   REPLACES                      PHASE
 amqstreams.v1.7.1                  Red Hat Integration - AMQ Streams                 1.7.1     amqstreams.v1.7.0             Succeeded
@@ -46,14 +46,14 @@ service-registry-operator.v2.0.0   Red Hat Integration - Service Registry Operat
 
 Install the local (or namespace-wide) operators running the following command:
 
-```shell script
+```shell
 oc create -f namespace-wide/
 ```
 
 These operators will be installed in the ```eda-workshop``` namespace and will be usable
 from only that namespace.
 
-```shell script
+```shell
 ❯ oc get pod -n eda-workshop
 NAME                                         READY   STATUS             RESTARTS   AGE
 grafana-operator-5ccd457bc6-rxs6t            1/1     Running            0          28h
@@ -62,7 +62,7 @@ prometheus-operator-7d874db8c-rpfmm          1/1     Running            0       
 
 To check the subscription statuses:
 
-```shell script
+```shell
 ❯ oc get csv
 NAME                               DISPLAY                VERSION   REPLACES                      PHASE
 grafana-operator.v3.10.1           Grafana Operator       3.10.1    grafana-operator.v3.10.0      Succeeded

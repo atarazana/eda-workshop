@@ -5,7 +5,7 @@ services of the solution as Knative Services, based in Red Hat OpenShift Serverl
 
 Before to deploy the new services, we will scale down the current applications:
 
-```shell script
+```shell
 oc scale dc/data-streaming --replicas=0
 oc scale dc/backend --replicas=0
 ```
@@ -14,13 +14,13 @@ oc scale dc/backend --replicas=0
 
 To deploy the Knative Serving services:
 
-```shell script
+```shell
 oc create -f knative-serving/knative-serving.yaml
 ```
 
 To verify that Knative Serving Services are available:
 
-```shell script
+```shell
 ❯ oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'
 DependenciesInstalled=True
 DeploymentsAvailable=True
@@ -31,7 +31,7 @@ VersionMigrationEligible=True
 
 Also you could check the pods in `knative-serving` namespace:
 
-```shell script
+```shell
 ❯ oc get pods -n knative-serving
 activator-7dff495b5c-bk2t8                               2/2     Running     0          3d
 activator-7dff495b5c-v6qxm                               2/2     Running     0          3d
@@ -51,13 +51,13 @@ webhook-bb8ccfd57-cfbqs                                  2/2     Running     0  
 
 To deploy the Knative Serving services:
 
-```shell script
+```shell
 oc create -f knative-eventing/knative-eventing.yaml
 ```
 
 To verify that Knative Eventing Services are available:
 
-```shell script
+```shell
 ❯ oc get knativeeventing.operator.knative.dev/knative-eventing -n knative-eventing --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}'
 DependenciesInstalled=True
 DeploymentsAvailable=True
@@ -69,13 +69,13 @@ VersionMigrationEligible=True
 Enable Serverless Eventing to manage Kafka cluster deploying a `KnativeKafka` definition using
 the current Apache Kafka cluster deployed:
 
-```shell script
+```shell
 oc apply -f knative-eventing/knative-kafka.yaml -n knative-eventing
 ```
 
 Also you could check the pods in `knative-eventing` namespace:
 
-```shell script
+```shell
 ❯ oc get pods -n knative-eventing
 eventing-controller-7b9cdbf9cf-s94zk        1/1     Running   0          15h
 eventing-webhook-b8f8cdc96-wf6bz            1/1     Running   0          15h
@@ -93,7 +93,7 @@ sugar-controller-5f6fb848b8-fzx9w           1/1     Running   0          15h
 
 Deploy sample KafkaTopic for testing proposal:
 
-```shell script
+```shell
 oc apply -f knative-eventing/knative-kafka/topics
 ```
 
@@ -101,7 +101,7 @@ oc apply -f knative-eventing/knative-kafka/topics
 
 To deploy our Application Serverless Services:
 
-```shell script
+```shell
 oc apply -f service/data-streaming-service.yaml
 oc apply -f service/backend-service.yaml
 oc apply -f service/event-display-service.yaml
@@ -109,7 +109,7 @@ oc apply -f service/event-display-service.yaml
 
 You could check the Application Serverless Services
 
-```shell script
+```shell
 ❯ kn service list
 NAME                        URL                                                                               LATEST                            AGE   CONDITIONS   READY   REASON
 backend-serverless          http://backend-serverless-eda-workshop.apps.labs.sandbox1754.opentlc.com          backend-serverless-00001          17h   3 OK / 3     True    
@@ -119,13 +119,13 @@ event-display-serverless    http://event-display-serverless-eda-workshop.apps.la
 
 Deploy Kafka Sources to consume messages from Kafka to start up the services
 
-```shell script
+```shell
 oc apply -f knative-eventing/kafka-source
 ```
 
 You could check the `KafkaSource` objects:
 
-```shell script
+```shell
 ❯ oc get kafkasource
 NAME                          TOPICS                                                                                                                                               BOOTSTRAPSERVERS                                      READY   REASON   AGE
 backend-kafka-source          ["eda.data.accounts","eda.data.clients","eda.data.movements","eda.events.domain.clients","eda.events.domain.accounts","eda.events.domain.regions"]   ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             17h
@@ -136,7 +136,7 @@ Now every time a new message is sent to `eda.cloud.events` topic or `eda.events.
 
 To send messages to events topic
 
-```shell script
+```shell
 ❯ oc run eda-serverless-kafka-producer -ti \
  --image=registry.redhat.io/amq7/amq-streams-kafka-27-rhel7:1.7.0 \
  --rm=true --restart=Never \
@@ -149,7 +149,7 @@ If you don't see a command prompt, try pressing enter.
 
 Checking that the event was processed by the `event-display` service:
 
-```shell script
+```shell
 ❯ oc logs -f event-display-64vkz-deployment-6dd7676664-6j7sz -c user-container
 ☁️  cloudevents.Event
 Validation: valid
@@ -174,13 +174,13 @@ execute the following commands:
 
 To update `backend-serverless` service:
 
-```shell script
+```shell
 kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:1.0.0-SNAPSHOT
 ```
 
 To update `data-streaming-serverless` service:
 
-```shell script
+```shell
 kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:1.0.0-SNAPSHOT
 ```
 

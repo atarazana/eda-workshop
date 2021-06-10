@@ -8,7 +8,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 You can run your application in dev mode that enables live coding using:
 
-```shell script
+```shell
 ./mvnw compile quarkus:dev
 ```
 
@@ -18,7 +18,7 @@ You can run your application in dev mode that enables live coding using:
 
 The application can be packaged using:
 
-```shell script
+```shell
 ./mvnw package
 ```
 
@@ -27,7 +27,7 @@ Be aware that it’s not an _über-jar_ as the dependencies are copied into the 
 
 If you want to build an _über-jar_, execute the following command:
 
-```shell script
+```shell
 ./mvnw package -Dquarkus.package.type=uber-jar
 ```
 
@@ -37,13 +37,13 @@ The application is now runnable using `java -jar target/quarkus-app/quarkus-run.
 
 You can create a native executable using: 
 
-```shell script
+```shell
 ./mvnw package -Pnative
 ```
 
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
 
-```shell script
+```shell
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
@@ -55,7 +55,7 @@ If you want to learn more about building native executables, please consult http
 
 To deploy the application using the Source-to-Image capabilities of OpenShift:
 
-```shell script
+```shell
 ./mvnw package -DskipTests=true -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true
 ```
 
@@ -63,7 +63,7 @@ To deploy the application using the Source-to-Image capabilities of OpenShift:
 
 To register the schemas in Service Registry execute:
 
-```shell script
+```shell
 ❯ ./mvnw generate-sources -Papicurio -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/api
 ```
 
