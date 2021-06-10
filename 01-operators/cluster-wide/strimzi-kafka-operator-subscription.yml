@@ -1,13 +1,12 @@
----
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: service-registry-operator
+  name: strimzi-kafka-operator
   namespace: openshift-operators
 spec:
-  channel: 2.0.x
+  channel: stable
   installPlanApproval: Automatic
-  name: service-registry-operator
-  source: redhat-operators
+  name: strimzi-kafka-operator
+  source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: service-registry-operator.v2.0.0
+  startingCSV: strimzi-cluster-operator.v0.23.0

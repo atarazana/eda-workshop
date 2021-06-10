@@ -2,12 +2,12 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: amq-streams
+  name: infinispan
   namespace: openshift-operators
 spec:
-  channel: stable
+  channel: 2.1.x
   installPlanApproval: Automatic
-  name: amq-streams
-  source: redhat-operators
+  name: infinispan
+  source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: amqstreams.v1.7.1
+  startingCSV: infinispan-operator.v1.1.2

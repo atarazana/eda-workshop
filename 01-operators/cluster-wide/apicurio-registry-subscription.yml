@@ -2,12 +2,12 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: datagrid
+  name: apicurio-registry
   namespace: openshift-operators
 spec:
-  channel: 8.2.x
+  channel: 2.x
   installPlanApproval: Automatic
-  name: datagrid
-  source: redhat-operators
+  name: apicurio-registry
+  source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: datagrid-operator.v8.2.0
+  startingCSV: apicurio-registry-operator.v1.0.0-v2.0.0.final
