@@ -53,3 +53,34 @@ CREATE TABLE movements (
   quantity INTEGER NOT NULL,
   FOREIGN KEY movement_account (account_id) REFERENCES accounts(id)
 ) AUTO_INCREMENT = 10001;
+
+# Populate database with initial data
+
+# Create Regions
+
+INSERT INTO regions
+VALUES (default,"es","Spain","Spain"),
+       (default,"pt","Portugal","Portugal"),
+       (default,"uk","United Kingdom","United Kingdom"),
+       (default,"it","Italy","Italy"),
+       (default,"fr","France","France"),
+       (default,"ge","Germany","Germany"),
+       (default,"us","United States of America","United States of America");
+
+# Update Regions
+
+UPDATE regions SET description = 'ES' WHERE id = 1;
+UPDATE regions SET description = 'PT' WHERE id = 2;
+UPDATE regions SET description = 'UK' WHERE id = 3;
+UPDATE regions SET description = 'IT' WHERE id = 4;
+UPDATE regions SET description = 'FR' WHERE id = 5;
+UPDATE regions SET description = 'GE' WHERE id = 6;
+UPDATE regions SET description = 'US' WHERE id = 7;
+
+UPDATE regions SET description = 'Spain' WHERE id = 1;
+UPDATE regions SET description = 'Portugal' WHERE id = 2;
+UPDATE regions SET description = 'United Kingdom' WHERE id = 3;
+UPDATE regions SET description = 'Italy' WHERE id = 4;
+UPDATE regions SET description = 'France' WHERE id = 5;
+UPDATE regions SET description = 'Germany' WHERE id = 6;
+UPDATE regions SET description = 'United States of America' WHERE id = 7;

@@ -2,21 +2,9 @@
 # Switch to this database
 USE enterprise;
 
-# Regions
-
-INSERT INTO regions
-VALUES (default,"es","Spain","Spain"),
-       (default,"pt","Portugal","Portugal"),
-       (default,"uk","United Kingdom","United Kingdom"),
-       (default,"it","Italy","Italy"),
-       (default,"fr","France","France"),
-       (default,"ge","Germany","Germany"),
-       (default,"us","United States of America","United States of America");
-
-# Customer with not accounts
-
-INSERT INTO clients
-VALUES (default,"Sally","Thomas","sally.thomas@acme.com");
+#
+# Sample Data to
+#
 
 # Customer with some accounts
 
@@ -190,79 +178,3 @@ VALUES (32, default, '2021-01-20 06:37:03', 'Incoming Transfer', -5000),
        (32, default, '2021-02-20 06:37:03', 'Outgoing Transfer',-10000),
        (32, default, '2021-03-20 06:37:03', 'Incoming Transfer',-25000),
        (32, default, '2021-01-20 06:37:03', 'Incoming Transfer', -1000);
-
-# Client with Accounts Closed
-
-#INSERT INTO clients
-#VALUES (default,"Tony","Closed","toni.closed@acme.com");
-
-#UPDATE clients SET last_name = 'Client', email = 'toni.client@acme.com' WHERE id = 12;
-
-#INSERT INTO accounts
-#VALUES (default,12,(select id from regions where code = 'uk'),'uk','0000000001','CLOSED');
-#INSERT INTO accounts
-#VALUES (default,12,(select id from regions where code = 'uk'),'uk','0000000002','ACTIVE');
-
-#UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 12;
-#UPDATE accounts SET status = 'CLOSED' WHERE client_id = 12;
-
-# Client with Accounts Inactivated or Closed
-
-#INSERT INTO clients
-#VALUES (default,"Client","Test","client.test@acme.com");
-
-#INSERT INTO accounts
-#VALUES (default,13,(select id from regions where code = 'us'),'us','0000000001','ACTIVE');
-#INSERT INTO accounts
-#VALUES (default,13,(select id from regions where code = 'us'),'us','0000000002','ACTIVE');
-#INSERT INTO accounts
-#VALUES (default,13,(select id from regions where code = 'us'),'us','0000000003','INACTIVE');
-#INSERT INTO accounts
-#VALUES (default,13,(select id from regions where code = 'us'),'us','0000000004','CLOSED');
-
-#UPDATE accounts SET status = 'INACTIVE' WHERE client_id = 13;
-#UPDATE accounts SET status = 'CLOSED' WHERE client_id = 13;
-
-# Client
-
-#INSERT INTO clients
-#VALUES (default,"Client","More Test","client.moretest@acme.com");
-
-#INSERT INTO accounts
-#VALUES (default,14,(select id from regions where code = 'us'),'us','0000000001','ACTIVE');
-#INSERT INTO accounts
-#VALUES (default,14,(select id from regions where code = 'us'),'us','0000000002','INACTIVE');
-#INSERT INTO accounts
-#VALUES (default,14,(select id from regions where code = 'us'),'us','0000000003','CLOSED');
-
-#INSERT INTO clients
-#VALUES (default,"Client","Test 99","client.test.99@acme.com");
-
-#INSERT INTO accounts
-#VALUES (default,51,(select id from regions where code = 'es'),'es','0000000001','ACTIVE'),
-#       (default,51,(select id from regions where code = 'es'),'es','0000000002','ACTIVE'),
-#       (default,51,(select id from regions where code = 'pt'),'pt','0000000001','ACTIVE'),
-#       (default,51,(select id from regions where code = 'pt'),'pt','0000000002','INACTIVE');
-
-#INSERT INTO accounts
-#VALUES (default,51,(select id from regions where code = 'es'),'es','0000000002','ACTIVE'),
-#       (default,51,(select id from regions where code = 'pt'),'pt','0000000001','ACTIVE'),
-#       (default,51,(select id from regions where code = 'pt'),'pt','0000000002','INACTIVE');
-
-#INSERT INTO clients
-#VALUES (default,"Client","Test","client.test.101@acme.com");
-#INSERT INTO accounts
-#VALUES (default,53,(select id from regions where code = 'us'),'us','0000000001','ACTIVE'),
-#       (default,53,(select id from regions where code = 'us'),'us','0000000002','ACTIVE');
-
-#INSERT INTO clients
-#VALUES (default,"Client","Test","client.test.110@acme.com");
-#INSERT INTO accounts
-#VALUES (default,54,(select id from regions where code = 'us'),'us','0000000001','ACTIVE'),
-#       (default,54,(select id from regions where code = 'us'),'us','0000000002','ACTIVE');
-
-#INSERT INTO clients
-#VALUES (default,"Client","Test","client.test.200@acme.com");
-#INSERT INTO accounts
-#VALUES (default,55,(select id from regions where code = 'us'),'us','0000000001','ACTIVE'),
-#       (default,55,(select id from regions where code = 'us'),'us','0000000002','ACTIVE');
