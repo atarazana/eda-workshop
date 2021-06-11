@@ -1,0 +1,21 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: dashboard-native-serverless
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: dashboard-native-serverless
+        app.kubernetes.io/part-of: dashboard-native-serverless
+    spec:
+      containers:
+        - image: quay.io/eda-workshop/dashboard:1.0.0-SNAPSHOT
+          resources:
+            requests:
+              cpu: 250m
+              memory: 250Mi
+            limits:
+              cpu: 1
+              memory: 1Gi

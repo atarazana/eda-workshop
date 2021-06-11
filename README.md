@@ -89,3 +89,7 @@ Follow [the instructions](./12-quarkus-dashboard/README.md)
 ## Deploy Serverless Services
 
 Follow [the instructions](./14-serverless/README.md)
+
+## Deploy Native Serverless Services
+
+Follow [the instructions](./15-native-services/README.md)

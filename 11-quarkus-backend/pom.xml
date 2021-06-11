@@ -126,6 +126,12 @@
             <artifactId>quarkus-openshift</artifactId>
         </dependency>
 
+        <!-- Container Image JIB Builder -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
+        </dependency>
+
         <!-- Quarkus Test Extensions -->
         <dependency>
             <groupId>io.quarkus</groupId>

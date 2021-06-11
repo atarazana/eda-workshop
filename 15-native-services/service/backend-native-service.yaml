@@ -1,0 +1,21 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: backend-native-serverless
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: backend-native-serverless
+        app.kubernetes.io/part-of: backend-native-serverless
+    spec:
+      containers:
+        - image: quay.io/eda-workshop/backend:1.0.0-SNAPSHOT
+          resources:
+            requests:
+              cpu: 250m
+              memory: 250Mi
+            limits:
+              cpu: 1
+              memory: 1Gi

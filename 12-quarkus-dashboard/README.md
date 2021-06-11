@@ -45,6 +45,22 @@ You can then execute your native executable with: `./target/dashboard-1.0-SNAPSH
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
 
+### Pushing Native Image into a Container Image Registry
+
+You can build a container image and push into a Container Image Registry using:
+
+```shell script
+./mvnw package -Pnative \
+  -Dquarkus.native.container-build=true \
+  -Dquarkus.container-image.build=true \
+  -Dquarkus.container-image.builder=jib \
+  -Dquarkus.container-image.push=true \
+  -Dquarkus.container-image.registry=quay.io \
+  -Dquarkus.container-image.group=eda-workshop \
+  -Dquarkus.container-image.username=<username> \
+  -Dquarkus.container-image.password='<password>'
+```
+
 ## Deploying into OpenShift
 
 To deploy the application using the Source-to-Image capabilities of OpenShift:

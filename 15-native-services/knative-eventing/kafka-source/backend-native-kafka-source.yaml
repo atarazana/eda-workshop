@@ -1,0 +1,23 @@
+apiVersion: sources.knative.dev/v1beta1
+kind: KafkaSource
+metadata:
+  name: backend-native-kafka-source
+  labels:
+    app.kubernetes.io/part-of: backend-native-serverless 
+    kafkasources.sources.knative.dev/key-type: int
+spec:
+  consumerGroup: backend-native-knative-group
+  bootstrapServers:
+    - event-bus-kafka-bootstrap.eda-workshop.svc:9092
+  topics:
+    - 'eda.data.accounts'
+    - 'eda.data.clients'
+    - 'eda.data.movements'
+    - 'eda.events.domain.clients'
+    - 'eda.events.domain.accounts'
+    - 'eda.events.domain.regions'
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: backend-native-serverless
