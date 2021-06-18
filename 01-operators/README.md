@@ -36,9 +36,9 @@ To check the subscription statuses:
 ```shell
 ❯ oc get csv
 NAME                               DISPLAY                                           VERSION   REPLACES                      PHASE
-amqstreams.v1.7.1                  Red Hat Integration - AMQ Streams                 1.7.1     amqstreams.v1.7.0             Succeeded
+amqstreams.v1.7.2                  Red Hat Integration - AMQ Streams                 1.7.2     amqstreams.v1.7.1             Succeeded
 datagrid-operator.v8.2.0           Data Grid                                         8.2.0     datagrid-operator.v8.1.7      Succeeded
-serverless-operator.v1.14.1        Red Hat OpenShift Serverless                      1.14.1    serverless-operator.v1.14.0   Succeeded
+serverless-operator.v1.15.0        Red Hat OpenShift Serverless                      1.15.0    serverless-operator.v1.14.0   Succeeded
 service-registry-operator.v2.0.0   Red Hat Integration - Service Registry Operator   2.0.0                                   Succeeded
 ```
 
