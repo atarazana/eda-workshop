@@ -69,18 +69,20 @@ VALUES (default,"es","Spain","Spain"),
 
 # Update Regions
 
-UPDATE regions SET description = 'ES' WHERE id = 1;
-UPDATE regions SET description = 'PT' WHERE id = 2;
-UPDATE regions SET description = 'UK' WHERE id = 3;
-UPDATE regions SET description = 'IT' WHERE id = 4;
-UPDATE regions SET description = 'FR' WHERE id = 5;
-UPDATE regions SET description = 'GE' WHERE id = 6;
-UPDATE regions SET description = 'US' WHERE id = 7;
+UPDATE regions SET description = 'ES' WHERE code = 'es';
+UPDATE regions SET description = 'PT' WHERE code = 'pt';
+UPDATE regions SET description = 'UK' WHERE code = 'uk';
+UPDATE regions SET description = 'IT' WHERE code = 'it';
+UPDATE regions SET description = 'FR' WHERE code = 'fr';
+UPDATE regions SET description = 'GE' WHERE code = 'ge';
+UPDATE regions SET description = 'US' WHERE code = 'us';
 
-UPDATE regions SET description = 'Spain' WHERE id = 1;
-UPDATE regions SET description = 'Portugal' WHERE id = 2;
-UPDATE regions SET description = 'United Kingdom' WHERE id = 3;
-UPDATE regions SET description = 'Italy' WHERE id = 4;
-UPDATE regions SET description = 'France' WHERE id = 5;
-UPDATE regions SET description = 'Germany' WHERE id = 6;
-UPDATE regions SET description = 'United States of America' WHERE id = 7;
+# Update Regions (again)
+
+UPDATE regions SET description = 'Spain' WHERE code = 'es';
+UPDATE regions SET description = 'Portugal' WHERE code = 'pt';
+UPDATE regions SET description = 'United Kingdom' WHERE code = 'uk';
+UPDATE regions SET description = 'Italy' WHERE code = 'it';
+UPDATE regions SET description = 'France' WHERE code = 'fr';
+UPDATE regions SET description = 'Germany' WHERE code = 'ge';
+UPDATE regions SET description = 'United States of America' WHERE code = 'us';
