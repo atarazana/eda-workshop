@@ -39,6 +39,17 @@ event-bus-zookeeper-client           ClusterIP   172.30.39.80     <none>        
 event-bus-zookeeper-nodes            ClusterIP   None             <none>        2181/TCP,2888/TCP,3888/TCP   6m49s
 ```
 
+The Kafka cluster is accessible from outside of OpenShift using a route created on top
+of the `event-bus-kafka-external-bootstrap` service. This route requires use the CA created by
+the operator. 
+
+To extract the CA and import into a JKS trust store file: 
+
+```shell
+❯ oc extract secret/event-bus-cluster-ca-cert --keys=ca.crt --to=- > ca.crt
+❯ keytool -import -trustcacerts -alias root -file ca.crt -keystore truststore.jks -storepass password -noprompt
+```
+
 ## Rolling Updates
 
 To update Zookeeper StatefulSet without downtime use the following command:following command:
@@ -129,3 +140,5 @@ oc delete kt quarkus-streaming-ktable-fk-join-subscription-state-store-000000006
 ```
 
 **NOTE**: The serial id suffix could change in your environment.
+
+

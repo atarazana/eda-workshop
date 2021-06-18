@@ -52,8 +52,8 @@ eda-registry-deployment-67c7895564-cbfvf   1/1     Running   0          10m
 ```
 
 Service Registry is available outside OpenShift cluster with the next route over
-the `eda-registry-service` service:
+the `eda-registry` application:
 
 ```shell
-oc get route eda-registry-ingress-h7t7p -o jsonpath='{.spec.host}'
+oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}'
 ```

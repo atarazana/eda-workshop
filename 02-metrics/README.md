@@ -73,5 +73,7 @@ To get the route to access Grafana:
 oc get route grafana-route -o jsonpath='{.spec.host}'
 ```
 
+It is a secured route, so you must use the `https` protocol.
+
 Use the original credentials **root/secret** as user/password. These credentials are defined in the
 [Grafana CR](./metrics/grafana/grafana.yaml) file.
