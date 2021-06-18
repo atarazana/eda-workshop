@@ -1,5 +1,9 @@
 # event-schemas-api project
 
+This project includes a set of API schemas to define the structure of data to share
+in our Event-Driven Architecture. Many of these schemas use Avro to define the structure and to
+facilitate to generate the POJO classes of them.
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
@@ -47,24 +51,17 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/quarkus-streaming-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/event-schemas-api-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
-
-## Deploying into OpenShift
-
-To deploy the application using the Source-to-Image capabilities of OpenShift:
-
-```shell
-./mvnw package -DskipTests=true -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true
-```
 
 ## Publishing Schemas into Service Registry
 
 To register the schemas in Service Registry execute:
 
 ```shell
-❯ ./mvnw generate-sources -Papicurio -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/api
+./mvnw generate-sources -Papi-schemas-register \
+  -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/apis/registry/v2
 ```
 
 ## Provided examples
@@ -74,3 +71,13 @@ To register the schemas in Service Registry execute:
 REST is easy peasy with this Hello World RESTEasy resource.
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## Starting a local Service Registry
+
+To test locally this project you could start a local instance of Service Registry:
+
+```shell
+podman run --rm -it -p 8080:8080 apicurio/apicurio-registry-mem:2.0.1.Final
+```
+
+The Service Registry is available in [http://localhost:8080/](http://localhost:8080)

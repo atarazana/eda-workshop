@@ -1,9 +1,8 @@
 package com.redhat.banking.eda.dashboard;
 
-import com.redhat.banking.eda.dashboard.valueobjects.AggregateMetric;
+import com.redhat.banking.eda.model.dto.AggregateMetricDTO;
 import io.quarkus.infinispan.client.Remote;
 import io.smallrye.mutiny.Multi;
-
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -12,7 +11,6 @@ import org.infinispan.query.dsl.Query;
 import org.infinispan.query.dsl.QueryFactory;
 import org.infinispan.query.dsl.QueryResult;
 import org.jboss.resteasy.reactive.RestSseElementType;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +37,11 @@ public class AggregateMetricResource {
 
     @Inject
     @Channel("aggregate-metrics-stream")
-    Multi<AggregateMetric> metrics;
+    Multi<AggregateMetricDTO> metrics;
 
     @Inject
     @Remote("aggregate-metrics")
-    RemoteCache<String, AggregateMetric> cache;
+    RemoteCache<String, AggregateMetricDTO> cache;
 
     RemoteCacheManager remoteCacheManager;
 
@@ -53,11 +51,11 @@ public class AggregateMetricResource {
     }
 
     @GET
-    public List<AggregateMetric> allAggregateMetrics() {
+    public List<AggregateMetricDTO> allAggregateMetrics() {
         LOG.info("allAggregateMetrics");
 
-        ArrayList<AggregateMetric> aggregateMetrics = new ArrayList<AggregateMetric>();
-        for (Map.Entry<String, AggregateMetric> alert : cache.entrySet()) {
+        ArrayList<AggregateMetricDTO> aggregateMetrics = new ArrayList<AggregateMetricDTO>();
+        for (Map.Entry<String, AggregateMetricDTO> alert : cache.entrySet()) {
             aggregateMetrics.add(alert.getValue());
         }
 
@@ -68,20 +66,20 @@ public class AggregateMetricResource {
 
     @GET
     @Path("/by-name")
-    public List<AggregateMetric> aggregateMetricsByName(@QueryParam("name") String name,
-                                                        @QueryParam("groupByClause") String groupByClause,
-                                                        @DefaultValue("300") @QueryParam("period") int periodInSeconds) {
+    public List<AggregateMetricDTO> aggregateMetricsByName(@QueryParam("name") String name,
+                                                           @QueryParam("groupByClause") String groupByClause,
+                                                           @DefaultValue("300") @QueryParam("period") int periodInSeconds) {
         LOG.info("aggregateMetricsByName");
 
         QueryFactory queryFactory = Search.getQueryFactory(cache);
         String groupByClauseFull = groupByClause != null ? "AND groupByClause = '" + groupByClause + "'" : "";
-        Query<AggregateMetric> query = queryFactory.create(
-                "FROM eda.workshop.AggregateMetric WHERE name = '" + name + "' " +
+        Query<AggregateMetricDTO> query = queryFactory.create(
+                "FROM eda.workshop.AggregateMetricDTO WHERE name = '" + name + "' " +
                         groupByClauseFull +
                         " ORDER BY timestamp");
 
         // Execute the query
-        QueryResult<AggregateMetric> queryResult = query.execute();
+        QueryResult<AggregateMetricDTO> queryResult = query.execute();
 
         LOG.info("size = " + queryResult.hitCount());
 
@@ -93,17 +91,17 @@ public class AggregateMetricResource {
 
     @GET
     @Path("/by-name-region")
-    public List<AggregateMetric> aggregateMetricsByNameAndRegion(@QueryParam("name") String name,
-                                                                 @QueryParam("region") String region) {
+    public List<AggregateMetricDTO> aggregateMetricsByNameAndRegion(@QueryParam("name") String name,
+                                                                    @QueryParam("region") String region) {
         LOG.info("aggregateMetricsByName");
 
         QueryFactory queryFactory = Search.getQueryFactory(cache);
-        Query<AggregateMetric> query = queryFactory.create(
-                "FROM eda.workshop.AggregateMetric WHERE name = '" + name + "' and from = '" + region
+        Query<AggregateMetricDTO> query = queryFactory.create(
+                "FROM eda.workshop.AggregateMetricDTO WHERE name = '" + name + "' and from = '" + region
                         + "' ORDER BY timestamp");
 
         // Execute the query
-        QueryResult<AggregateMetric> queryResult = query.execute();
+        QueryResult<AggregateMetricDTO> queryResult = query.execute();
 
         LOG.info("size = " + queryResult.hitCount());
 
@@ -114,7 +112,7 @@ public class AggregateMetricResource {
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS)
     @RestSseElementType(MediaType.APPLICATION_JSON)
-    public Multi<AggregateMetric> stream() {
+    public Multi<AggregateMetricDTO> stream() {
         return metrics;
     }
 

@@ -13,4 +13,5 @@ public class DashboardResource {
     public String hello() {
         return "Hello RESTEasy";
     }
+
 }

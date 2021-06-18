@@ -1,0 +1,42 @@
+{
+  "namespace": "com.redhat.banking.eda.model.events.accounts",
+  "name": "AccountBalanceVIPReached",
+  "type": "record",
+  "doc": "Client account with a balance identified as VIP.",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "doc": "Client Id."
+    },
+    {
+      "name": "full_name",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Full name."
+    },
+    {
+      "name": "email",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Email."
+    },
+    {
+      "name": "sequence",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Account sequence."
+    },
+    {
+      "name": "vip",
+      "type": "boolean",
+      "doc": "Is a VIP account."
+    }
+  ]
+}

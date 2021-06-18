@@ -1,0 +1,61 @@
+{
+  "name": "AggregateMetric",
+  "namespace": "com.redhat.banking.eda.model.events",
+  "type": "record",
+  "doc": "Aggregated Metric with important information.",
+  "fields": [
+    {
+      "name": "name",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Metric Name."
+    },
+    {
+      "name": "value",
+      "type": "double",
+      "doc": "Value."
+    },
+    {
+      "name": "unit",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Unit."
+    },
+    {
+      "name": "qualifier",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Qualifier."
+    },
+    {
+      "name": "from",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "From."
+    },
+    {
+      "name": "groupByClause",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Group by."
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Timestamp."
+    }
+  ]
+}

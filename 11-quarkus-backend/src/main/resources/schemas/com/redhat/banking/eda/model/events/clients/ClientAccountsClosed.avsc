@@ -1,0 +1,34 @@
+{
+  "namespace": "com.redhat.banking.eda.model.events.clients",
+  "name": "ClientAccountsClosed",
+  "type": "record",
+  "doc": "Client with all accounts closed.",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int",
+      "doc": "Client Id."
+    },
+    {
+      "name": "full_name",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Full name."
+    },
+    {
+      "name": "email",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Email."
+    },
+    {
+      "name": "accountsClosed",
+      "type": "int",
+      "doc": "Number of accounts closed."
+    }
+  ]
+}

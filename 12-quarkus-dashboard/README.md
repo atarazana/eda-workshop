@@ -1,8 +1,26 @@
 # dashboard project
 
+This is the dashboard of this Event-Driven Architecture to visualize data processed by other components.
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Getting Schemas from Service Registry
+
+This project uses a set of schemas defined in the Service Registry. To download the latest
+version of them and to generate the new classes:
+
+```shell
+./mvnw generate-sources -Papi-schemas-download \
+  -Dapicurio.registry.url=http://$(oc get route -l app=eda-registry -o jsonpath='{.items[0].spec.host}')/apis/registry/v2
+```
+
+To generate the new classes:
+
+```shell
+./mvnw generate-sources
+```
 
 ## Running the application in dev mode
 
@@ -41,7 +59,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/dashboard-1.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/dashboard-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
 
@@ -66,7 +84,7 @@ You can build a container image and push into a Container Image Registry using:
 To deploy the application using the Source-to-Image capabilities of OpenShift:
 
 ```shell
-./mvnw package -DskipTests=true -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true -Dquarkus.openshift.route.expose=true
+./mvnw package -Dquarkus.kubernetes.deploy=true -Dquarkus.kubernetes-client.trust-certs=true -Dquarkus.openshift.route.expose=true
 ```
 
 References:

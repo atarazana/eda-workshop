@@ -1,0 +1,95 @@
+{
+  "name": "Alert",
+  "namespace": "com.redhat.banking.eda.model.events",
+  "type": "record",
+  "doc": "Alert event with some important information.",
+  "fields": [
+    {
+      "name": "id",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Alert Id."
+    },
+    {
+      "name": "name",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Name."
+    },
+    {
+      "name": "definition",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Definition."
+    },
+    {
+      "name": "variant",
+      "type": {
+        "type": "enum",
+        "name": "AlertVariant",
+        "doc": "Alert variants",
+        "symbols": [
+          "success",
+          "danger",
+          "warning",
+          "info",
+          "default"
+        ],
+        "default": "default"
+      },
+      "doc": "Variant."
+    },
+    {
+      "name": "expression",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Alert expression."
+    },
+    {
+      "name": "duration",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Duration."
+    },
+    {
+      "name": "labels",
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "string",
+          "avro.java.string": "String"
+        },
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "annotations",
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "string",
+          "avro.java.string": "String"
+        },
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "doc": "Timestamp."
+    }
+  ]
+}

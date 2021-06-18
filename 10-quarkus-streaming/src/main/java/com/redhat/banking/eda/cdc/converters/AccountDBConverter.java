@@ -1,8 +1,8 @@
 package com.redhat.banking.eda.cdc.converters;
 
 import com.redhat.banking.eda.cdc.model.AccountDB;
-import com.redhat.eda.model.events.Alert;
-import com.redhat.eda.model.events.AlertVariant;
+import com.redhat.banking.eda.model.events.Alert;
+import com.redhat.banking.eda.model.events.AlertVariant;
 import io.smallrye.reactive.messaging.kafka.OutgoingKafkaRecordMetadata;
 import org.eclipse.microprofile.reactive.messaging.Acknowledgment;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -28,8 +28,7 @@ public class AccountDBConverter {
 
     @Inject
     @Channel("eda-alerts")
-    //Emitter<Alert> alertEmitter;
-    Emitter<String> alertEmitter;
+    Emitter<Alert> alertEmitter;
 
     @Incoming("dbz-enterprise-accounts")
     @Acknowledgment(Acknowledgment.Strategy.POST_PROCESSING)
@@ -81,7 +80,7 @@ public class AccountDBConverter {
                         .setTimestamp(Instant.now().toString())
                         .build();
 
-                alertEmitter.send(alert.toString());
+                alertEmitter.send(alert);
             }
 
             if ("CLOSED".equals(accountDB.status)) {
@@ -100,7 +99,7 @@ public class AccountDBConverter {
                         .setTimestamp(Instant.now().toString())
                         .build();
 
-                alertEmitter.send(alert.toString());
+                alertEmitter.send(alert);
             }
         }
 

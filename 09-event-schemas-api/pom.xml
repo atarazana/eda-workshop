@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.redhat.banking.eda</groupId>
-    <artifactId>event-schemas-api</artifactId>    
+    <artifactId>event-schemas-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
@@ -19,10 +19,10 @@
         <quarkus.platform.version>1.13.6.Final</quarkus.platform.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <!-- Avro -->
-        <avro.version>1.10.1</avro.version>
+        <avro.version>1.10.2</avro.version>
         <!-- Apicurio Registry -->
-        <apicurio.version>1.3.2.Final</apicurio.version>
-        <apicurio.registry.url>http://APICURIO-SERVICE-REGISTRY:PORT/api</apicurio.registry.url>
+        <apicurio.version>2.0.1.Final</apicurio.version>
+        <apicurio.registry.url>http://localhost:8080/apis/registry/v2</apicurio.registry.url>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -104,13 +104,6 @@
                         <configuration>
                             <!-- Source Folder with Avro Schemas -->
                             <sourceDirectory>${project.basedir}/src/main/resources/schemas</sourceDirectory>
-                            <!--
-                            <imports>
-                                <import>${project.basedir}/src/main/resources/schemas/common/event-error.avsc</import>
-                                <import>${project.basedir}/src/main/resources/schemas/common/event-environment.avsc</import>
-                                <import>${project.basedir}/src/main/resources/schemas/common/command-runtime.avsc</import>
-                            </imports>
-                            -->
                             <includes>
                                 <!-- Avro Schemas extension file pattern -->
                                 <include>**/*.avsc</include>
@@ -184,7 +177,7 @@
         </profile>
 
         <profile>
-            <id>apicurio</id>
+            <id>api-schemas-register</id>
             <build>
                 <plugins>
                     <plugin>
@@ -199,35 +192,87 @@
                                 </goals>
                                 <configuration>
                                     <registryUrl>${apicurio.registry.url}</registryUrl>
-                                    <artifactType>AVRO</artifactType>
                                     <artifacts>
-                                        <!-- Schema definition for RecordIdStrategy strategy -->
-                                        <!-- Alerts and Metrics -->
-                                        <com.redhat.banking.eda.model.events.Alert>
-                                            ${project.basedir}/src/main/resources/schemas/alert.avsc
-                                        </com.redhat.banking.eda.model.events.Alert>
-                                        <com.redhat.banking.eda.model.events.AggregateMetric>
-                                            ${project.basedir}/src/main/resources/schemas/aggregate-metric.avsc
-                                        </com.redhat.banking.eda.model.events.AggregateMetric>
+                                        <!-- Alert - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events</groupId>
+                                            <artifactId>Alert</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/Alert.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
 
-                                        <!-- Clients -->
-                                        <com.redhat.banking.eda.model.events.clients.ClientAccountsClosed>
-                                            ${project.basedir}/src/main/resources/schemas/clients/client-accounts-closed.avsc
-                                        </com.redhat.banking.eda.model.events.clients.ClientAccountsClosed>
-                                        <com.redhat.banking.eda.model.events.clients.ClientAccountsInactivated>
-                                            ${project.basedir}/src/main/resources/schemas/clients/client-accounts-inactivated.avsc
-                                        </com.redhat.banking.eda.model.events.clients.ClientAccountsInactivated>
+                                        <!-- Aggregated Metrics - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events</groupId>
+                                            <artifactId>AggregateMetric</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/AggregateMetric.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
 
-                                        <!-- Accounts -->
-                                        <com.redhat.banking.eda.model.events.accounts.AccountBalanceLOWReached>
-                                            ${project.basedir}/src/main/resources/schemas/accounts/account-balance-low-reached.avsc
-                                        </com.redhat.banking.eda.model.events.accounts.AccountBalanceLOWReached>
-                                        <com.redhat.banking.eda.model.events.accounts.AccountBalanceNEGReached>
-                                            ${project.basedir}/src/main/resources/schemas/accounts/account-balance-neg-reached.avsc
-                                        </com.redhat.banking.eda.model.events.accounts.AccountBalanceNEGReached>
-                                        <com.redhat.banking.eda.model.events.accounts.AccountBalanceVIPReached>
-                                            ${project.basedir}/src/main/resources/schemas/accounts/account-balance-vip-reached.avsc
-                                        </com.redhat.banking.eda.model.events.accounts.AccountBalanceVIPReached>
+                                        <!-- Client Account Closed - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events.clients</groupId>
+                                            <artifactId>ClientAccountsClosed</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/clients/ClientAccountsClosed.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
+                                        <!-- Client Account Inactivated - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events.clients</groupId>
+                                            <artifactId>ClientAccountsInactivated</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/clients/ClientAccountsInactivated.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
+
+                                        <!-- Account Balance Low Reached - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events.accounts</groupId>
+                                            <artifactId>AccountBalanceLOWReached</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/accounts/AccountBalanceLOWReached.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
+                                        <!-- Account Balance Negative Reached - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events</groupId>
+                                            <artifactId>AccountBalanceNEGReached</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/accounts/AccountBalanceNEGReached.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
+                                        <!-- Account Balance VIP Reached - Schema definition for RecordIdStrategy strategy -->
+                                        <artifact>
+                                            <groupId>com.redhat.banking.eda.model.events.accounts</groupId>
+                                            <artifactId>AccountBalanceVIPReached</artifactId>
+                                            <type>AVRO</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/com/redhat/banking/eda/model/events/accounts/AccountBalanceVIPReached.avsc
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </artifact>
                                     </artifacts>
                                 </configuration>
                             </execution>

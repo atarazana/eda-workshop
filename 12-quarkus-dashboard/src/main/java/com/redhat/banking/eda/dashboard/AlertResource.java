@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -12,8 +11,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.redhat.banking.eda.dashboard.valueobjects.Alert;
-
+import com.redhat.banking.eda.model.dto.AlertDTO;
+import com.redhat.banking.eda.model.events.Alert;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.infinispan.client.hotrod.RemoteCache;
 import org.infinispan.client.hotrod.RemoteCacheManager;
@@ -30,11 +29,11 @@ public class AlertResource {
     private static final Logger LOG = LoggerFactory.getLogger(AlertResource.class);
 
     @Inject
-    @Channel("alerts-stream") Multi<Alert> alerts; 
+    @Channel("alerts-stream") Multi<AlertDTO> alerts;
 
     @Inject 
     @Remote("alerts")
-    RemoteCache<String, Alert> cache;
+    RemoteCache<String, AlertDTO> cache;
 
     RemoteCacheManager remoteCacheManager;
     
@@ -44,17 +43,17 @@ public class AlertResource {
     }
 
     @GET
-    public List<Alert> allAlerts() { 
+    public List<AlertDTO> allAlerts() {
         LOG.info("allAlerts");
 
-        ArrayList<Alert> alerts = new ArrayList<Alert>();
-        for (Map.Entry<String, Alert> alert : cache.entrySet()) {
+        ArrayList<AlertDTO> alerts = new ArrayList<AlertDTO>();
+        for (Map.Entry<String, AlertDTO> alert : cache.entrySet()) {
             alerts.add(alert.getValue());
         }
 
         LOG.info("size = " + cache.keySet().size());
 
-        alerts.sort(Comparator.comparing(Alert::getTimestamp).reversed());
+        alerts.sort(Comparator.comparing(AlertDTO::getTimestamp).reversed());
 
         return alerts;
     }
@@ -63,14 +62,8 @@ public class AlertResource {
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS) 
     @RestSseElementType(MediaType.APPLICATION_JSON) 
-    public Multi<Alert> stream() { 
+    public Multi<AlertDTO> stream() {
         return alerts;
     }
 
-    // class InstantSorter implements Comparator<Alert> {
-    //     @Override
-    //     public int compare(Alert o1, Alert o2) {
-    //         return o2.getTimestamp() > o1.getTimestamp();
-    //     }
-    // }
 }

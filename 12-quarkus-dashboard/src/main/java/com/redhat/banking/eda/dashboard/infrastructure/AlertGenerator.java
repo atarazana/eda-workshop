@@ -1,20 +1,18 @@
 package com.redhat.banking.eda.dashboard.infrastructure;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Random;
-import java.util.UUID;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import com.redhat.banking.eda.dashboard.valueobjects.Alert;
-import com.redhat.banking.eda.dashboard.valueobjects.AlertVariant;
-
+import com.redhat.banking.eda.model.events.Alert;
+import com.redhat.banking.eda.model.events.AlertVariant;
 import io.smallrye.mutiny.Multi;
-
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * A bean producing random prices every 5 seconds.
@@ -22,6 +20,7 @@ import org.jboss.logging.Logger;
  */
 @ApplicationScoped
 public class AlertGenerator {
+
     Logger logger = Logger.getLogger(AlertGenerator.class);
 
     private static String NAME = "Max Hourly Balance Exceeded";
@@ -33,38 +32,63 @@ public class AlertGenerator {
 
     @ConfigProperty(name = "dummy.generator")
     String dummyGenerator;
-    
+
     @Outgoing("generated-alerts")
     public Multi<Alert> generate() {
-        logger.info(">>>>>>>>>> dummy.generator = " + dummyGenerator);
+        logger.info(">>>>>>>>>> Alert dummy.generator = " + dummyGenerator);
 
         if (dummyGenerator.equalsIgnoreCase("on")) {
             return Multi.createFrom().ticks().every(Duration.ofSeconds(20))
-                .onOverflow().drop()
-                .map(tick -> {
-                    UUID uuid = UUID.randomUUID();
+                    .onOverflow().drop()
+                    .map(tick -> {
+                        UUID uuid = UUID.randomUUID();
 
-                    // HashMap<String,String> labels = new HashMap<String,String>();
-                    // labels.put("from", "dept-" + random.nextInt(10));
+                        // HashMap<String,String> labels = new HashMap<String,String>();
+                        // labels.put("from", "dept-" + random.nextInt(10));
 
-                    // HashMap<String,String> annotations = new HashMap<String,String>();
-                    // annotations.put("location", "SPAIN");
+                        // HashMap<String,String> annotations = new HashMap<String,String>();
+                        // annotations.put("location", "SPAIN");
 
-                    int variant = random.nextInt(4);
-                    String definition = DEFINITION;
-                    AlertVariant variantValue = AlertVariant.DEFAULT;
-                    switch (variant) {
-                        case 0:  variantValue = AlertVariant.SUCCESS; definition = "Balance replenished"; break;
-                        case 1:  variantValue = AlertVariant.INFO; definition = "All good"; break;
-                        case 2:  variantValue = AlertVariant.WARNING; definition = "Min Balance about to be reached"; break;
-                        case 3:  variantValue = AlertVariant.DANGER; definition = "Outstanding problem!"; break;
-                    }
+                        int variant = random.nextInt(4);
+                        String definition = DEFINITION;
+                        AlertVariant variantValue = AlertVariant.default$;
+                        switch (variant) {
+                            case 0:
+                                variantValue = AlertVariant.success;
+                                definition = "Balance replenished";
+                                break;
+                            case 1:
+                                variantValue = AlertVariant.info;
+                                definition = "All good";
+                                break;
+                            case 2:
+                                variantValue = AlertVariant.warning;
+                                definition = "Min Balance about to be reached";
+                                break;
+                            case 3:
+                                variantValue = AlertVariant.danger;
+                                definition = "Outstanding problem!";
+                                break;
+                        }
 
-                    //Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), DEFINITION, EXPRESSION, DURATION, labels, annotations, Instant.now());
-                    Alert alert = new  Alert(uuid.toString(), NAME, variantValue.value(), definition, EXPRESSION, DURATION, Instant.now());
-                    return alert;
-                });
-            }
+                        Alert alert = Alert.newBuilder()
+                                .setId(uuid.toString())
+                                .setVariant(variantValue)
+                                .setName(NAME)
+                                .setDefinition(definition)
+                                .setExpression(EXPRESSION)
+                                .setDuration(DURATION)
+                                .setLabels(new HashMap<>())
+                                .setAnnotations(new HashMap<>())
+                                .setTimestamp(Instant.now().toString())
+                                .build();
+
+                        logger.infov("Alert generated for %s with level %s", alert.getName(), alert.getVariant().toString());
+
+                        return alert;
+                    });
+        }
+
         return null;
     }
 

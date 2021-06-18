@@ -1,6 +1,7 @@
 package com.redhat.banking.eda.backend.listeners;
 
-import com.redhat.eda.model.events.AggregateMetric;
+import com.redhat.banking.eda.model.events.AggregateMetric;
+import com.redhat.banking.eda.model.events.Alert;
 import io.smallrye.reactive.messaging.kafka.IncomingKafkaRecord;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -25,11 +26,13 @@ public class RegionDomainProcessor {
 
     @Inject
     @Channel("eda-alerts")
-    Emitter<String> alertsEmitter;
+    //Emitter<String> alertsEmitter;
+    Emitter<Alert> alertsEmitter;
 
     @Inject
     @Channel("eda-aggregate-metrics")
-    Emitter<String> aggregateMetricsEmitter;
+    //Emitter<String> aggregateMetricsEmitter;
+    Emitter<AggregateMetric> aggregateMetricsEmitter;
 
     @Incoming("domain-regions")
     public CompletionStage consume(IncomingKafkaRecord<Integer, String> record) {
@@ -54,7 +57,7 @@ public class RegionDomainProcessor {
         AggregateMetric accountsActiveMetric = AggregateMetric.newBuilder()
                 .setName("Accounts Active by Region")
                 .setUnit("Accounts")
-                .setValue(Double.valueOf(accountsActive))
+                .setValue(accountsActive + 0.0)
                 .setQualifier("COUNT")
                 .setFrom("Region(" + regionCode + ")")
                 .setGroupByClause(regionCode)
@@ -65,7 +68,7 @@ public class RegionDomainProcessor {
         AggregateMetric accountsInactiveMetric = AggregateMetric.newBuilder()
                 .setName("Accounts Inactive by Region")
                 .setUnit("Accounts")
-                .setValue(Double.valueOf(accountsInactive))
+                .setValue(accountsInactive + 0.0)
                 .setQualifier("COUNT")
                 .setFrom("Region(" + regionCode + ")")
                 .setGroupByClause(regionCode)
@@ -76,7 +79,7 @@ public class RegionDomainProcessor {
         AggregateMetric accountsClosedMetric = AggregateMetric.newBuilder()
                 .setName("Accounts Closed by Region")
                 .setUnit("Accounts")
-                .setValue(Double.valueOf(accountsClosed))
+                .setValue(accountsClosed + 0.0)
                 .setQualifier("COUNT")
                 .setFrom("Region(" + regionCode + ")")
                 .setGroupByClause(regionCode)
@@ -87,7 +90,7 @@ public class RegionDomainProcessor {
         AggregateMetric balanceRegionMetric = AggregateMetric.newBuilder()
                 .setName("Balance by Region")
                 .setUnit("EUR")
-                .setValue(Double.valueOf(balanceRegion))
+                .setValue(balanceRegion + 0.0)
                 .setQualifier("COUNT")
                 .setFrom("Region(" + regionCode + ")")
                 .setGroupByClause(regionCode)
@@ -95,16 +98,16 @@ public class RegionDomainProcessor {
                 .build();
 
         LOG.info("Sending aggregated metric with Accounts active by Region {}", accountsActiveMetric);
-        aggregateMetricsEmitter.send(accountsActiveMetric.toString());
+        aggregateMetricsEmitter.send(accountsActiveMetric);
 
         LOG.info("Sending aggregated metric with Accounts inactive by Region {}", accountsInactiveMetric);
-        aggregateMetricsEmitter.send(accountsInactiveMetric.toString());
+        aggregateMetricsEmitter.send(accountsInactiveMetric);
 
         LOG.info("Sending aggregated metric with Accounts closed by Region {}", accountsClosedMetric);
-        aggregateMetricsEmitter.send(accountsClosedMetric.toString());
+        aggregateMetricsEmitter.send(accountsClosedMetric);
 
         LOG.info("Sending aggregated metric with Balance by Region {}", balanceRegionMetric);
-        aggregateMetricsEmitter.send(balanceRegionMetric.toString());
+        aggregateMetricsEmitter.send(balanceRegionMetric);
 
         // Commit message
         return record.ack();

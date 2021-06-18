@@ -1,6 +1,7 @@
 package com.redhat.banking.eda.backend.listeners;
 
-import com.redhat.eda.model.events.AggregateMetric;
+import com.redhat.banking.eda.model.events.AggregateMetric;
+import com.redhat.banking.eda.model.events.Alert;
 import io.smallrye.reactive.messaging.kafka.IncomingKafkaRecord;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -25,11 +26,11 @@ public class ClientDomainProcessor {
 
     @Inject
     @Channel("eda-alerts")
-    Emitter<String> alertsEmitter;
+    Emitter<Alert> alertsEmitter;
 
     @Inject
     @Channel("eda-aggregate-metrics")
-    Emitter<String> aggregateMetricsEmitter;
+    Emitter<AggregateMetric> aggregateMetricsEmitter;
 
     @Incoming("domain-clients")
     public CompletionStage consume(IncomingKafkaRecord<Integer, String> record) {
@@ -54,7 +55,7 @@ public class ClientDomainProcessor {
             AggregateMetric aggregateMetric = AggregateMetric.newBuilder()
                     .setName("Accounts Inactivated")
                     .setUnit("Accounts")
-                    .setValue(Double.valueOf(accounts))
+                    .setValue(accounts + 0.0)
                     .setQualifier("COUNT")
                     .setFrom("ClientAccounts")
                     .setGroupByClause("Client")
@@ -62,15 +63,14 @@ public class ClientDomainProcessor {
                     .build();
 
             LOG.info("Sending aggregated metric with Accounts inactivated {}", aggregateMetric);
-
-            aggregateMetricsEmitter.send(aggregateMetric.toString());
+            aggregateMetricsEmitter.send(aggregateMetric);
         }
 
         if (accountsClosed) {
             AggregateMetric aggregateMetric = AggregateMetric.newBuilder()
                     .setName("Accounts Closed")
                     .setUnit("Accounts")
-                    .setValue(Double.valueOf(accounts))
+                    .setValue(accounts + 0.0)
                     .setQualifier("COUNT")
                     .setFrom("ClientAccounts")
                     .setGroupByClause("Client")
@@ -78,8 +78,7 @@ public class ClientDomainProcessor {
                     .build();
 
             LOG.info("Sending aggregated metric with Accounts closed {}", aggregateMetric);
-
-            aggregateMetricsEmitter.send(aggregateMetric.toString());
+            aggregateMetricsEmitter.send(aggregateMetric);
         }
 
         // Commit message
