@@ -7,16 +7,8 @@ spec:
     persistence: "kafkasql"
     kafkasql:
       bootstrapServers: "event-bus-kafka-bootstrap:9092"
-      #bootstrapServers: "event-bus-kafka-bootstrap:9093"
-      #security:
-      #  tls:
-      #    keystoreSecretName: registry-user
-      #    truststoreSecretName: event-bus-cluster-ca-cert
     ui:
       readOnly: false
     logLevel: INFO
   deployment:
     replicas: 1
-    #host: <string>
-    #affinity: <k8s.io/api/core/v1 Affinity struct>
-    #tolerations: <k8s.io/api/core/v1 []Toleration slice>      
