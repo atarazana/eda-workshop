@@ -28,18 +28,17 @@ This Apache Kafka cluster will be available by the `event-bus-kafka-bootstrap` s
 ```shell
 ❯ oc get svc
 NAME                                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-event-bus-cruise-control             ClusterIP   172.30.178.143   <none>        9090/TCP                     108s
-event-bus-kafka-0                    ClusterIP   172.30.232.201   <none>        9094/TCP                     4m32s
-event-bus-kafka-1                    ClusterIP   172.30.224.92    <none>        9094/TCP                     4m32s
-event-bus-kafka-2                    ClusterIP   172.30.110.118   <none>        9094/TCP                     4m32s
-event-bus-kafka-bootstrap            ClusterIP   172.30.154.88    <none>        9091/TCP,9092/TCP,9093/TCP   4m32s
-event-bus-kafka-brokers              ClusterIP   None             <none>        9091/TCP,9092/TCP,9093/TCP   4m32s
-event-bus-kafka-external-bootstrap   ClusterIP   172.30.123.176   <none>        9094/TCP                     4m32s
-event-bus-zookeeper-client           ClusterIP   172.30.39.80     <none>        2181/TCP                     6m49s
-event-bus-zookeeper-nodes            ClusterIP   None             <none>        2181/TCP,2888/TCP,3888/TCP   6m49s
+event-bus-kafka-0                    ClusterIP   172.30.29.32     <none>        9094/TCP                     5m36s
+event-bus-kafka-1                    ClusterIP   172.30.217.92    <none>        9094/TCP                     5m36s
+event-bus-kafka-2                    ClusterIP   172.30.160.241   <none>        9094/TCP                     5m36s
+event-bus-kafka-bootstrap            ClusterIP   172.30.149.0     <none>        9091/TCP,9092/TCP,9093/TCP   5m36s
+event-bus-kafka-brokers              ClusterIP   None             <none>        9091/TCP,9092/TCP,9093/TCP   5m36s
+event-bus-kafka-external-bootstrap   ClusterIP   172.30.57.32     <none>        9094/TCP                     5m36s
+event-bus-zookeeper-client           ClusterIP   172.30.247.178   <none>        2181/TCP                     7m15s
+event-bus-zookeeper-nodes            ClusterIP   None             <none>        2181/TCP,2888/TCP,3888/TCP   7m15s
 ```
 
-The Kafka cluster is accessible from outside of OpenShift using a route created on top
+The Kafka cluster is accessible outside of OpenShift using a route created on top
 of the `event-bus-kafka-external-bootstrap` service. This route requires use the CA created by
 the operator. 
 
@@ -49,6 +48,19 @@ To extract the CA and import into a JKS trust store file:
 ❯ oc extract secret/event-bus-cluster-ca-cert --keys=ca.crt --to=- > ca.crt
 ❯ keytool -import -trustcacerts -alias root -file ca.crt -keystore truststore.jks -storepass password -noprompt
 ```
+
+The `bootstrap` route allows to access outside OpenShift:
+
+```shell
+❯ oc get route
+NAME                        HOST/PORT                                                                              PATH   SERVICES                             PORT   TERMINATION   WILDCARD
+event-bus-kafka-0           event-bus-kafka-0-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-0                    9094   passthrough   None
+event-bus-kafka-1           event-bus-kafka-1-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-1                    9094   passthrough   None
+event-bus-kafka-2           event-bus-kafka-2-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-2                    9094   passthrough   None
+event-bus-kafka-bootstrap   event-bus-kafka-bootstrap-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com          event-bus-kafka-external-bootstrap   9094   passthrough   None
+```
+
+For this example, then you could use `event-bus-kafka-bootstrap-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com:443` as the bootstrap connect string to access the Kafka cluster from outside of OpenShift.
 
 ## Rolling Updates
 
@@ -92,6 +104,9 @@ oc apply -f topics/events
 
 ## Clean up KafkaTopics
 
+**NOTE:** If you need to recreate or delete the KafkaTopics, you could follow this section,
+otherwise, you could skip it.
+
 To delete the `KafkaTopic` created to build a fresh installation:
 
 ```shell
@@ -111,7 +126,7 @@ oc delete kt eda.events.domain.clients.accounts.inactivated
 oc delete kt eda.events.domain.regions                     
 ```
 
-To delete the `KafkaTopic` created by the Kafka Streams API:
+To delete the `KafkaTopic` created by the Kafka Streams API (**NOTE**: The serial id suffix could change in your environment):
 
 ```shell
 oc delete kt quarkus-streaming-eda.data.accounts-state-store-0000000003-changelog---5346c3863458ac3ee7a6d862c28f20219bdc1f10             
@@ -138,7 +153,3 @@ oc delete kt quarkus-streaming-ktable-fk-join-subscription-state-store-000000001
 oc delete kt quarkus-streaming-ktable-fk-join-subscription-state-store-0000000037-changelog---672fe9879f3f126c94f0be3e215dc1519bf1e573   
 oc delete kt quarkus-streaming-ktable-fk-join-subscription-state-store-0000000061-changelog---2e51bc24d0f2e790f0fc07104758d9d07d1c0392   
 ```
-
-**NOTE**: The serial id suffix could change in your environment.
-
-

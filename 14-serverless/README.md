@@ -8,6 +8,7 @@ Before to deploy the new services, we will scale down the current applications:
 ```shell
 oc scale dc/data-streaming --replicas=0
 oc scale dc/backend --replicas=0
+oc scale dc/dashboard --replicas=0
 ```
 
 ## Deploying Serving Services
@@ -33,18 +34,22 @@ Also you could check the pods in `knative-serving` namespace:
 
 ```shell
 ❯ oc get pods -n knative-serving
-activator-7dff495b5c-bk2t8                               2/2     Running     0          3d
-activator-7dff495b5c-v6qxm                               2/2     Running     0          3d
-autoscaler-5946b4756c-28btt                              2/2     Running     0          3d
-autoscaler-hpa-d4b9d7988-5kwvh                           2/2     Running     0          3d
-autoscaler-hpa-d4b9d7988-hzsh2                           2/2     Running     0          3d
-controller-5794c5654f-b2jvr                              2/2     Running     0          6h55m
-controller-5794c5654f-ws7kv                              2/2     Running     0          6h55m
-domain-mapping-79d766ccbc-58kv4                          2/2     Running     0          3d
-domainmapping-webhook-86d5d6b94c-zmhcd                   2/2     Running     0          3d
-storage-version-migration-serving-serving-0.20.0-xxd96   0/1     Completed   0          3d
-webhook-bb8ccfd57-b5788                                  2/2     Running     0          3d
-webhook-bb8ccfd57-cfbqs                                  2/2     Running     0          3d
+NAME                                                     READY   STATUS      RESTARTS   AGE
+activator-f68c6fb67-krm9n                                2/2     Running     0          100s
+activator-f68c6fb67-sgfrr                                2/2     Running     0          86s
+autoscaler-98c9ffc79-6p2fg                               2/2     Running     0          69s
+autoscaler-98c9ffc79-zcv5k                               2/2     Running     0          100s
+autoscaler-hpa-6779db9d98-l7n2s                          2/2     Running     0          97s
+autoscaler-hpa-6779db9d98-pgzvn                          2/2     Running     0          97s
+controller-6c45ff7df8-c758h                              2/2     Running     0          67s
+controller-6c45ff7df8-rjmmv                              2/2     Running     0          91s
+domain-mapping-566454db5c-bgqdb                          2/2     Running     0          96s
+domainmapping-webhook-668d945dff-8kdmr                   2/2     Running     0          96s
+kn-cli-00001-deployment-85fdb79d4-lhxjv                  2/2     Running     0          47s
+kn-cli-00002-deployment-9f84df9b4-9r9nq                  2/2     Running     0          47s
+storage-version-migration-serving-serving-0.21.0-6tkmc   0/1     Completed   0          95s
+webhook-56f6d98499-9tb2f                                 2/2     Running     0          84s
+webhook-56f6d98499-fnb74                                 2/2     Running     0          99s
 ```
 
 ## Deploying Eventing Services
@@ -77,18 +82,19 @@ Also you could check the pods in `knative-eventing` namespace:
 
 ```shell
 ❯ oc get pods -n knative-eventing
-eventing-controller-7b9cdbf9cf-s94zk        1/1     Running   0          15h
-eventing-webhook-b8f8cdc96-wf6bz            1/1     Running   0          15h
-imc-controller-55dc57b4d-llgc2              1/1     Running   0          15h
-imc-dispatcher-79f447d6f-rckcx              1/1     Running   0          15h
-kafka-ch-controller-fd859cc5f-48mzk         1/1     Running   0          15h
-kafka-ch-dispatcher-649945777d-tqw9q        1/1     Running   0          15h
-kafka-controller-manager-79644f667f-dtwqv   1/1     Running   0          15h
-kafka-webhook-68db549d7-t8f9q               1/1     Running   0          15h
-mt-broker-controller-55d65b468b-5gw6b       1/1     Running   0          15h
-mt-broker-filter-7c8ff49f98-pvxfn           1/1     Running   0          15h
-mt-broker-ingress-5458f4c5bc-gnhk5          1/1     Running   0          15h
-sugar-controller-5f6fb848b8-fzx9w           1/1     Running   0          15h
+NAME                                          READY   STATUS      RESTARTS   AGE
+eventing-controller-6ddfbbb6b9-8xmp7          2/2     Running     0          2m13s
+eventing-webhook-6c8ccf95b6-72ljw             2/2     Running     0          2m12s
+imc-controller-56dbdcf559-7k6j2               2/2     Running     0          2m8s
+imc-dispatcher-747c575f59-z5jjh               2/2     Running     0          2m7s
+kafka-ch-controller-854d74bc7f-fztfq          1/1     Running     0          32s
+kafka-controller-manager-7dd57996c-8tlsk      1/1     Running     0          31s
+kafka-webhook-775dcbd549-875p2                1/1     Running     0          32s
+mt-broker-controller-5bb8459547-25xnf         2/2     Running     0          2m6s
+mt-broker-filter-79cf4cd577-57lwd             2/2     Running     0          2m7s
+mt-broker-ingress-868f47567c-fm5zf            2/2     Running     0          2m6s
+sugar-controller-6cf9545794-bsqkd             2/2     Running     0          2m6s
+v0.21-kafka-storage-version-migration-tl687   0/1     Completed   0          31s
 ```
 
 Deploy sample KafkaTopic for testing proposal:
@@ -102,19 +108,18 @@ oc apply -f knative-eventing/knative-kafka/topics
 To deploy our Application Serverless Services:
 
 ```shell
-oc apply -f service/data-streaming-service.yaml
-oc apply -f service/backend-service.yaml
-oc apply -f service/event-display-service.yaml
+oc apply -f service/
 ```
 
 You could check the Application Serverless Services
 
 ```shell
 ❯ kn service list
-NAME                        URL                                                                               LATEST                            AGE   CONDITIONS   READY   REASON
-backend-serverless          http://backend-serverless-eda-workshop.apps.labs.sandbox1754.opentlc.com          backend-serverless-00001          17h   3 OK / 3     True    
-data-streaming-serverless   http://data-streaming-serverless-eda-workshop.apps.labs.sandbox1754.opentlc.com   data-streaming-serverless-00001   16h   3 OK / 3     True    
-event-display-serverless    http://event-display-serverless-eda-workshop.apps.labs.sandbox1754.opentlc.com    event-display-serverless-00001    69s   3 OK / 3     True    
+NAME                        URL                                                                                           LATEST                            AGE    CONDITIONS   READY   REASON
+backend-serverless          http://backend-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com          backend-serverless-00001          98s    3 OK / 3     True    
+dashboard-serverless        http://dashboard-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com        dashboard-serverless-00001        98s    3 OK / 3     True    
+data-streaming-serverless   http://data-streaming-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com   data-streaming-serverless-00001   98s    3 OK / 3     True    
+event-display-serverless    http://event-display-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com    event-display-serverless-00001    113s   3 OK / 3     True
 ```
 
 Deploy Kafka Sources to consume messages from Kafka to start up the services
@@ -128,8 +133,9 @@ You could check the `KafkaSource` objects:
 ```shell
 ❯ oc get kafkasource
 NAME                          TOPICS                                                                                                                                               BOOTSTRAPSERVERS                                      READY   REASON   AGE
-backend-kafka-source          ["eda.data.accounts","eda.data.clients","eda.data.movements","eda.events.domain.clients","eda.events.domain.accounts","eda.events.domain.regions"]   ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             17h
-data-streaming-kafka-source   ["dbserver02.enterprise.accounts","dbserver02.enterprise.clients","dbserver02.enterprise.movements","dbserver02.enterprise.regions"]                 ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             16h
+backend-kafka-source          ["eda.data.accounts","eda.data.clients","eda.data.movements","eda.events.domain.clients","eda.events.domain.accounts","eda.events.domain.regions"]   ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             4m26s
+data-streaming-kafka-source   ["dbserver02.enterprise.accounts","dbserver02.enterprise.clients","dbserver02.enterprise.movements","dbserver02.enterprise.regions"]                 ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             4m26s
+event-display-kafka-source    ["eda.cloud.events"]                                                                                                                                 ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             4m26s
 ```
 
 Now every time a new message is sent to `eda.cloud.events` topic or `eda.events.alerts` or `eda.events.aggregate-metrics`, the message will be processed by a `event-display` instance or the dashboard-serverless instance:
@@ -150,7 +156,7 @@ If you don't see a command prompt, try pressing enter.
 Checking that the event was processed by the `event-display` service:
 
 ```shell
-❯ oc logs -f event-display-64vkz-deployment-6dd7676664-6j7sz -c user-container
+❯ oc logs -c user-container -f event-display-64vkz-deployment-6dd7676664-6j7sz
 ☁️  cloudevents.Event
 Validation: valid
 Context Attributes,

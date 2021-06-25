@@ -87,7 +87,6 @@ You can build a container image and push into a Container Image Registry using:
   -Dquarkus.container-image.password='<password>'
 ```
 
-
 ## Deploying into OpenShift
 
 To deploy the application using the Source-to-Image capabilities of OpenShift:

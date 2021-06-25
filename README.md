@@ -38,6 +38,11 @@ As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespac
 ❯ oc new-project eda-workshop
 ```
 
+This workshop requires deploy many different components and
+it is needed to have enough resources. This workshop was
+tested in "OpenShift 4.7 Workshop (Small)" Service provided
+in the [Red Hat Product Demo System](https://rhpds.redhat.com/) with a single worker node of AWS instance type `m5a.4xlarge`. Other node topologies and types should work.
+
 ## Deploy Operators
 
 Follow [the instructions](./01-operators/README.md)
