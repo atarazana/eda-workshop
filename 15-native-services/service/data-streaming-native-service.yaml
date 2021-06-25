@@ -29,8 +29,8 @@ spec:
         - image: quay.io/eda-workshop/data-streaming:1.0.0-SNAPSHOT
           resources:
             requests:
-              cpu: 250m
-              memory: 250Mi
+              cpu: 500m
+              memory: 128Mi
             limits:
               cpu: 1
               memory: 1Gi

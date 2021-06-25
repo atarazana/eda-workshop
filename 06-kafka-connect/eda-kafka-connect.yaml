@@ -11,11 +11,6 @@ spec:
   version: 2.7.0
   replicas: 1
   bootstrapServers: event-bus-kafka-bootstrap:9092
-  #bootstrapServers: event-bus-kafka-bootstrap:9093
-  #tls:
-  #  trustedCertificates:
-  #    - secretName: event-bus-cluster-ca-cert
-  #      certificate: ca.crt
   config:
     group.id: eda-connect-cluster
     offset.storage.topic: kafka-connect-cluster-offsets
@@ -55,10 +50,10 @@ spec:
             url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.0.0.Final/apicurio-registry-distro-connect-converter-2.0.0.Final.tar.gz
   resources: 
     requests:
-      cpu: "1"
+      cpu: 500m
       memory: 2Gi
     limits:
-      cpu: "2"
+      cpu: "1"
       memory: 2Gi
   logging: 
     type: inline
