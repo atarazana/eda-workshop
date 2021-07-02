@@ -25,11 +25,11 @@ public class ClientDomainProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(ClientDomainProcessor.class);
 
     @Inject
-    @Channel("eda-alerts")
+    @Channel("eda-alerts-client")
     Emitter<Alert> alertsEmitter;
 
     @Inject
-    @Channel("eda-aggregate-metrics")
+    @Channel("eda-aggregate-metrics-client")
     Emitter<AggregateMetric> aggregateMetricsEmitter;
 
     @Incoming("domain-clients")

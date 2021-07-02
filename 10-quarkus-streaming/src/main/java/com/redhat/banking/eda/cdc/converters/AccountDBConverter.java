@@ -27,7 +27,7 @@ public class AccountDBConverter {
     Emitter<AccountDB> accountDBEmitter;
 
     @Inject
-    @Channel("eda-alerts")
+    @Channel("eda-alerts-account")
     Emitter<Alert> alertEmitter;
 
     @Incoming("dbz-enterprise-accounts")
