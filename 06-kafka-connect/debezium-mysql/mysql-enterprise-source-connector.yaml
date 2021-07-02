@@ -18,7 +18,13 @@ spec:
     database.history.kafka.bootstrap.servers: event-bus-kafka-bootstrap:9092  
     database.history.kafka.topic: schema-changes.enterprise
     include.schema.changes: false
-    snapshot.new.tables: parallel
+    snapshot.new.tables: parallel    
+    # To solve offset flush timeouts: The interval should be shortened and timeout increased.
+    offset.flush.interval.ms: 30000 # Default: 60000
+    offset.flush.timeout.ms: 15000 # Default: 5000
+    # DBZ is generating very large batches of records, reduce parameters max.batch.size and max.queue.size
+    #max.batch.size: 2048
+    #max.queue.size: 8192
     # Service Registry Integration
     # Key Converter
     #key.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
