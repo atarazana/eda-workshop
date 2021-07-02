@@ -24,4 +24,4 @@ select region_code,count(*) from accounts where status = 'CLOSED' group by regio
 
 # Balance by Region
 
-select region_code,sum(quantity) from accounts a, movements m where a.id = m.account_id group by a.region_code;
+select region_code,sum(quantity) from accounts a, movements m where a.id = m.account_id group by a.region_code order by sum(quantity) desc;
