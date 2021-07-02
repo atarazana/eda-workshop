@@ -26,7 +26,7 @@ spec:
         app.kubernetes.io/part-of: data-streaming-serverless        
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:1.0.0-SNAPSHOT
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:latest
           resources:
             requests:
               cpu: 500m
