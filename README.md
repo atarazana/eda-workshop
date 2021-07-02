@@ -27,6 +27,10 @@ following deployment topology:
 This file include the list of steps to deploy easily this use case for your learning and testing efforts
 about these amazing technologies and products.
 
+**HINT**: If you want to deploy easily, we created a set of shell scripts with all the main
+commands to deploy the infrastructure, applications and serverless services. Check the shell scripts in
+the root of this repository.
+
 ## Prepare OpenShift
 
 This architecture has been tested in Red Hat OpenShift Container Platform 4.7 version.
