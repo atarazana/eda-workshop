@@ -3,10 +3,16 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: data-streaming-serverless
+  labels:
+    app.kubernetes.io/instance: data-streaming-serverless
+    app.kubernetes.io/part-of: eda-workshop
 spec:
   template:
     metadata:
       annotations:
+        # Determines the minimum amount of time that the last pod will remain active after
+        # the Autoscaler decides to scale pods to zero.
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "5s"
         ## Knative concurrency-based autoscaling (default).
         #autoscaling.knative.dev/class: kpa.autoscaling.knative.dev
         #autoscaling.knative.dev/metric: concurrency
@@ -23,7 +29,7 @@ spec:
         #autoscaling.knative.dev/target: "50"
       labels:
         app.kubernetes.io/instance: data-streaming-serverless
-        app.kubernetes.io/part-of: data-streaming-serverless        
+        app.kubernetes.io/part-of: eda-workshop
     spec:
       containers:
         - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:latest
