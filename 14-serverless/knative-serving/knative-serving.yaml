@@ -6,7 +6,10 @@ metadata:
   namespace: knative-serving
 spec:
   config:
-    autoscaler:
-      scale-to-zero-pod-retention-period: "60s"
+    autoscaler:      
+      scale-to-zero-grace-period: "30s"
+      # Determines the minimum amount of time that the last pod will remain active after
+      # the Autoscaler decides to scale pods to zero.
+      scale-to-zero-pod-retention-period: "5s"
       container-concurrency-target-default: "100" # Default 100
       container-concurrency-target-percentage: "75" # Default 70

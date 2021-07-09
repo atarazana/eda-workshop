@@ -27,7 +27,7 @@ public class ClientDBConverter {
     Emitter<ClientDB> eventsClientEmitter;
 
     @Inject
-    @Channel("eda-alerts")
+    @Channel("eda-alerts-client")
     Emitter<Alert> alertEmitter;
 
     @Incoming("dbz-enterprise-clients")

@@ -23,6 +23,7 @@ spec:
     #value.converter: org.apache.kafka.connect.json.JsonConverter
     #key.converter.schemas.enable: true
     #value.converter.schemas.enable: true
+    connector.client.config.override.policy: All
   #image: image-registry.openshift-image-registry.svc:5000/eda-workshop/eda-kafka-connect:latest
   build:
     output:

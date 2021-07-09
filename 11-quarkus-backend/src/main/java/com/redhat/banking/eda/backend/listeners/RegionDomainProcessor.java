@@ -25,13 +25,11 @@ public class RegionDomainProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(RegionDomainProcessor.class);
 
     @Inject
-    @Channel("eda-alerts")
-    //Emitter<String> alertsEmitter;
+    @Channel("eda-alerts-region")
     Emitter<Alert> alertsEmitter;
 
     @Inject
-    @Channel("eda-aggregate-metrics")
-    //Emitter<String> aggregateMetricsEmitter;
+    @Channel("eda-aggregate-metrics-region")
     Emitter<AggregateMetric> aggregateMetricsEmitter;
 
     @Incoming("domain-regions")

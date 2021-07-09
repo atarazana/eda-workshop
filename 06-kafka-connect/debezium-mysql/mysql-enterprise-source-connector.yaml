@@ -6,8 +6,9 @@ metadata:
     strimzi.io/cluster: eda-kafka-connect
 spec:
   class: io.debezium.connector.mysql.MySqlConnector
-  tasksMax: 1  
-  config:  
+  tasksMax: 1
+  pause: false
+  config:
     database.hostname: mysql-enterprise
     database.port: 3306
     database.user: debezium
@@ -15,23 +16,31 @@ spec:
     database.server.id: 284054
     database.server.name: dbserver02
     database.include.list: enterprise
-    database.history.kafka.bootstrap.servers: event-bus-kafka-bootstrap:9092  
+    database.history.kafka.bootstrap.servers: event-bus-kafka-bootstrap:9092
     database.history.kafka.topic: schema-changes.enterprise
     include.schema.changes: false
+    #snapshot.mode: schema_only_recovery
+    snapshot.mode: initial
     snapshot.new.tables: parallel
+    # To solve offset flush timeouts: The interval should be shortened and timeout increased.
+    offset.flush.interval.ms: 30000 # Default: 60000
+    offset.flush.timeout.ms: 15000 # Default: 5000
+    # DBZ is generating very large batches of records, reduce parameters max.batch.size and max.queue.size
+    #max.batch.size: 2048
+    #max.queue.size: 8192
     # Service Registry Integration
     # Key Converter
     #key.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
-    #key.converter: io.apicurio.registry.utils.converter.AvroConverter    
-    #key.converter.apicurio.registry.url: http://eda-registry-service:8080/api    
+    #key.converter: io.apicurio.registry.utils.converter.AvroConverter
+    #key.converter.apicurio.registry.url: http://eda-registry-service:8080/api
     #key.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy
     #key.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
     #key.converter.apicurio.registry.converter.serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer
     #key.converter.apicurio.registry.converter.deserializer: io.apicurio.registry.utils.serde.AvroKafkaDeserializer
     # Value Converter
     #value.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
-    #value.converter: io.apicurio.registry.utils.converter.AvroConverter    
-    #value.converter.apicurio.registry.url: http://eda-registry-service:8080/api       
+    #value.converter: io.apicurio.registry.utils.converter.AvroConverter
+    #value.converter.apicurio.registry.url: http://eda-registry-service:8080/api
     #value.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy
     #value.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
     #value.converter.apicurio.registry.converter.serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer

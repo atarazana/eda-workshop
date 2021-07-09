@@ -8,7 +8,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/instance: dashboard-serverless
-        app.kubernetes.io/part-of: dashboard-serverless
+        app.kubernetes.io/part-of: eda-workshop
     spec:
       containers:
         - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/dashboard:latest

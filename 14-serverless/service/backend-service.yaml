@@ -6,9 +6,13 @@ metadata:
 spec:
   template:
     metadata:
+      annotations:
+        # Determines the minimum amount of time that the last pod will remain active after
+        # the Autoscaler decides to scale pods to zero.
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "5s"    
       labels:
         app.kubernetes.io/instance: backend-serverless
-        app.kubernetes.io/part-of: backend-serverless
+        app.kubernetes.io/part-of: eda-workshop
     spec:
       containers:
         - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:latest

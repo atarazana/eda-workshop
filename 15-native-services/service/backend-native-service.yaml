@@ -3,15 +3,22 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: backend-native-serverless
+  labels:
+    app.kubernetes.io/instance: backend-native-serverless
+    app.kubernetes.io/part-of: eda-workshop
 spec:
   template:
     metadata:
+      annotations:
+        # Determines the minimum amount of time that the last pod will remain active after
+        # the Autoscaler decides to scale pods to zero.
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "5s"
       labels:
         app.kubernetes.io/instance: backend-native-serverless
-        app.kubernetes.io/part-of: backend-native-serverless
+        app.kubernetes.io/part-of: eda-workshop
     spec:
       containers:
-        - image: quay.io/eda-workshop/backend:1.0.0-SNAPSHOT
+        - image: quay.io/eda-workshop/backend:2.0.0-SNAPSHOT
           resources:
             requests:
               cpu: 500m

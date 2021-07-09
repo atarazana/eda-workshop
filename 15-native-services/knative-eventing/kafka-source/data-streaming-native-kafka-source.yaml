@@ -3,7 +3,7 @@ kind: KafkaSource
 metadata:
   name: data-streaming-native-kafka-source
   labels:
-    app.kubernetes.io/part-of: data-streaming-native-serverless
+    app.kubernetes.io/part-of: eda-workshop
     kafkasources.sources.knative.dev/key-type: string
 spec:
   consumerGroup: data-streaming-native-knative-group
