@@ -113,9 +113,10 @@ echo "**********************************"
 echo "Deploying Kafka Connect Cluster"
 echo "**********************************"
 
-oc apply -f 06-kafka-connect/eda-kafka-connect-is.yaml 
+oc apply -f 06-kafka-connect/eda-kafka-connect-is.yaml
+oc apply -f 06-kafka-connect/topics/
 oc apply -f 06-kafka-connect/configmap/
-oc apply -f 06-kafka-connect/eda-kafka-connect.yaml 
+oc apply -f 06-kafka-connect/eda-kafka-connect.yaml
 
 # TODO Add checks to move to next step
 sleep 300

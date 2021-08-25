@@ -12,6 +12,7 @@ using the build capabilities of Red Hat AMQ Streams.
 To deploy Kafka Connect cluster exposing metrics:
 
 ```shell
+❯ oc apply -f topics/
 ❯ oc apply -f configmap/
 ❯ oc apply -f eda-kafka-connect.yaml 
 ```
@@ -33,16 +34,16 @@ status:
   connectorPlugins:
   - class: io.debezium.connector.mysql.MySqlConnector
     type: source
-    version: 1.5.0.Final
+    version: 1.6.1.Final
   - class: io.debezium.connector.postgresql.PostgresConnector
     type: source
-    version: 1.5.0.Final
+    version: 1.6.1.Final
   - class: org.apache.kafka.connect.file.FileStreamSinkConnector
     type: sink
-    version: 2.7.0.redhat-00005
+    version: 2.8.0.redhat-00002
   - class: org.apache.kafka.connect.file.FileStreamSourceConnector
     type: source
-    version: 2.7.0.redhat-00005
+    version: 2.8.0.redhat-00002
   - class: org.apache.kafka.connect.mirror.MirrorCheckpointConnector
     type: source
     version: "1"

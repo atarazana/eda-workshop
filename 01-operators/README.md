@@ -23,7 +23,7 @@ from any namespaces in the cluster.
 ```shell
 ❯ oc get pod -n openshift-operators
 NAME                                                  READY   STATUS    RESTARTS   AGE
-amq-streams-cluster-operator-v1.7.1-bcf69549b-ntdm2   1/1     Running   0          25h
+amq-streams-cluster-operator-v1.8.0-75f8c6f46c-s7mcb  1/1     Running   0          25h
 apicurio-registry-operator-576d45bbd9-jqdcb           1/1     Running   0          2m36s
 infinispan-operator-5c77fcfbc9-wg4ws                  1/1     Running   0          2m40s
 knative-openshift-9d6b46dcf-2dfdz                     1/1     Running   0          27h
@@ -36,10 +36,10 @@ To check the subscription statuses:
 ```shell
 ❯ oc get csv
 NAME                               DISPLAY                                           VERSION   REPLACES                      PHASE
-amqstreams.v1.7.2                  Red Hat Integration - AMQ Streams                 1.7.2     amqstreams.v1.7.1             Succeeded
-datagrid-operator.v8.2.0           Data Grid                                         8.2.0     datagrid-operator.v8.1.7      Succeeded
-serverless-operator.v1.15.0        Red Hat OpenShift Serverless                      1.15.0    serverless-operator.v1.14.0   Succeeded
-service-registry-operator.v2.0.0   Red Hat Integration - Service Registry Operator   2.0.0                                   Succeeded
+amqstreams.v1.8.0                  Red Hat Integration - AMQ Streams                 1.8.0     amqstreams.v1.7.3                  Succeeded
+datagrid-operator.v8.2.3           Data Grid                                         8.2.3     datagrid-operator.v8.2.2           Succeeded
+serverless-operator.v1.16.0        Red Hat OpenShift Serverless                      1.16.0    serverless-operator.v1.15.0        Succeeded
+service-registry-operator.v2.0.1   Red Hat Integration - Service Registry Operator   2.0.1     service-registry-operator.v2.0.0   Succeeded
 ```
 
 ## Local Operators
@@ -65,6 +65,6 @@ To check the subscription statuses:
 ```shell
 ❯ oc get csv
 NAME                               DISPLAY                VERSION   REPLACES                      PHASE
-grafana-operator.v3.10.1           Grafana Operator       3.10.1    grafana-operator.v3.10.0      Succeeded
+grafana-operator.v3.10.2           Grafana Operator       3.10.2    grafana-operator.v3.10.1      Succeeded
 prometheusoperator.0.47.0          Prometheus Operator    0.47.0    prometheusoperator.0.37.0     Succeeded
 ```

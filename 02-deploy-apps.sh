@@ -36,3 +36,14 @@ echo "**********************************"
 oc new-app registry.access.redhat.com/ubi8/openjdk-11~https://github.com/atarazana/eda-workshop.git \
     --context-dir=12-quarkus-dashboard --name dashboard
 oc expose svc/dashboard
+
+sleep 420
+
+echo "**********************************"
+echo "Tagging Application Images"
+echo "**********************************"
+
+oc tag business-app:latest business-app:2.1.3-SNAPSHOT
+oc tag data-streaming:latest data-streaming:2.1.3-SNAPSHOT
+oc tag backend:latest backend:2.1.3-SNAPSHOT
+oc tag dashboard:latest dashboard:2.1.3-SNAPSHOT

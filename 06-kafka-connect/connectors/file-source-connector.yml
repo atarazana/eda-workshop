@@ -1,3 +1,4 @@
+---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
@@ -12,5 +13,5 @@ spec:
   class: org.apache.kafka.connect.file.FileStreamSourceConnector
   tasksMax: 1
   config:
-    file: "/opt/kafka/LICENSE"
+    file: /opt/kafka/LICENSE
     topic: samples.connect.file-source-topic

@@ -4,11 +4,9 @@ kind: KafkaTopic
 metadata:
   labels:
     strimzi.io/cluster: event-bus
-  name: eda.events.alerts
+  name: kafka-connect-cluster-offsets
 spec:
   config:
-    retention.ms: 604800000
-    segment.bytes: 1073741824
-    cleanup.policy: delete
-  partitions: 1
+    cleanup.policy: compact
+  partitions: 25
   replicas: 3
