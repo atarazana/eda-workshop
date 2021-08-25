@@ -5,16 +5,16 @@ metadata:
   name: dashboard-native-serverless
   labels:
     app.kubernetes.io/instance: dashboard-native-serverless
-    app.kubernetes.io/part-of: eda-workshop
+    app.kubernetes.io/part-of: eda-workshop-native
 spec:
   template:
     metadata:
       labels:
         app.kubernetes.io/instance: dashboard-native-serverless
-        app.kubernetes.io/part-of: eda-workshop
+        app.kubernetes.io/part-of: eda-workshop-native
     spec:
       containers:
-        - image: quay.io/eda-workshop/dashboard:2.0.0-SNAPSHOT
+        - image: quay.io/eda-workshop/dashboard:2.1.3-SNAPSHOT
           resources:
             requests:
               cpu: 500m
