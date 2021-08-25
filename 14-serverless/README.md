@@ -100,7 +100,7 @@ v0.21-kafka-storage-version-migration-tl687   0/1     Completed   0          31s
 Deploy sample KafkaTopic for testing proposal:
 
 ```shell
-oc apply -f knative-eventing/knative-kafka/topics
+oc apply -f knative-eventing/topics
 ```
 
 ## Deploying Application Serverless Services
