@@ -1,3 +1,4 @@
+---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
@@ -18,8 +19,7 @@ spec:
     database.include.list: enterprise
     database.history.kafka.bootstrap.servers: event-bus-kafka-bootstrap:9092
     database.history.kafka.topic: schema-changes.enterprise
-    include.schema.changes: false
-    #snapshot.mode: schema_only_recovery
+    include.schema.changes: false    
     snapshot.mode: initial
     snapshot.new.tables: parallel
     # To solve offset flush timeouts: The interval should be shortened and timeout increased.

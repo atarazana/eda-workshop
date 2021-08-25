@@ -1,4 +1,5 @@
-apiVersion: kafka.strimzi.io/v1beta1
+---
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   labels:
@@ -7,8 +8,8 @@ metadata:
 spec:
   config:
     # 7 days
-    retention.ms: "604800000"
-    segment.bytes: "1073741824"
+    retention.ms: 604800000
+    segment.bytes: 1073741824
     cleanup.policy: compact
   partitions: 1
   replicas: 3
