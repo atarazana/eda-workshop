@@ -39,17 +39,17 @@ spec:
         artifacts:
           # Debezium Connector for PostgreSQL
           - type: tgz
-            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.6.1.Final/debezium-connector-postgres-1.6.1.Final-plugin.tar.gz
+            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.0.Final/debezium-connector-postgres-1.7.0.Final-plugin.tar.gz
       # Debezium Connector for MySQL
       - name: debezium-connector-mysql
         artifacts:
           - type: tgz
-            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.6.1.Final/debezium-connector-mysql-1.6.1.Final-plugin.tar.gz
+            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.7.0.Final/debezium-connector-mysql-1.7.0.Final-plugin.tar.gz
       # Apicurio Registry Connect Converters
       - name: apicurio-registry-converter
         artifacts:
           - type: tgz
-            url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.0.1.Final/apicurio-registry-distro-connect-converter-2.0.1.Final.tar.gz
+            url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.1.1.Final/apicurio-registry-distro-connect-converter-2.1.1.Final.tar.gz
   resources: 
     requests:
       cpu: 500m

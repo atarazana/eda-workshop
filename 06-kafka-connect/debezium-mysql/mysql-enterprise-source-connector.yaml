@@ -29,19 +29,17 @@ spec:
     #max.batch.size: 2048
     #max.queue.size: 8192
     # Service Registry Integration
-    # Key Converter
-    #key.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
+    # Key Converter Avro
     #key.converter: io.apicurio.registry.utils.converter.AvroConverter
-    #key.converter.apicurio.registry.url: http://eda-registry-service:8080/api
-    #key.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy
-    #key.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
-    #key.converter.apicurio.registry.converter.serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer
-    #key.converter.apicurio.registry.converter.deserializer: io.apicurio.registry.utils.serde.AvroKafkaDeserializer
-    # Value Converter
-    #value.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
+    # Key Converter JSON
+    key.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
+    key.converter.apicurio.registry.url: http://eda-registry-service:8080/apis/registry/v2
+    key.converter.apicurio.registry.auto-register: true
+    key.converter.apicurio.registry.find-latest: true
+    # Value Converter Avro
     #value.converter: io.apicurio.registry.utils.converter.AvroConverter
-    #value.converter.apicurio.registry.url: http://eda-registry-service:8080/api
-    #value.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy
-    #value.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
-    #value.converter.apicurio.registry.converter.serializer: io.apicurio.registry.utils.serde.AvroKafkaSerializer
-    #value.converter.apicurio.registry.converter.deserializer: io.apicurio.registry.utils.serde.AvroKafkaDeserializer
+    # Value Converter JSON
+    value.converter: io.apicurio.registry.utils.converter.ExtJsonConverter
+    value.converter.apicurio.registry.url: http://eda-registry-service:8080/apis/registry/v2
+    value.converter.apicurio.registry.auto-register: true
+    value.converter.apicurio.registry.find-latest: true    
