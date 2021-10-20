@@ -35,8 +35,9 @@ Or if you want to reuse the same services but using the native version, you coul
 with image you want to use:
 
 ```shell
-kn service update data-streaming-serverless --image quay.io/eda-workshop/data-streaming:2.0.0-SNAPSHOT
-kn service update backend-serverless --image quay.io/eda-workshop/backend:2.0.0-SNAPSHOT
+kn service update data-streaming-serverless --image quay.io/eda-workshop/data-streaming:2.3.0-SNAPSHOT
+kn service update backend-serverless --image quay.io/eda-workshop/backend:2.3.0-SNAPSHOT
+kn service update dashboard-serverless --image quay.io/eda-workshop/dashboard:2.3.0-SNAPSHOT
 ```
 
 To deploy new `KafkaSource` source for these new services:
@@ -50,19 +51,19 @@ Now, these applications startup in few milliseconds, the faster ones in the arch
 * data-streaming application:
 
 ```text
-2021-07-02 09:59:05,684 INFO  [io.quarkus] (main) data-streaming 2.0.0-SNAPSHOT native (powered by Quarkus 2.0.0.Final) started in 0.115s. Listening on: http://0.0.0.0:8080
+2021-10-19 14:50:40,079 INFO  [io.quarkus] (main) data-streaming 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.178s. Listening on: http://0.0.0.0:8080
 ```
 
 * backend application:
 
 ```text
-2021-07-02 09:59:04,969 INFO  [io.quarkus] (main) backend 2.0.0-SNAPSHOT native (powered by Quarkus 2.0.0.Final) started in 0.066s. Listening on: http://0.0.0.0:8080
+2021-10-19 14:50:52,030 INFO  [io.quarkus] (main) backend 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.106s. Listening on: http://0.0.0.0:8080
 ```
 
 * dashboard application:
 
 ```text
-2021-07-01 11:39:29,370 INFO  [io.quarkus] (main) dashboard 2.0.0-SNAPSHOT native (powered by Quarkus 2.0.0.Final) started in 0.041s. Listening on: http://0.0.0.0:8080
+2021-10-19 14:52:01,190 INFO  [io.quarkus] (main) dashboard 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.073s. Listening on: http://0.0.0.0:8080
 ```
 
 ## Main References

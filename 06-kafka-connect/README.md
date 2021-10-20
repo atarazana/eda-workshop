@@ -14,7 +14,7 @@ To deploy Kafka Connect cluster exposing metrics:
 ```shell
 ❯ oc apply -f topics/
 ❯ oc apply -f configmap/
-❯ oc apply -f eda-kafka-connect.yaml 
+❯ oc apply -f eda-kafka-connect.yaml
 ```
 
 After some minutes the KafkaConnect Cluster will be ready:

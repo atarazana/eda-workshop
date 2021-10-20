@@ -14,7 +14,7 @@ oc login -u admin-user
 Install the global (or cluster-wide) operators running the following command:
 
 ```shell
-oc create -f cluster-wide/
+oc apply -f cluster-wide/
 ```
 
 These operators will be installed in the ```openshift-operators``` namespace and will be usable

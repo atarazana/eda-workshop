@@ -144,7 +144,7 @@ To send messages to events topic
 
 ```shell
 ❯ oc run eda-serverless-kafka-producer -ti \
- --image=registry.redhat.io/amq7/amq-streams-kafka-27-rhel7:1.7.0 \
+ --image=registry.redhat.io/amq7/amq-streams-kafka-28-rhel8:1.8.0 \
  --rm=true --restart=Never \
  -- bin/kafka-console-producer.sh \
  --broker-list event-bus-kafka-bootstrap.eda-workshop.svc:9092 \
@@ -181,13 +181,13 @@ execute the following commands:
 To update `backend-serverless` service:
 
 ```shell
-kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:1.0.0-SNAPSHOT
+kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.3.0-SNAPSHOT
 ```
 
 To update `data-streaming-serverless` service:
 
 ```shell
-kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:1.0.0-SNAPSHOT
+kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:2.3.0-SNAPSHOT
 ```
 
 ## Main References
