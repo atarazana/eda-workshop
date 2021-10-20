@@ -32,7 +32,7 @@ spec:
         app.kubernetes.io/part-of: eda-workshop
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:2.1.3-SNAPSHOT
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:2.3.0-SNAPSHOT
           resources:
             requests:
               cpu: 500m
