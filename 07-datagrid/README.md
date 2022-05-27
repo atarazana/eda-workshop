@@ -24,7 +24,7 @@ status:
   - message: 'View: eda-infinispan-0-6324,eda-infinispan-1-13135,eda-infinispan-2-45969'
     status: "True"
     type: WellFormed
-  consoleUrl: http://eda-infinispan-external-eda-workshop.apps.labs.sandbox1754.opentlc.com/console
+  consoleUrl: http://eda-infinispan-external-eda-workshop.apps.sandbox.opentlc.com/console
   podStatus:
     ready:
     - eda-infinispan-1
@@ -37,10 +37,11 @@ A set of new pods will be deployed:
 
 ```shell
 ❯ oc get pod | grep infinispan
-NAME               READY   STATUS    RESTARTS   AGE
-eda-infinispan-0   1/1     Running   0          10m
-eda-infinispan-1   1/1     Running   0          9m5s
-eda-infinispan-2   1/1     Running   0          7m58s
+NAME                                               READY   STATUS    RESTARTS   AGE
+eda-infinispan-0                                   1/1     Running      0              10m
+eda-infinispan-1                                   1/1     Running      0              9m26s
+eda-infinispan-2                                   1/1     Running      0              8m44s
+eda-infinispan-config-listener-85b985c588-86szv    1/1     Running      0              8m2s
 ```
 
 To get the route to access DataGrid Administration Console:
