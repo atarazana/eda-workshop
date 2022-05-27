@@ -40,8 +40,8 @@ A Prometheus instance will be available with a service and a route:
 NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 prometheus-operated   ClusterIP   None             <none>        9090/TCP   34s
 ❯ oc get route
-NAME        HOST/PORT                                                  PATH   SERVICES             PORT   TERMINATION   WILDCARD
-prometheus  prometheus-eda-workshop.apps.labs.sandbox1754.opentlc.com         prometheus-operated  web                  None
+NAME        HOST/PORT                                          PATH   SERVICES             PORT   TERMINATION   WILDCARD
+prometheus  prometheus-eda-workshop.apps.sandbox.opentlc.com          prometheus-operated  web                  None
 ```
 
 To get the route to access Prometheus:
