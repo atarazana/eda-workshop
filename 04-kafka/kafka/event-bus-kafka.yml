@@ -7,13 +7,13 @@ metadata:
   name: event-bus
 spec:
   kafka:
-    version: 2.8.0
+    version: 3.1.0
     config:
       # Log message format
-      log.message.format.version: 2.8
+      log.message.format.version: 3.1
       # Specify which version of the inter-broker protocol will be used.
       # This is typically bumped after all brokers were upgraded to a new version.
-      inter.broker.protocol.version: 2.8
+      inter.broker.protocol.version: 3.1
       # default replication factors for automatically created topics
       default.replication.factor: 3
       # The default number of log partitions per topic

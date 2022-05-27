@@ -34,16 +34,16 @@ status:
   connectorPlugins:
   - class: io.debezium.connector.mysql.MySqlConnector
     type: source
-    version: 1.6.1.Final
+    version: 1.7.2.Final-redhat-00003
   - class: io.debezium.connector.postgresql.PostgresConnector
     type: source
-    version: 1.6.1.Final
+    version: 3.1.0.redhat-00004
   - class: org.apache.kafka.connect.file.FileStreamSinkConnector
     type: sink
-    version: 2.8.0.redhat-00002
+    version: 3.1.0.redhat-00004
   - class: org.apache.kafka.connect.file.FileStreamSourceConnector
     type: source
-    version: 2.8.0.redhat-00002
+    version: 3.1.0.redhat-00004
   - class: org.apache.kafka.connect.mirror.MirrorCheckpointConnector
     type: source
     version: "1"

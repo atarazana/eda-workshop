@@ -9,7 +9,7 @@ metadata:
     # needing to call the Connect REST API directly
     strimzi.io/use-connector-resources: "true"
 spec:
-  version: 2.8.0
+  version: 3.1.0
   replicas: 1
   bootstrapServers: event-bus-kafka-bootstrap:9092
   config:
@@ -38,18 +38,23 @@ spec:
       - name: debezium-connector-postgres
         artifacts:
           # Debezium Connector for PostgreSQL
-          - type: tgz
-            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.0.Final/debezium-connector-postgres-1.7.0.Final-plugin.tar.gz
+          #- type: tgz
+          #  url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.0.Final/debezium-connector-postgres-1.7.0.Final-plugin.tar.gz
+          - type: zip
+            url: https://maven.repository.redhat.com/ga/io/debezium/debezium-connector-postgres/1.7.2.Final-redhat-00003/debezium-connector-postgres-1.7.2.Final-redhat-00003-plugin.zip
       # Debezium Connector for MySQL
       - name: debezium-connector-mysql
         artifacts:
-          - type: tgz
-            url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.7.0.Final/debezium-connector-mysql-1.7.0.Final-plugin.tar.gz
+          #- type: tgz
+          #  url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/1.7.0.Final/debezium-connector-mysql-1.7.0.Final-plugin.tar.gz
+          - type: zip
+            url: https://maven.repository.redhat.com/ga/io/debezium/debezium-connector-mysql/1.7.2.Final-redhat-00003/debezium-connector-mysql-1.7.2.Final-redhat-00003-plugin.zip
       # Apicurio Registry Connect Converters
       - name: apicurio-registry-converter
         artifacts:
           - type: tgz
-            url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.1.1.Final/apicurio-registry-distro-connect-converter-2.1.1.Final.tar.gz
+            #url: https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.1.1.Final/apicurio-registry-distro-connect-converter-2.1.1.Final.tar.gz
+            url: https://maven.repository.redhat.com/ga/io/apicurio/apicurio-registry-distro-connect-converter/2.2.2.managedsvc-redhat-00001/apicurio-registry-distro-connect-converter-2.2.2.managedsvc-redhat-00001.tar.gz
   resources: 
     requests:
       cpu: 500m

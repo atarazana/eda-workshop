@@ -54,13 +54,13 @@ The `bootstrap` route allows to access outside OpenShift:
 ```shell
 ❯ oc get route
 NAME                        HOST/PORT                                                                              PATH   SERVICES                             PORT   TERMINATION   WILDCARD
-event-bus-kafka-0           event-bus-kafka-0-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-0                    9094   passthrough   None
-event-bus-kafka-1           event-bus-kafka-1-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-1                    9094   passthrough   None
-event-bus-kafka-2           event-bus-kafka-2-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com                  event-bus-kafka-2                    9094   passthrough   None
-event-bus-kafka-bootstrap   event-bus-kafka-bootstrap-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com          event-bus-kafka-external-bootstrap   9094   passthrough   None
+event-bus-kafka-0           event-bus-kafka-0-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-0                    9094   passthrough   None
+event-bus-kafka-1           event-bus-kafka-1-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-1                    9094   passthrough   None
+event-bus-kafka-2           event-bus-kafka-2-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-2                    9094   passthrough   None
+event-bus-kafka-bootstrap   event-bus-kafka-bootstrap-eda-workshop.apps.sandbox.opentlc.com          event-bus-kafka-external-bootstrap   9094   passthrough   None
 ```
 
-For this example, then you could use `event-bus-kafka-bootstrap-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com:443` as the bootstrap connect string to access the Kafka cluster from outside of OpenShift.
+For this example, then you could use `event-bus-kafka-bootstrap-eda-workshop.apps.sandbox.opentlc.com:443` as the bootstrap connect string to access the Kafka cluster from outside of OpenShift.
 
 ## Rolling Updates
 
