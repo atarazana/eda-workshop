@@ -20,7 +20,7 @@ spec:
     ui:
       readOnly: false
   deployment:
-    host: eda-registry.eda-workshop.apps.labs.sandbox1754.opentlc.com
+    host: eda-registry.eda-workshop.apps.labs.sandbox.opentlc.com
     replicas: 1
 status:
   conditions:
@@ -30,7 +30,7 @@ status:
     status: "True"
     type: Ready
   info:
-    host: eda-registry.eda-workshop.apps.labs.sandbox1754.opentlc.com
+    host: eda-registry.eda-workshop.apps.labs.sandbox.opentlc.com
   managedResources:
   - kind: Deployment
     name: eda-registry-deployment
