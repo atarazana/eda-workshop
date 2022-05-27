@@ -56,7 +56,8 @@ public class AggregateMetricGenerator {
                         return metric;
                     });
         }
-        return null;
+
+        return Multi.createFrom().empty();
     }
 
     public AggregateMetric generateBalanceByRegion() {

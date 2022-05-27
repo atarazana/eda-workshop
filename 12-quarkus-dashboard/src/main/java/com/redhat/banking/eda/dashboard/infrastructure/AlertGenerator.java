@@ -89,7 +89,7 @@ public class AlertGenerator {
                     });
         }
 
-        return null;
+        return Multi.createFrom().empty();
     }
 
 }
