@@ -6,8 +6,8 @@ metadata:
   namespace: knative-serving
 spec:
   config:
-    autoscaler:      
-      scale-to-zero-grace-period: "30s"
+    autoscaler:
+      scale-to-zero-grace-period: "45s"
       # Determines the minimum amount of time that the last pod will remain active after
       # the Autoscaler decides to scale pods to zero.
       scale-to-zero-pod-retention-period: "5s"
