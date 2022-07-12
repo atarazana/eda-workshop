@@ -5,7 +5,7 @@ metadata:
   name: data-streaming-native-serverless
   labels:
     app.kubernetes.io/instance: data-streaming-native-serverless
-    app.kubernetes.io/part-of: eda-workshop-native
+    app.kubernetes.io/part-of: eda-workshop-serverless-native
 spec:
   template:
     metadata:
@@ -29,10 +29,10 @@ spec:
         #autoscaling.knative.dev/target: "50"
       labels:
         app.kubernetes.io/instance: data-streaming-native-serverless
-        app.kubernetes.io/part-of: eda-workshop-native
+        app.kubernetes.io/part-of: eda-workshop-serverless-native
     spec:
       containers:
-        - image: quay.io/eda-workshop/data-streaming:2.3.0-SNAPSHOT
+        - image: quay.io/eda-workshop/data-streaming:2.10.1-SNAPSHOT
           resources:
             requests:
               cpu: 500m

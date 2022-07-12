@@ -5,7 +5,7 @@ metadata:
   name: backend-serverless
   labels:
     app.kubernetes.io/instance: data-streaming-serverless
-    app.kubernetes.io/part-of: eda-workshop  
+    app.kubernetes.io/part-of: eda-workshop-serverless
 spec:
   template:
     metadata:
@@ -15,10 +15,10 @@ spec:
         autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "5s"    
       labels:
         app.kubernetes.io/instance: backend-serverless
-        app.kubernetes.io/part-of: eda-workshop
+        app.kubernetes.io/part-of: eda-workshop-serverless
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.3.0-SNAPSHOT
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.10.1-SNAPSHOT
           resources:
             requests:
               cpu: 500m

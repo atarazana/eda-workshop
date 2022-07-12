@@ -3,7 +3,8 @@ kind: KafkaSource
 metadata:
   name: backend-kafka-source
   labels:
-    app.kubernetes.io/part-of: backend-serverless 
+    app.kubernetes.io/instance: backend-kafka-source
+    app.kubernetes.io/part-of: eda-workshop-serverless 
     kafkasources.sources.knative.dev/key-type: int
 spec:
   consumerGroup: backend-knative-group

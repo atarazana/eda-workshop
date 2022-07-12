@@ -3,18 +3,22 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: dashboard-serverless
+  annotations:
+    app.openshift.io/connects-to: eda-infinispan
   labels:
     app.kubernetes.io/instance: data-streaming-serverless
-    app.kubernetes.io/part-of: eda-workshop  
+    app.kubernetes.io/part-of: eda-workshop-serverless
 spec:
   template:
     metadata:
+      annotations:
+        app.openshift.io/connects-to: eda-infinispan
       labels:
         app.kubernetes.io/instance: dashboard-serverless
-        app.kubernetes.io/part-of: eda-workshop
+        app.kubernetes.io/part-of: eda-workshop-serverless
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/dashboard:2.3.0-SNAPSHOT
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/dashboard:2.10.1-SNAPSHOT
           resources:
             requests:
               cpu: 500m
