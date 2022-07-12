@@ -43,7 +43,7 @@ echo "**********************************"
 echo "Tagging Application Images"
 echo "**********************************"
 
-oc tag business-app:latest business-app:2.1.3-SNAPSHOT
-oc tag data-streaming:latest data-streaming:2.1.3-SNAPSHOT
-oc tag backend:latest backend:2.1.3-SNAPSHOT
-oc tag dashboard:latest dashboard:2.1.3-SNAPSHOT
+oc tag business-app:latest business-app:2.10.1-SNAPSHOT
+oc tag data-streaming:latest data-streaming:2.10.1-SNAPSHOT
+oc tag backend:latest backend:2.10.1-SNAPSHOT
+oc tag dashboard:latest dashboard:2.10.1-SNAPSHOT
