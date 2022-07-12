@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mysql:5.7.35
 
 LABEL maintainer="Debezium Community"
 LABEL database="Enterprise Database"
