@@ -10,4 +10,4 @@ spec:
   name: datagrid
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: datagrid-operator.v8.3.4
+  startingCSV: datagrid-operator.v8.3.6
