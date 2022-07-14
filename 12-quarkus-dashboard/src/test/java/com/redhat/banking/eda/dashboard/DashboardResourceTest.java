@@ -18,7 +18,7 @@ public class DashboardResourceTest {
           .when().get("/dashboard")
           .then()
              .statusCode(200)
-             .body(is("Hello RESTEasy"));
+             .body(is("Hello Dashboard!"));
     }
 
 }
