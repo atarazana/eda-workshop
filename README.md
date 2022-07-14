@@ -33,15 +33,15 @@ the root of this repository.
 
 ## Prepare OpenShift
 
-This architecture has been tested in Red Hat OpenShift Container Platform 4.8 version and the following
+This architecture has been tested in Red Hat OpenShift Container Platform 4.10 version and the following
 operators:
 
-* Red Hat Integration - AMQ Streams 1.8.0
-* Red Hat Integration - Service Registry 2.0.1
-* Red Hat Data Grid 8.2.3
-* Red Hat OpenShift Serverless 1.16.0
-* Prometheus 0.47.0
-* Grafana 3.10.3
+* Red Hat Integration - AMQ Streams 2.1.0
+* Red Hat Integration - Service Registry 2.0.5
+* Red Hat Data Grid 8.3.6
+* Red Hat OpenShift Serverless 1.23.0
+* Prometheus 0.56.3
+* Grafana 4.4.1
 
 As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespace:
 
@@ -52,7 +52,7 @@ As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespac
 
 This workshop requires deploy many different components and
 it is needed to have enough resources. This workshop was
-tested in "OpenShift 4.7 Workshop (Small)" Service provided
+tested in "OpenShift 4.10 Workshop (Small)" Service provided
 in the [Red Hat Product Demo System](https://rhpds.redhat.com/) with a single worker node of AWS
 instance type `m5a.4xlarge`. Other node topologies and types should work.
 

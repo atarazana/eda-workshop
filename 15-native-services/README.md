@@ -35,9 +35,9 @@ Or if you want to reuse the same services but using the native version, you coul
 with image you want to use:
 
 ```shell
-kn service update data-streaming-serverless --image quay.io/eda-workshop/data-streaming:2.3.0-SNAPSHOT
-kn service update backend-serverless --image quay.io/eda-workshop/backend:2.3.0-SNAPSHOT
-kn service update dashboard-serverless --image quay.io/eda-workshop/dashboard:2.3.0-SNAPSHOT
+kn service update data-streaming-serverless --image quay.io/eda-workshop/data-streaming:2.10.1-SNAPSHOT
+kn service update backend-serverless --image quay.io/eda-workshop/backend:2.10.1-SNAPSHOT
+kn service update dashboard-serverless --image quay.io/eda-workshop/dashboard:2.10.1-SNAPSHOT
 ```
 
 To deploy new `KafkaSource` source for these new services:

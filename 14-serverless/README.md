@@ -34,22 +34,22 @@ Also you could check the pods in `knative-serving` namespace:
 
 ```shell
 ❯ oc get pods -n knative-serving
-NAME                                                     READY   STATUS      RESTARTS   AGE
-activator-f68c6fb67-krm9n                                2/2     Running     0          100s
-activator-f68c6fb67-sgfrr                                2/2     Running     0          86s
-autoscaler-98c9ffc79-6p2fg                               2/2     Running     0          69s
-autoscaler-98c9ffc79-zcv5k                               2/2     Running     0          100s
-autoscaler-hpa-6779db9d98-l7n2s                          2/2     Running     0          97s
-autoscaler-hpa-6779db9d98-pgzvn                          2/2     Running     0          97s
-controller-6c45ff7df8-c758h                              2/2     Running     0          67s
-controller-6c45ff7df8-rjmmv                              2/2     Running     0          91s
-domain-mapping-566454db5c-bgqdb                          2/2     Running     0          96s
-domainmapping-webhook-668d945dff-8kdmr                   2/2     Running     0          96s
-kn-cli-00001-deployment-85fdb79d4-lhxjv                  2/2     Running     0          47s
-kn-cli-00002-deployment-9f84df9b4-9r9nq                  2/2     Running     0          47s
-storage-version-migration-serving-serving-0.21.0-6tkmc   0/1     Completed   0          95s
-webhook-56f6d98499-9tb2f                                 2/2     Running     0          84s
-webhook-56f6d98499-fnb74                                 2/2     Running     0          99s
+NAME                                                    READY   STATUS      RESTARTS   AGE
+activator-67dcc8667f-pqdqm                              2/2     Running     0          2m4s
+activator-67dcc8667f-stbwz                              2/2     Running     0          2m4s
+autoscaler-5746cc94c7-7ktxn                             2/2     Running     0          2m4s
+autoscaler-5746cc94c7-kknnt                             2/2     Running     0          2m4s
+autoscaler-hpa-5668d4cbd9-jqtlz                         2/2     Running     0          2m1s
+autoscaler-hpa-5668d4cbd9-p2wc4                         2/2     Running     0          2m1s
+controller-7f4dff8dbf-8l8hl                             2/2     Running     0          95s
+controller-7f4dff8dbf-mf8r8                             2/2     Running     0          114s
+domain-mapping-55cd8bf549-582nj                         2/2     Running     0          2m3s
+domain-mapping-55cd8bf549-sr2s2                         2/2     Running     0          2m3s
+domainmapping-webhook-688cc48f5c-g2ltk                  2/2     Running     0          2m3s
+domainmapping-webhook-688cc48f5c-t6bc6                  2/2     Running     0          2m3s
+storage-version-migration-serving-serving-1.1.2-xpt7d   0/1     Completed   0          2m1s
+webhook-6644cfd46b-dzkr2                                2/2     Running     0          2m2s
+webhook-6644cfd46b-qggtr                                2/2     Running     0          2m2s
 ```
 
 ## Deploying Eventing Services
@@ -82,19 +82,32 @@ Also you could check the pods in `knative-eventing` namespace:
 
 ```shell
 ❯ oc get pods -n knative-eventing
-NAME                                          READY   STATUS      RESTARTS   AGE
-eventing-controller-6ddfbbb6b9-8xmp7          2/2     Running     0          2m13s
-eventing-webhook-6c8ccf95b6-72ljw             2/2     Running     0          2m12s
-imc-controller-56dbdcf559-7k6j2               2/2     Running     0          2m8s
-imc-dispatcher-747c575f59-z5jjh               2/2     Running     0          2m7s
-kafka-ch-controller-854d74bc7f-fztfq          1/1     Running     0          32s
-kafka-controller-manager-7dd57996c-8tlsk      1/1     Running     0          31s
-kafka-webhook-775dcbd549-875p2                1/1     Running     0          32s
-mt-broker-controller-5bb8459547-25xnf         2/2     Running     0          2m6s
-mt-broker-filter-79cf4cd577-57lwd             2/2     Running     0          2m7s
-mt-broker-ingress-868f47567c-fm5zf            2/2     Running     0          2m6s
-sugar-controller-6cf9545794-bsqkd             2/2     Running     0          2m6s
-v0.21-kafka-storage-version-migration-tl687   0/1     Completed   0          31s
+NAME                                                      READY   STATUS      RESTARTS   AGE
+eventing-controller-7d8698996f-chbbh                      2/2     Running     0          64s
+eventing-controller-7d8698996f-tlhwz                      2/2     Running     0          64s
+eventing-webhook-5bb687ffc6-485gt                         2/2     Running     0          64s
+eventing-webhook-5bb687ffc6-6kmsj                         2/2     Running     0          64s
+imc-controller-79c8f69cf5-69zbs                           2/2     Running     0          60s
+imc-controller-79c8f69cf5-n9hmb                           2/2     Running     0          60s
+imc-dispatcher-6b8b49794d-84fzd                           2/2     Running     0          59s
+imc-dispatcher-6b8b49794d-ssptj                           2/2     Running     0          59s
+kafka-ch-controller-78fb88fddc-p5p4z                      2/2     Running     0          80s
+kafka-controller-995bb5d97-6kw8p                          2/2     Running     0          77s
+kafka-controller-post-install-1.22.0-f9gmz                0/1     Completed   0          79s
+kafka-source-dispatcher-6cc878c59c-bkns7                  2/2     Running     0          79s
+kafka-webhook-855968c6f-vqrw9                             2/2     Running     0          80s
+kafka-webhook-eventing-558cfdc7b6-4tbjr                   2/2     Running     0          79s
+knative-kafka-storage-version-migrator-1.22.0-qkv2w       0/1     Completed   0          79s
+mt-broker-controller-bd467886b-852ns                      2/2     Running     0          57s
+mt-broker-controller-bd467886b-b7qvj                      2/2     Running     0          57s
+mt-broker-filter-6b944bf9bb-9ln7m                         2/2     Running     0          58s
+mt-broker-filter-6b944bf9bb-cqrw8                         2/2     Running     0          58s
+mt-broker-ingress-7b446c5678-r2lhh                        2/2     Running     0          58s
+mt-broker-ingress-7b446c5678-w7l8z                        2/2     Running     0          58s
+storage-version-migration-eventing-eventing-1.1.0-bqqrs   0/1     Completed   0          57s
+storage-version-migration-kafka-channel-1.22.0-4ffbm      0/1     Completed   0          79s
+sugar-controller-547b949d59-dvwl5                         2/2     Running     0          57s
+sugar-controller-547b949d59-sfrnp                         2/2     Running     0          57s
 ```
 
 Deploy sample KafkaTopic for testing proposal:
@@ -115,11 +128,11 @@ You could check the Application Serverless Services
 
 ```shell
 ❯ kn service list
-NAME                        URL                                                                                           LATEST                            AGE    CONDITIONS   READY   REASON
-backend-serverless          http://backend-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com          backend-serverless-00001          98s    3 OK / 3     True    
-dashboard-serverless        http://dashboard-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com        dashboard-serverless-00001        98s    3 OK / 3     True    
-data-streaming-serverless   http://data-streaming-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com   data-streaming-serverless-00001   98s    3 OK / 3     True    
-event-display-serverless    http://event-display-serverless-eda-workshop.apps.cluster-1498.1498.sandbox380.opentlc.com    event-display-serverless-00001    113s   3 OK / 3     True
+NAME                        URL                                                                      LATEST                            AGE    CONDITIONS   READY
+backend-serverless          http://backend-serverless-eda-workshop.apps.sandbox.opentlc.com          backend-serverless-00001          98s    3 OK / 3     True    
+dashboard-serverless        http://dashboard-serverless-eda-workshop.apps.sandbox.opentlc.com        dashboard-serverless-00001        98s    3 OK / 3     True    
+data-streaming-serverless   http://data-streaming-serverless-eda-workshop.apps.sandbox.opentlc.com   data-streaming-serverless-00001   98s    3 OK / 3     True    
+event-display-serverless    http://event-display-serverless-eda-workshop.apps.sandbox.opentlc.com    event-display-serverless-00001    113s   3 OK / 3     True
 ```
 
 Deploy Kafka Sources to consume messages from Kafka to start up the services
@@ -138,13 +151,14 @@ data-streaming-kafka-source   ["dbserver02.enterprise.accounts","dbserver02.ente
 event-display-kafka-source    ["eda.cloud.events"]                                                                                                                                 ["event-bus-kafka-bootstrap.eda-workshop.svc:9092"]   True             4m26s
 ```
 
-Now every time a new message is sent to `eda.cloud.events` topic or `eda.events.alerts` or `eda.events.aggregate-metrics`, the message will be processed by a `event-display` instance or the dashboard-serverless instance:
+Now every time a new message is sent to `eda.cloud.events` topic or `eda.events.alerts` or `eda.events.aggregate-metrics`, the message
+will be processed by a `event-display` instance or the dashboard-serverless instance:
 
 To send messages to events topic
 
 ```shell
 ❯ oc run eda-serverless-kafka-producer -ti \
- --image=registry.redhat.io/amq7/amq-streams-kafka-28-rhel8:1.8.0 \
+ --image=registry.redhat.io/amq7/amq-streams-kafka-31-rhel8:2.1.0 \
  --rm=true --restart=Never \
  -- bin/kafka-console-producer.sh \
  --broker-list event-bus-kafka-bootstrap.eda-workshop.svc:9092 \
@@ -181,16 +195,16 @@ execute the following commands:
 To update `backend-serverless` service:
 
 ```shell
-kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.3.0-SNAPSHOT
+kn service update backend-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.10.1-SNAPSHOT
 ```
 
 To update `data-streaming-serverless` service:
 
 ```shell
-kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:2.3.0-SNAPSHOT
+kn service update data-streaming-serverless --image image-registry.openshift-image-registry.svc:5000/eda-workshop/data-streaming:2.10.1-SNAPSHOT
 ```
 
 ## Main References
 
-[Installing Knative Serving](https://docs.openshift.com/container-platform/4.7/serverless/admin_guide/installing-knative-serving.html)
-[Installing Knative Eventing](https://docs.openshift.com/container-platform/4.7/serverless/admin_guide/installing-knative-eventing.html)
+[Installing Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
+[Installing Knative Eventing](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-eventing.html)
