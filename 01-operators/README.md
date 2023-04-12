@@ -22,23 +22,24 @@ from any namespaces in the cluster.
 
 ```shell
 ❯ oc get pod -n openshift-operators
-NAME                                                      READY   STATUS    RESTARTS   AGE
-amq-streams-cluster-operator-v2.1.0-4-7f66787968-jhc55    1/1     Running   0          6h8m
-apicurio-registry-operator-55bb56dd6-5rdgc                1/1     Running   0          6h7m
-infinispan-operator-controller-manager-5d9d4ddf76-kk4sb   1/1     Running   0          6h7m
-knative-openshift-57fc57698b-c8vmj                        1/1     Running   0          6h7m
-knative-openshift-ingress-5589fb9d7-sblb4                 1/1     Running   0          6h7m
-knative-operator-957c8745-bl8t9                           1/1     Running   0          6h7m
+NAME                                                         READY      STATUS       RESTARTS      AGE
+amq-streams-cluster-operator-v2.3.0-3-f4fc7f8bd-n8k7s        1/1     Running   0          18h
+apicurio-registry-operator-v1.1.0-redhat.1-c7d78cf88-zvhkd   1/1     Running   0          21h
+infinispan-operator-controller-manager-99b46985-vg2l9        1/1     Running   0          20h
+knative-openshift-7955656555-tfpcw                           1/1     Running   0          20h
+knative-openshift-ingress-68c4847689-jdq4b                   1/1     Running   0          21h
+knative-operator-webhook-68db7f68cf-ss9rs                    1/1     Running   0          20h
 ```
 
 To check the subscription statuses:
 
 ```shell
 ❯ oc get csv
-amqstreams.v2.1.0-4                               Red Hat Integration - AMQ Streams                 2.1.0-4                amqstreams.v2.1.0-3                               Succeeded
-datagrid-operator.v8.3.6                          Data Grid                                         8.3.6                  datagrid-operator.v8.3.4                          Succeeded
-serverless-operator.v1.23.0                       Red Hat OpenShift Serverless                      1.23.0                 serverless-operator.v1.22.0                       Succeeded
-service-registry-operator.v2.0.5-0.1655396591.p   Red Hat Integration - Service Registry Operator   2.0.5+0.1655396591.p   service-registry-operator.v2.0.5-0.1652887585.p   Succeeded
+NAME                               DISPLAY                                           VERSION   REPLACES                           PHASE
+amqstreams.v2.3.0-3                AMQ Streams                                       2.3.0-3   amqstreams.v2.3.0-2                Succeeded
+datagrid-operator.v8.3.9           Data Grid                                         8.3.9     datagrid-operator.v8.3.6           Succeeded
+serverless-operator.v1.28.0        Red Hat OpenShift Serverless                      1.28.0    serverless-operator.v1.27.1        Succeeded
+service-registry-operator.v2.1.4   Red Hat Integration - Service Registry Operator   2.1.4     service-registry-operator.v2.1.3   Succeeded
 ```
 
 ## Local Operators
@@ -54,17 +55,17 @@ from only that namespace.
 
 ```shell
 ❯ oc get pod -n eda-workshop
-NAME                                                   READY   STATUS    RESTARTS      AGE
-grafana-operator-controller-manager-59ccc6df4d-qq94l   2/2     Running   0             24m
-prometheus-operator-85f4f9fddc-nwjdv                   1/1     Running   0             24m
-prometheus-prometheus-0                                2/2     Running   1 (23m ago)   24m
+NAME                                                   READY   STATUS    RESTARTS   AGE
+grafana-operator-controller-manager-64457bf95b-bfnj2   2/2     Running   0          3h46m
+prometheus-operator-68c545f897-mgpc2                   1/1     Running   0          3h50m
+prometheus-prometheus-0                                2/2     Running   0          3h48m
 ```
 
 To check the subscription statuses:
 
 ```shell
 ❯ oc get csv
-NAME                               DISPLAY                VERSION   REPLACES                      PHASE
-grafana-operator.v4.4.1            Grafana Operator       4.4.1     grafana-operator.v4.4.0       Succeeded
-prometheusoperator.0.56.3          Prometheus Operator    0.56.3    prometheusoperator.0.47.0     Succeeded
+NAME                               DISPLAY                 VERSION   REPLACES                  PHASE
+grafana-operator.v4.10.0           Grafana Operator        4.10.0    grafana-operator.v4.9.0   Succeeded
+rhods-prometheus-operator.4.10.0   Prometheus Operator     4.10.0                              Succeeded
 ```

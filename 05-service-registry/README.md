@@ -24,7 +24,7 @@ spec:
     replicas: 1
 status:
   conditions:
-  - lastTransitionTime: "2021-05-21T09:30:19Z"
+  - lastTransitionTime: "2023-04-12T10:28:52Z"
     message: ""
     reason: Reconciled
     status: "True"

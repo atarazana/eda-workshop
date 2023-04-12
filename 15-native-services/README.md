@@ -51,19 +51,19 @@ Now, these applications startup in few milliseconds, the faster ones in the arch
 * data-streaming application:
 
 ```text
-2021-10-19 14:50:40,079 INFO  [io.quarkus] (main) data-streaming 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.178s. Listening on: http://0.0.0.0:8080
+2023-04-12 10:45:21,075 INFO  [io.quarkus] (main) data-streaming 2.16.5-SNAPSHOT native (powered by Quarkus 2.16.5.Final) started in 0.170s. Listening on: http://0.0.0.0:8080
 ```
 
 * backend application:
 
 ```text
-2021-10-19 14:50:52,030 INFO  [io.quarkus] (main) backend 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.106s. Listening on: http://0.0.0.0:8080
+2023-04-12 10:45:20,863 INFO  [io.quarkus] (main) backend 2.16.5-SNAPSHOT native (powered by Quarkus 2.16.5.Final) started in 0.099s. Listening on: http://0.0.0.0:8080
 ```
 
 * dashboard application:
 
 ```text
-2021-10-19 14:52:01,190 INFO  [io.quarkus] (main) dashboard 2.1.3-SNAPSHOT native (powered by Quarkus 2.1.3.Final) started in 0.073s. Listening on: http://0.0.0.0:8080
+2023-04-12 14:23:45,941 INFO  [io.quarkus] (main) dashboard 2.16.5-SNAPSHOT native (powered by Quarkus 2.16.5.Final) started in 0.084s. Listening on: http://0.0.0.0:8080
 ```
 
 ## Main References

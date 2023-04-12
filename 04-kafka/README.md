@@ -17,7 +17,7 @@ kind: Kafka
 status:
   clusterId: QysSEfizSGu6-JKyRge_RA
   conditions:
-  - lastTransitionTime: "2021-06-03T07:44:50.140Z"
+  - lastTransitionTime: "2023-04-12T10:28:26.985513Z"
     status: "True"
     type: Ready
 # ...    
@@ -27,15 +27,15 @@ This Apache Kafka cluster will be available by the `event-bus-kafka-bootstrap` s
 
 ```shell
 ❯ oc get svc
-NAME                                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-event-bus-kafka-0                    ClusterIP   172.30.29.32     <none>        9094/TCP                     5m36s
-event-bus-kafka-1                    ClusterIP   172.30.217.92    <none>        9094/TCP                     5m36s
-event-bus-kafka-2                    ClusterIP   172.30.160.241   <none>        9094/TCP                     5m36s
-event-bus-kafka-bootstrap            ClusterIP   172.30.149.0     <none>        9091/TCP,9092/TCP,9093/TCP   5m36s
-event-bus-kafka-brokers              ClusterIP   None             <none>        9091/TCP,9092/TCP,9093/TCP   5m36s
-event-bus-kafka-external-bootstrap   ClusterIP   172.30.57.32     <none>        9094/TCP                     5m36s
-event-bus-zookeeper-client           ClusterIP   172.30.247.178   <none>        2181/TCP                     7m15s
-event-bus-zookeeper-nodes            ClusterIP   None             <none>        2181/TCP,2888/TCP,3888/TCP   7m15s
+NAME                                 TYPE         CLUSTER-IP       EXTERNAL-IP   PORT(S)                                AGE
+event-bus-kafka-0                    ClusterIP    172.30.53.115    <none>        9094/TCP                               3h46m
+event-bus-kafka-1                    ClusterIP    172.30.123.245   <none>        9094/TCP                               3h46m
+event-bus-kafka-2                    ClusterIP    172.30.47.228    <none>        9094/TCP                               3h46m
+event-bus-kafka-bootstrap            ClusterIP    172.30.157.100   <none>        9091/TCP,9092/TCP,9093/TCP             3h46m
+event-bus-kafka-brokers              ClusterIP    None             <none>        9090/TCP,9091/TCP,9092/TCP,9093/TCP    3h46m
+event-bus-kafka-external-bootstrap   ClusterIP    172.30.193.14    <none>        9094/TCP                               3h46m
+event-bus-zookeeper-client           ClusterIP    172.30.192.15    <none>        2181/TCP                               3h48m
+event-bus-zookeeper-nodes            ClusterIP    None             <none>        2181/TCP,2888/TCP,3888/TCP             3h48m
 ```
 
 The Kafka cluster is accessible outside of OpenShift using a route created on top
@@ -53,28 +53,14 @@ The `bootstrap` route allows to access outside OpenShift:
 
 ```shell
 ❯ oc get route
-NAME                        HOST/PORT                                                                              PATH   SERVICES                             PORT   TERMINATION   WILDCARD
-event-bus-kafka-0           event-bus-kafka-0-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-0                    9094   passthrough   None
-event-bus-kafka-1           event-bus-kafka-1-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-1                    9094   passthrough   None
-event-bus-kafka-2           event-bus-kafka-2-eda-workshop.apps.sandbox.opentlc.com                  event-bus-kafka-2                    9094   passthrough   None
-event-bus-kafka-bootstrap   event-bus-kafka-bootstrap-eda-workshop.apps.sandbox.opentlc.com          event-bus-kafka-external-bootstrap   9094   passthrough   None
+NAME                        HOST/PORT                                                                PATH   SERVICES                             PORT   TERMINATION   WILDCARD
+event-bus-kafka-0           event-bus-kafka-0-eda-workshop.apps.sandbox.opentlc.com                         event-bus-kafka-0                    9094   passthrough   None
+event-bus-kafka-1           event-bus-kafka-1-eda-workshop.apps.sandbox.opentlc.com                         event-bus-kafka-1                    9094   passthrough   None
+event-bus-kafka-2           event-bus-kafka-2-eda-workshop.apps.sandbox.opentlc.com                         event-bus-kafka-2                    9094   passthrough   None
+event-bus-kafka-bootstrap   event-bus-kafka-bootstrap-eda-workshop.apps.sandbox.opentlc.com                 event-bus-kafka-external-bootstrap   9094   passthrough   None
 ```
 
 For this example, then you could use `event-bus-kafka-bootstrap-eda-workshop.apps.sandbox.opentlc.com:443` as the bootstrap connect string to access the Kafka cluster from outside of OpenShift.
-
-## Rolling Updates
-
-To update Zookeeper StatefulSet without downtime use the following command:following command:
-
-```shell
-oc annotate statefulset event-bus-zookeeper strimzi.io/manual-rolling-update=true
-```
-
-To update Kafka StatefulSet without downtime use the 
-
-```shell
-oc annotate statefulset event-bus-kafka strimzi.io/manual-rolling-update=true
-```
 
 ## Deploying KafkaTopics
 

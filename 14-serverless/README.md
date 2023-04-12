@@ -34,22 +34,21 @@ Also you could check the pods in `knative-serving` namespace:
 
 ```shell
 ❯ oc get pods -n knative-serving
-NAME                                                    READY   STATUS      RESTARTS   AGE
-activator-67dcc8667f-pqdqm                              2/2     Running     0          2m4s
-activator-67dcc8667f-stbwz                              2/2     Running     0          2m4s
-autoscaler-5746cc94c7-7ktxn                             2/2     Running     0          2m4s
-autoscaler-5746cc94c7-kknnt                             2/2     Running     0          2m4s
-autoscaler-hpa-5668d4cbd9-jqtlz                         2/2     Running     0          2m1s
-autoscaler-hpa-5668d4cbd9-p2wc4                         2/2     Running     0          2m1s
-controller-7f4dff8dbf-8l8hl                             2/2     Running     0          95s
-controller-7f4dff8dbf-mf8r8                             2/2     Running     0          114s
-domain-mapping-55cd8bf549-582nj                         2/2     Running     0          2m3s
-domain-mapping-55cd8bf549-sr2s2                         2/2     Running     0          2m3s
-domainmapping-webhook-688cc48f5c-g2ltk                  2/2     Running     0          2m3s
-domainmapping-webhook-688cc48f5c-t6bc6                  2/2     Running     0          2m3s
-storage-version-migration-serving-serving-1.1.2-xpt7d   0/1     Completed   0          2m1s
-webhook-6644cfd46b-dzkr2                                2/2     Running     0          2m2s
-webhook-6644cfd46b-qggtr                                2/2     Running     0          2m2s
+NAME                                     READY   STATUS    RESTARTS   AGE
+activator-5ccb9bf477-5nz9d               2/2     Running   0          21h
+activator-5ccb9bf477-zmd9n               2/2     Running   0          21h
+autoscaler-58b6d67565-dz9t4              2/2     Running   0          21h
+autoscaler-58b6d67565-qvgtz              2/2     Running   0          21h
+autoscaler-hpa-6554cfc674-8kgqh          2/2     Running   0          21h
+autoscaler-hpa-6554cfc674-hdxdw          2/2     Running   0          21h
+controller-67fcf5575c-7kn44              2/2     Running   0          21h
+controller-67fcf5575c-ng68h              2/2     Running   0          21h
+domain-mapping-77b6c5ff4b-r9lcw          2/2     Running   0          21h
+domain-mapping-77b6c5ff4b-x62vw          2/2     Running   0          21h
+domainmapping-webhook-755b79747d-5ljjv   2/2     Running   0          21h
+domainmapping-webhook-755b79747d-l8s4t   2/2     Running   0          21h
+webhook-55c4b97656-rhtk7                 2/2     Running   0          21h
+webhook-55c4b97656-zkzw5                 2/2     Running   0          21h
 ```
 
 ## Deploying Eventing Services
@@ -82,32 +81,28 @@ Also you could check the pods in `knative-eventing` namespace:
 
 ```shell
 ❯ oc get pods -n knative-eventing
-NAME                                                      READY   STATUS      RESTARTS   AGE
-eventing-controller-7d8698996f-chbbh                      2/2     Running     0          64s
-eventing-controller-7d8698996f-tlhwz                      2/2     Running     0          64s
-eventing-webhook-5bb687ffc6-485gt                         2/2     Running     0          64s
-eventing-webhook-5bb687ffc6-6kmsj                         2/2     Running     0          64s
-imc-controller-79c8f69cf5-69zbs                           2/2     Running     0          60s
-imc-controller-79c8f69cf5-n9hmb                           2/2     Running     0          60s
-imc-dispatcher-6b8b49794d-84fzd                           2/2     Running     0          59s
-imc-dispatcher-6b8b49794d-ssptj                           2/2     Running     0          59s
-kafka-ch-controller-78fb88fddc-p5p4z                      2/2     Running     0          80s
-kafka-controller-995bb5d97-6kw8p                          2/2     Running     0          77s
-kafka-controller-post-install-1.22.0-f9gmz                0/1     Completed   0          79s
-kafka-source-dispatcher-6cc878c59c-bkns7                  2/2     Running     0          79s
-kafka-webhook-855968c6f-vqrw9                             2/2     Running     0          80s
-kafka-webhook-eventing-558cfdc7b6-4tbjr                   2/2     Running     0          79s
-knative-kafka-storage-version-migrator-1.22.0-qkv2w       0/1     Completed   0          79s
-mt-broker-controller-bd467886b-852ns                      2/2     Running     0          57s
-mt-broker-controller-bd467886b-b7qvj                      2/2     Running     0          57s
-mt-broker-filter-6b944bf9bb-9ln7m                         2/2     Running     0          58s
-mt-broker-filter-6b944bf9bb-cqrw8                         2/2     Running     0          58s
-mt-broker-ingress-7b446c5678-r2lhh                        2/2     Running     0          58s
-mt-broker-ingress-7b446c5678-w7l8z                        2/2     Running     0          58s
-storage-version-migration-eventing-eventing-1.1.0-bqqrs   0/1     Completed   0          57s
-storage-version-migration-kafka-channel-1.22.0-4ffbm      0/1     Completed   0          79s
-sugar-controller-547b949d59-dvwl5                         2/2     Running     0          57s
-sugar-controller-547b949d59-sfrnp                         2/2     Running     0          57s
+NAME                                                  READY   STATUS      RESTARTS   AGE
+eventing-controller-7fc87788d-mpfwd                   2/2     Running     0          21h
+eventing-controller-7fc87788d-vswts                   2/2     Running     0          21h
+eventing-webhook-64b9965c69-drbrc                     2/2     Running     0          21h
+eventing-webhook-64b9965c69-f4d5l                     2/2     Running     0          21h
+imc-controller-544d8cd554-knss2                       2/2     Running     0          21h
+imc-controller-544d8cd554-xtwh9                       2/2     Running     0          21h
+imc-dispatcher-577774f87d-67kxn                       2/2     Running     0          21h
+imc-dispatcher-577774f87d-l8l8l                       2/2     Running     0          21h
+kafka-channel-dispatcher-7b4755bff5-5sngt             2/2     Running     0          21h
+kafka-channel-receiver-6f96c865d6-mjg7s               2/2     Running     0          21h
+kafka-controller-794497b975-97ngb                     2/2     Running     0          21h
+kafka-controller-post-install-1.28.0-sbmjp            0/1     Completed   0          8m44s
+kafka-source-dispatcher-0                             2/2     Running     0          3h34m
+kafka-webhook-eventing-64999d8559-sp475               2/2     Running     0          21h
+knative-kafka-storage-version-migrator-1.28.0-2t8md   0/1     Completed   0          6m23s
+mt-broker-controller-5b48b69554-6bnq5                 2/2     Running     0          21h
+mt-broker-controller-5b48b69554-zsld9                 2/2     Running     0          21h
+mt-broker-filter-65fb8fb459-fg4vj                     2/2     Running     0          21h
+mt-broker-filter-65fb8fb459-n5kpb                     2/2     Running     0          21h
+mt-broker-ingress-6cfd4ff67-hn487                     2/2     Running     0          21h
+mt-broker-ingress-6cfd4ff67-zqhxh                     2/2     Running     0          21h
 ```
 
 Deploy sample KafkaTopic for testing proposal:

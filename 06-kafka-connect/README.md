@@ -20,7 +20,7 @@ To deploy Kafka Connect cluster exposing metrics:
 After some minutes the KafkaConnect Cluster will be ready:
 
 ```shell
-❯ oc get kc eda-kafka-connect -o yaml
+❯ oc get kafkaconnect eda-kafka-connect -o yaml
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 # ...
@@ -28,31 +28,25 @@ spec:
 # ...
 status:
   conditions:
-  - lastTransitionTime: "2021-05-26T07:36:58.127886Z"
+  - lastTransitionTime: "2023-04-12T10:30:22.126914Z"
     status: "True"
     type: Ready
   connectorPlugins:
   - class: io.debezium.connector.mysql.MySqlConnector
     type: source
-    version: 1.7.2.Final-redhat-00003
+    version: 1.9.7.Final-redhat-00003
   - class: io.debezium.connector.postgresql.PostgresConnector
     type: source
-    version: 3.1.0.redhat-00004
-  - class: org.apache.kafka.connect.file.FileStreamSinkConnector
-    type: sink
-    version: 3.1.0.redhat-00004
-  - class: org.apache.kafka.connect.file.FileStreamSourceConnector
-    type: source
-    version: 3.1.0.redhat-00004
+    version: 1.9.7.Final-redhat-00003
   - class: org.apache.kafka.connect.mirror.MirrorCheckpointConnector
     type: source
-    version: "1"
+    version: 3.3.1.redhat-00008
   - class: org.apache.kafka.connect.mirror.MirrorHeartbeatConnector
     type: source
-    version: "1"
+    version: 3.3.1.redhat-00008
   - class: org.apache.kafka.connect.mirror.MirrorSourceConnector
     type: source
-    version: "1"
+    version: 3.3.1.redhat-00008
   labelSelector: strimzi.io/cluster=eda-kafka-connect,strimzi.io/name=eda-kafka-connect-connect,strimzi.io/kind=KafkaConnect
   observedGeneration: 3
   replicas: 1

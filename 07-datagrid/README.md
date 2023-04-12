@@ -66,10 +66,10 @@ We could test and verify the Caches:
 ```shell
 ❯ oc get cache
 NAME                               AGE
-eda-infinispan-aggregate-metrics   7s
-eda-infinispan-alerts              7s
-eda-infinispan-clients             7s
-eda-infinispan-regions             7s
+eda-infinispan-aggregate-metrics   3h47m
+eda-infinispan-alerts              3h47m
+eda-infinispan-clients             3h47m
+eda-infinispan-regions             3h47m
 ```
 
 To get the current status of a Data Cache:
