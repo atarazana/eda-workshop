@@ -18,7 +18,7 @@ spec:
         app.kubernetes.io/part-of: eda-workshop-serverless
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.10.1-SNAPSHOT
+        - image: image-registry.openshift-image-registry.svc:5000/eda-workshop/backend:2.16.5-SNAPSHOT
           resources:
             requests:
               cpu: 500m

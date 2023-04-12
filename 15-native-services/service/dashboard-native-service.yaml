@@ -18,7 +18,7 @@ spec:
         app.kubernetes.io/part-of: eda-workshop-serverless-native
     spec:
       containers:
-        - image: quay.io/eda-workshop/dashboard:2.10.1-SNAPSHOT
+        - image: quay.io/eda-workshop/dashboard:2.16.5-SNAPSHOT
           resources:
             requests:
               cpu: 500m
