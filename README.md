@@ -33,15 +33,15 @@ the root of this repository.
 
 ## Prepare OpenShift
 
-This architecture has been tested in Red Hat OpenShift Container Platform 4.10 version and the following
+This architecture has been tested in Red Hat OpenShift Container Platform 4.12 version and the following
 operators:
 
-* Red Hat Integration - AMQ Streams 2.1.0
-* Red Hat Integration - Service Registry 2.0.5
-* Red Hat Data Grid 8.3.6
-* Red Hat OpenShift Serverless 1.23.0
-* Prometheus 0.56.3
-* Grafana 4.4.1
+* Red Hat Integration - AMQ Streams 2.3.0 (Apache Kafka 3.3)
+* Red Hat Integration - Service Registry 2.1.4
+* Red Hat Data Grid 8.3.9
+* Red Hat OpenShift Serverless 1.28.0
+* Prometheus 4.10.0
+* Grafana 4.10.0
 
 As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespace:
 
@@ -52,9 +52,8 @@ As a normal user in your OpenShift cluster, create a ```eda-workshop``` namespac
 
 This workshop requires deploy many different components and
 it is needed to have enough resources. This workshop was
-tested in "OpenShift 4.10 Workshop (Small)" Service provided
-in the [Red Hat Product Demo System](https://rhpds.redhat.com/) with a single worker node of AWS
-instance type `m5a.4xlarge`. Other node topologies and types should work.
+tested in "OpenShift 4.12 Workshop" Service provided
+in the [Red Hat Product Demo Platform](https://demo.redhat.com/).
 
 ## Deploy Operators
 
@@ -111,3 +110,42 @@ Follow [the instructions](./14-serverless/README.md)
 ## Deploy Native Serverless Services
 
 Follow [the instructions](./15-native-services/README.md)
+
+## Bonus Track - Scripted deployment
+
+There is a set of different shell scripts that allow to deploy easily all the
+components of this repository avoiding a step-by-step process. The following
+scripts can help you to deploy this solution in your cluster in few minutes:
+
+* [`01-deploy-infra.sh`](./01-deploy-infra.sh) - Deploy the infrastructure of
+the solution: Operators, Databases, Kafka and KafkaConnect clusters, Service Registry
+and Data Grid cluster.
+
+* [`02-deploy-apps.sh`](./02-deploy-apps.sh) - Deploy the different applications of
+the solution: business, streaming, backend, and dashboard.
+
+* [`03-deploy-serverless-services.sh`](./03-deploy-serverless-services.sh) - Deploy the
+the serverless components of the solution. This script will scale down the previous
+applications.
+
+* [`04-deploy-serverless-native-services.sh`](./03-deploy-serverless-native-services.sh) - Deploy
+the Quarkus Native version of each component updating the previous serverless services created.
+
+* [`99-update-regions.sh`](./99-update-regions.sh.sh) - Sample script to update the `Regions`
+table in the `enterprise` data base to start the consumption of the data and calculate
+the values for each region by the `data-streaming` application.
+
+The order to deploy successfully the solution is:
+
+```shell
+./01-deploy-infra.sh
+./02-deploy-apps.sh
+./99-update-regions.sh
+```
+
+To deploy the serverless version of the solution then you only need to execute:
+
+```shell
+./03-deploy-serverless-services.sh
+./04-deploy-serverless-native-services.sh
+```

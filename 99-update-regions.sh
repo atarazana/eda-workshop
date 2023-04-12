@@ -1,0 +1,25 @@
+echo "**********************************"
+echo "Updating Regions table"
+echo "**********************************"
+
+echo "Regions Table Status (Before Updating)"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "SELECT* FROM regions;"
+
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'ES' WHERE code = 'es';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'PT' WHERE code = 'pt';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'UK' WHERE code = 'uk';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'IT' WHERE code = 'it';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'FR' WHERE code = 'fr';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'GE' WHERE code = 'ge';"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'US' WHERE code = 'us';"
+
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'Spain' WHERE code = 'es';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'Portugal' WHERE code = 'pt';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'United Kingdom' WHERE code = 'uk';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'Italy' WHERE code = 'it';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'France' WHERE code = 'fr';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'Germany' WHERE code = 'ge';"
+#oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "UPDATE regions SET description = 'United States of America' WHERE code = 'us';"
+
+echo "Regions Table Status (After Updating)"
+oc exec -it $(oc get pods --selector deployment=mysql-enterprise -o jsonpath='{.items[0].metadata.name}') -- mysql -u mysqluser -pmysqlpw enterprise -e "SELECT* FROM regions;"
