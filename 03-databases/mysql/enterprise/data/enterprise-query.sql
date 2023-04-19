@@ -1,27 +1,27 @@
 
-# Switch to this database
+-- Switch to this database
 USE enterprise;
 
-#
-# Set of queries to get check data
-#
+--
+-- Set of queries to get check data
+--
 
-# Account statuses by Region
+-- Balance by Region
+select '* Balance by Region *' AS '';
+select region_code,sum(quantity) from accounts a, movements m where a.id = m.account_id group by a.region_code order by sum(quantity) desc;
 
-select region_code,status,count(*) from accounts a group by region_code,status;
-
-# Account Active by Region
-
-select region_code,count(*) from accounts where status = 'ACTIVE' group by region_code,status;
-
-# Account Inactive by Region
-
-select region_code,count(*) from accounts where status = 'INACTIVE' group by region_code,status;
-
-# Account Closed by Region
-
+-- Account Closed by Region
+select '* Account Closed by Region *' AS '';
 select region_code,count(*) from accounts where status = 'CLOSED' group by region_code,status;
 
-# Balance by Region
+-- Account Inactive by Region
+select '* Account Inactive by Region *' AS '';
+select region_code,count(*) from accounts where status = 'INACTIVE' group by region_code,status;
 
-select region_code,sum(quantity) from accounts a, movements m where a.id = m.account_id group by a.region_code order by sum(quantity) desc;
+-- Account Active by Region
+select '* Account Active by Region *' AS '';
+select region_code,count(*) from accounts where status = 'ACTIVE' group by region_code,status;
+
+-- Account statuses by Region
+select '* Account statuses by Region *' AS '';
+select region_code,status,count(*) from accounts a group by region_code,status;
