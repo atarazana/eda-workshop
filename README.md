@@ -121,17 +121,23 @@ scripts can help you to deploy this solution in your cluster in few minutes:
 the solution: Operators, Databases, Kafka and KafkaConnect clusters, Service Registry
 and Data Grid cluster.
 
-* [`02-deploy-apps.sh`](./02-deploy-apps.sh) - Deploy the different applications of
+* [`02-load-enterprise-data.sh`](./02-load-enterprise-data.sh) - Load and initial sequence
+of data into `enterprise` database.
+
+* [`05-deploy-apps.sh`](./05-deploy-apps.sh) - Deploy the different applications of
 the solution: business, streaming, backend, and dashboard.
 
-* [`03-deploy-serverless-services.sh`](./03-deploy-serverless-services.sh) - Deploy the
+* [`10-deploy-serverless-services.sh`](./10-deploy-serverless-services.sh) - Deploy the
 the serverless components of the solution. This script will scale down the previous
 applications.
 
-* [`04-deploy-serverless-native-services.sh`](./03-deploy-serverless-native-services.sh) - Deploy
+* [`12-deploy-serverless-native-services.sh`](./12-deploy-serverless-native-services.sh) - Deploy
 the Quarkus Native version of each component updating the previous serverless services created.
 
-* [`99-update-regions.sh`](./99-update-regions.sh.sh) - Sample script to update the `Regions`
+* [`98-query-enterprise-data.sh`](./98-query-enterprise-data.sh) - Summarize some data from the
+`enterprise` database.
+
+* [`99-update-regions.sh`](./99-update-regions.sh) - Sample script to update the `Regions`
 table in the `enterprise` data base to start the consumption of the data and calculate
 the values for each region by the `data-streaming` application.
 
@@ -139,13 +145,13 @@ The order to deploy successfully the solution is:
 
 ```shell
 ./01-deploy-infra.sh
-./02-deploy-apps.sh
-./99-update-regions.sh
+./02-load-enterprise-data.sh
+./05-deploy-apps.sh
 ```
 
 To deploy the serverless version of the solution then you only need to execute:
 
 ```shell
-./03-deploy-serverless-services.sh
-./04-deploy-serverless-native-services.sh
+./10-deploy-serverless-services.sh
+./12-deploy-serverless-native-services.sh
 ```
