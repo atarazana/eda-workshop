@@ -19,7 +19,5 @@ spec:
     type: Route
   security:
     endpointEncryption:
-      # certSecretName:
-      # certServiceName:
       type: None  
     endpointSecretName: eda-infinispan-credentials
