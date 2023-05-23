@@ -1,0 +1,102 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: 📜 Event Schemas API 📜 - 👷 CI pipeline with Maven 🚀
+
+# This section allows the workflow to create a Release
+# https://github.com/softprops/action-gh-release/issues/236#issuecomment-1150530128
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+
+# This section ensures that new pushes cancel current executions of the workflow
+concurrency:
+  group: event-schemas-api
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v.[0-9]+.[0-9]+.[0-9]+'
+    paths:
+      - 09-event-schemas-api/**
+    #paths-ignore:
+    #  - 'LICENSE'
+    #  - '*.md'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 09-event-schemas-api/**
+    #paths-ignore:
+    #  - 'LICENSE'
+    #  - '*.md'    
+
+env:
+  APP_WORKSPACE: 09-event-schemas-api
+  JAVA_VERSION: "17"
+    
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    name: Get Application Version
+    outputs:
+      app_version: ${{ steps.get_app_version.outputs.version }}
+      tag_version: ${{ steps.get_tag_version.outputs.version }}
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'adopt'
+
+      - name: Get version from Maven project
+        id: get_app_version
+        working-directory: ${{ env.APP_WORKSPACE }}
+        run: |
+          APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Application Version: $APP_VERSION"
+          echo "version=$APP_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get version from Tag release
+        id: get_tag_version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "Application version from Tag release: ${{ github.ref_name }}"
+          echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    name: "Compile"
+    needs:
+      - setup
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'adopt'
+
+      - name: Build with Maven
+        working-directory: ${{ env.APP_WORKSPACE }}
+        run: |
+          echo "Building version ${{ needs.setup.outputs.app_version }}"
+          ./mvnw -B package --file pom.xml
+
+      #- name: Official SonarQube Scan
+      #  uses: SonarSource/sonarqube-scan-action@v1.0.0
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: ${{ env.APP_WORKSPACE }}/target/surefire-reports/**/*.xml
