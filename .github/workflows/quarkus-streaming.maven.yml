@@ -181,7 +181,7 @@ jobs:
         
       - name: "Build native executable"
         working-directory: ${{ env.APP_WORKSPACE }}
-        run: ./mvnw install --no-transfer-progress -Dnative -DskipTests -Dquarkus.native.remote-container-build=true
+        run: ./mvnw install --no-transfer-progress -Dnative -DskipTests -Dquarkus.native.remote-container-build=true -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.builder=jib
 
       - name: "Upload native executable"
         uses: actions/upload-artifact@v3
