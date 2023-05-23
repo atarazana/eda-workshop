@@ -21,19 +21,17 @@ on:
       - main
     tags:
       - 'v.[0-9]+.[0-9]+.[0-9]+'
-    #paths:
-    #  - 08-quarkus-business-app
-    #paths-ignore:
-    #  - 'argocd/**'
-    #  - 'img/**'
-    #  - 'LICENSE'
-    #  - '*.md'
+    paths:
+      - 11-quarkus-backend
+    paths-ignore:
+      - 'LICENSE'
+      - '*.md'
   pull_request:
     branches:
       - main
+    paths:
+      - 11-quarkus-backend  
     paths-ignore:
-      - 'argocd/**'
-      - 'img/**'
       - 'LICENSE'
       - '*.md'    
 
@@ -159,7 +157,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: .
+          context: ${{ env.APP_WORKSPACE }}
           file: ${{ env.APP_WORKSPACE }}/src/main/docker/Dockerfile.jvm
           # Hack for pseudo ternary expression: If no tag => Latest, if not, tag value
           # Source: https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
@@ -218,7 +216,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: .
+          context: ${{ env.APP_WORKSPACE }}
           file: ${{ env.APP_WORKSPACE }}/src/main/docker/Dockerfile.native
           # Hack for pseudo ternary expression: If no tag => Latest, if not, tag value
           # Source: https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
