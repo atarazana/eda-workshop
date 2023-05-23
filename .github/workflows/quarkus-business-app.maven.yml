@@ -159,8 +159,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: .
-          file: ${{ env.APP_WORKSPACE }}/src/main/docker/Dockerfile.jvm
+          context: ${{ env.APP_WORKSPACE }}
+          file: src/main/docker/Dockerfile.jvm
           # Hack for pseudo ternary expression: If no tag => Latest, if not, tag value
           # Source: https://github.com/orgs/community/discussions/25725#discussioncomment-3248924
           tags: ${{ env.IMAGE_BASE_NAME }}:${{ needs.setup.outputs.tag_version || needs.setup.outputs.app_version }}
