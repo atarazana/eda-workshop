@@ -30,7 +30,7 @@ on:
     branches:
       - main
     paths:
-      - 08-quarkus-business-app
+      - 08-quarkus-business-app/**
     #paths-ignore:
     #  - 'LICENSE'
     #  - '*.md'    
