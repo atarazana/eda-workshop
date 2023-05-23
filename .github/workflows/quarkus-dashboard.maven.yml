@@ -23,17 +23,17 @@ on:
       - 'v.[0-9]+.[0-9]+.[0-9]+'
     paths:
       - 12-quarkus-dashboard
-    paths-ignore:
-      - 'LICENSE'
-      - '*.md'
+    #paths-ignore:
+    #  - 'LICENSE'
+    #  - '*.md'
   pull_request:
     branches:
       - main
     paths:
       - 12-quarkus-dashboard  
-    paths-ignore:
-      - 'LICENSE'
-      - '*.md'    
+    #paths-ignore:
+    #  - 'LICENSE'
+    #  - '*.md'    
 
 env:
   APP_GROUP: eda-workshop
