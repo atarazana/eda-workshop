@@ -1,8 +1,8 @@
 package com.redhat.banking.enterprise;
 
-import io.quarkus.test.junit.NativeImageTest;
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
-@NativeImageTest
+@QuarkusIntegrationTest
 public class NativeBusinessProducerResourceIT extends BusinessProducerResourceTest {
 
     // Execute the same tests but in native mode.
