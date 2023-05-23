@@ -12,7 +12,7 @@ permissions:
 
 # This section ensures that new pushes cancel current executions of the workflow
 concurrency:
-  group: streaming
+  group: dashboard
   cancel-in-progress: true
 
 on:
