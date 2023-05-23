@@ -11,9 +11,9 @@ permissions:
   pull-requests: write
 
 # This section ensures that new pushes cancel current executions of the workflow
-#concurrency:
-#  group: ${{ github.ref }}
-#  cancel-in-progress: true
+concurrency:
+  group: business-app
+  cancel-in-progress: true
 
 on:
   push:
@@ -42,7 +42,7 @@ env:
   APP_NAME: business-app
   APP_WORKSPACE: 08-quarkus-business-app
   JAVA_VERSION: "17"
-  IMAGE_BASE_NAME: "quay.io/$APP_GROUP/$APP_NAME"
+  IMAGE_BASE_NAME: "quay.io/eda-workshop/business-app"
     
 jobs:
   setup:
