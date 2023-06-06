@@ -1,5 +1,18 @@
 # Event-Driven Architecture Workshop
 
+![License](https://img.shields.io/github/license/atarazana/eda-workshop?style=plastic)
+![Main Lang](https://img.shields.io/github/languages/top/atarazana/eda-workshop)
+
+![Business App Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/quarkus-business-app.maven.yml/badge.svg?branch=main)
+![Event Schemas API Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/event-schemas-api.maven.yml/badge.svg?branch=main)
+![Quarkus Streaming Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/quarkus-streaming.maven.yml/badge.svg?branch=main)
+![Quarkus Backend Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/quarkus-backend.maven.yml/badge.svg?branch=main)
+![Quarkus Dashboard Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/quarkus-dashboard.maven.yml/badge.svg?branch=main)
+
+![Last Commit](https://img.shields.io/github/last-commit/atarazana/eda-workshop)
+![Tag](https://img.shields.io/github/v/tag/atarazana/eda-workshop)
+![Downloads](https://img.shields.io/github/downloads/atarazana/eda-workshop/total)
+
 In the digital transformation strategies of companies, Serverless technologies, Event-Driven Architectures (EDA)
 and data capture patterns (Change Data Capture) are gaining more strength every day.
  
