@@ -2,6 +2,7 @@
 
 ![License](https://img.shields.io/github/license/atarazana/eda-workshop?style=plastic)
 ![Main Lang](https://img.shields.io/github/languages/top/atarazana/eda-workshop)
+![Languages](https://img.shields.io/github/languages/count/atarazana/eda-workshop)
 
 ![Business App Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/quarkus-business-app.maven.yml/badge.svg?branch=main)
 ![Event Schemas API Build Status](https://github.com/atarazana/eda-workshop/actions/workflows/event-schemas-api.maven.yml/badge.svg?branch=main)
