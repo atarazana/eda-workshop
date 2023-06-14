@@ -1,0 +1,27 @@
+name: 🔖 Release Drafter 🔖
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+permissions:
+  contents: read
+      
+jobs:
+  update_release_draft:
+    name: Release drafter
+    runs-on: ubuntu-latest
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+
+    steps:
+      - name: Update Release Draft
+        uses: release-drafter/release-drafter@v5
+        with:
+          publish: true
+          prerelease: false        
+        env:
+          # Instead of GITHUB_TOKEN Ref: https://github.com/stefanzweifel/changelog-updater-action/discussions/30
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
